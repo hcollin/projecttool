@@ -1,0 +1,9 @@
+{
+  "name": "projecttool-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/ui/projecttoolui",
+    "common/projecttoolmodels"
+  ]
+}
