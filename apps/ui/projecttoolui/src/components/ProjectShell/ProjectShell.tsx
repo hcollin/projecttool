@@ -1,5 +1,6 @@
-import { AppShell, NavLink } from "@mantine/core";
+import { AppShell, Flex, NavLink, Stack, Title } from "@mantine/core";
 import { Link } from "@tanstack/react-router";
+import AnchorLink from "../AnchorLink/AnchorLink";
 
 const ProjectShell = (props: { children: React.ReactNode }) => {
 	return (
@@ -20,15 +21,19 @@ const ProjectShell = (props: { children: React.ReactNode }) => {
 			}}
 		>
 			<AppShell.Header>
-				<h1>Project Tool</h1>
+				<Flex align="center" justify="space-between" h="100%" px="md">
+					<AnchorLink to="/">
+						<Title order={1}>Project Tool</Title>
+					</AnchorLink>
+				</Flex>
 			</AppShell.Header>
 
 			<AppShell.Navbar className="project-navbar">
 				<NavLink label="Home" component={Link} to="/project/dashboard" />
 				<NavLink label="Settings" component={Link} to="/project/settings" />
-                <NavLink label="Pricing" component={Link} to="/project/pricing" />
-                <NavLink label="Resources" component={Link} to="/project/resources" />
-                <NavLink label="Phases" component={Link} to="/project/phases" />
+				<NavLink label="Pricing" component={Link} to="/project/pricing" />
+				<NavLink label="Resources" component={Link} to="/project/resources" />
+				<NavLink label="Phases" component={Link} to="/project/phases" />
 			</AppShell.Navbar>
 
 			<AppShell.Main className="main-content">{props.children}</AppShell.Main>
