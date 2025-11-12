@@ -11,6 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectIndexRouteImport } from './routes/project/index'
+import { Route as ProjectSettingsRouteImport } from './routes/project/settings'
+import { Route as ProjectResourcesRouteImport } from './routes/project/resources'
+import { Route as ProjectPricingRouteImport } from './routes/project/pricing'
+import { Route as ProjectPhasesRouteImport } from './routes/project/phases'
+import { Route as ProjectDashboardRouteImport } from './routes/project/dashboard'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,30 +27,97 @@ const ProjectIndexRoute = ProjectIndexRouteImport.update({
   path: '/project/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProjectSettingsRoute = ProjectSettingsRouteImport.update({
+  id: '/project/settings',
+  path: '/project/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectResourcesRoute = ProjectResourcesRouteImport.update({
+  id: '/project/resources',
+  path: '/project/resources',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectPricingRoute = ProjectPricingRouteImport.update({
+  id: '/project/pricing',
+  path: '/project/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectPhasesRoute = ProjectPhasesRouteImport.update({
+  id: '/project/phases',
+  path: '/project/phases',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectDashboardRoute = ProjectDashboardRouteImport.update({
+  id: '/project/dashboard',
+  path: '/project/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/project/dashboard': typeof ProjectDashboardRoute
+  '/project/phases': typeof ProjectPhasesRoute
+  '/project/pricing': typeof ProjectPricingRoute
+  '/project/resources': typeof ProjectResourcesRoute
+  '/project/settings': typeof ProjectSettingsRoute
   '/project': typeof ProjectIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/project/dashboard': typeof ProjectDashboardRoute
+  '/project/phases': typeof ProjectPhasesRoute
+  '/project/pricing': typeof ProjectPricingRoute
+  '/project/resources': typeof ProjectResourcesRoute
+  '/project/settings': typeof ProjectSettingsRoute
   '/project': typeof ProjectIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/project/dashboard': typeof ProjectDashboardRoute
+  '/project/phases': typeof ProjectPhasesRoute
+  '/project/pricing': typeof ProjectPricingRoute
+  '/project/resources': typeof ProjectResourcesRoute
+  '/project/settings': typeof ProjectSettingsRoute
   '/project/': typeof ProjectIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/project'
+  fullPaths:
+    | '/'
+    | '/project/dashboard'
+    | '/project/phases'
+    | '/project/pricing'
+    | '/project/resources'
+    | '/project/settings'
+    | '/project'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/project'
-  id: '__root__' | '/' | '/project/'
+  to:
+    | '/'
+    | '/project/dashboard'
+    | '/project/phases'
+    | '/project/pricing'
+    | '/project/resources'
+    | '/project/settings'
+    | '/project'
+  id:
+    | '__root__'
+    | '/'
+    | '/project/dashboard'
+    | '/project/phases'
+    | '/project/pricing'
+    | '/project/resources'
+    | '/project/settings'
+    | '/project/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ProjectDashboardRoute: typeof ProjectDashboardRoute
+  ProjectPhasesRoute: typeof ProjectPhasesRoute
+  ProjectPricingRoute: typeof ProjectPricingRoute
+  ProjectResourcesRoute: typeof ProjectResourcesRoute
+  ProjectSettingsRoute: typeof ProjectSettingsRoute
   ProjectIndexRoute: typeof ProjectIndexRoute
 }
 
@@ -65,11 +137,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/project/settings': {
+      id: '/project/settings'
+      path: '/project/settings'
+      fullPath: '/project/settings'
+      preLoaderRoute: typeof ProjectSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/project/resources': {
+      id: '/project/resources'
+      path: '/project/resources'
+      fullPath: '/project/resources'
+      preLoaderRoute: typeof ProjectResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/project/pricing': {
+      id: '/project/pricing'
+      path: '/project/pricing'
+      fullPath: '/project/pricing'
+      preLoaderRoute: typeof ProjectPricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/project/phases': {
+      id: '/project/phases'
+      path: '/project/phases'
+      fullPath: '/project/phases'
+      preLoaderRoute: typeof ProjectPhasesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/project/dashboard': {
+      id: '/project/dashboard'
+      path: '/project/dashboard'
+      fullPath: '/project/dashboard'
+      preLoaderRoute: typeof ProjectDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ProjectDashboardRoute: ProjectDashboardRoute,
+  ProjectPhasesRoute: ProjectPhasesRoute,
+  ProjectPricingRoute: ProjectPricingRoute,
+  ProjectResourcesRoute: ProjectResourcesRoute,
+  ProjectSettingsRoute: ProjectSettingsRoute,
   ProjectIndexRoute: ProjectIndexRoute,
 }
 export const routeTree = rootRouteImport
