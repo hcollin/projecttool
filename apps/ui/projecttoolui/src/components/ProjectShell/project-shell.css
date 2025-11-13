@@ -1,5 +1,7 @@
-
-
 div.project-shell {
-    
+
+
+    main > div.mantine-Container-root {
+        padding: var(--mantine-spacing-md);
+    }
 }

@@ -6,5 +6,9 @@ import type { IRootObject } from "../IRootObject";
  * 
  */
 export interface IProjectBase extends IRootObject{
-    name: string;
+    codename: string;
+    realname?: string;
+    clientName?: string;
+    
+
 }
