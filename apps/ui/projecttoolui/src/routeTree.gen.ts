@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectIndexRouteImport } from './routes/project/index'
+import { Route as ProjectTechnologyRouteImport } from './routes/project/technology'
 import { Route as ProjectSettingsRouteImport } from './routes/project/settings'
 import { Route as ProjectResourcesRouteImport } from './routes/project/resources'
 import { Route as ProjectPricingRouteImport } from './routes/project/pricing'
@@ -25,6 +26,11 @@ const IndexRoute = IndexRouteImport.update({
 const ProjectIndexRoute = ProjectIndexRouteImport.update({
   id: '/project/',
   path: '/project/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectTechnologyRoute = ProjectTechnologyRouteImport.update({
+  id: '/project/technology',
+  path: '/project/technology',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectSettingsRoute = ProjectSettingsRouteImport.update({
@@ -60,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/project/pricing': typeof ProjectPricingRoute
   '/project/resources': typeof ProjectResourcesRoute
   '/project/settings': typeof ProjectSettingsRoute
+  '/project/technology': typeof ProjectTechnologyRoute
   '/project': typeof ProjectIndexRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/project/pricing': typeof ProjectPricingRoute
   '/project/resources': typeof ProjectResourcesRoute
   '/project/settings': typeof ProjectSettingsRoute
+  '/project/technology': typeof ProjectTechnologyRoute
   '/project': typeof ProjectIndexRoute
 }
 export interface FileRoutesById {
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/project/pricing': typeof ProjectPricingRoute
   '/project/resources': typeof ProjectResourcesRoute
   '/project/settings': typeof ProjectSettingsRoute
+  '/project/technology': typeof ProjectTechnologyRoute
   '/project/': typeof ProjectIndexRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/project/pricing'
     | '/project/resources'
     | '/project/settings'
+    | '/project/technology'
     | '/project'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/project/pricing'
     | '/project/resources'
     | '/project/settings'
+    | '/project/technology'
     | '/project'
   id:
     | '__root__'
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/project/pricing'
     | '/project/resources'
     | '/project/settings'
+    | '/project/technology'
     | '/project/'
   fileRoutesById: FileRoutesById
 }
@@ -118,6 +130,7 @@ export interface RootRouteChildren {
   ProjectPricingRoute: typeof ProjectPricingRoute
   ProjectResourcesRoute: typeof ProjectResourcesRoute
   ProjectSettingsRoute: typeof ProjectSettingsRoute
+  ProjectTechnologyRoute: typeof ProjectTechnologyRoute
   ProjectIndexRoute: typeof ProjectIndexRoute
 }
 
@@ -135,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/project'
       fullPath: '/project'
       preLoaderRoute: typeof ProjectIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/project/technology': {
+      id: '/project/technology'
+      path: '/project/technology'
+      fullPath: '/project/technology'
+      preLoaderRoute: typeof ProjectTechnologyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/project/settings': {
@@ -182,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProjectPricingRoute: ProjectPricingRoute,
   ProjectResourcesRoute: ProjectResourcesRoute,
   ProjectSettingsRoute: ProjectSettingsRoute,
+  ProjectTechnologyRoute: ProjectTechnologyRoute,
   ProjectIndexRoute: ProjectIndexRoute,
 }
 export const routeTree = rootRouteImport

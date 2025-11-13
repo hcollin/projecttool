@@ -9,17 +9,19 @@
         "preview": "vite preview"
     },
     "dependencies": {
-        "react": "^19.2.0",
-        "react-dom": "^19.2.0",
+        "@frosttroll/projecttoolmodels": "*",
         "@mantine/core": "^8.3.6",
         "@mantine/hooks": "^8.3.6",
         "@tabler/icons-react": "^3.35.0",
         "@tanstack/react-router": "^1.134.13",
         "@tanstack/react-router-devtools": "^1.134.13",
-        "@frosttroll/projecttoolmodels": "*"
+        "react": "^19.2.0",
+        "react-dom": "^19.2.0",
+        "valtio": "^2.2.0"
     },
     "devDependencies": {
         "@eslint/js": "^9.39.1",
+        "@tanstack/router-plugin": "^1.134.13",
         "@types/node": "^24.10.0",
         "@types/react": "^19.2.2",
         "@types/react-dom": "^19.2.2",
@@ -28,11 +30,10 @@
         "eslint-plugin-react-hooks": "^7.0.1",
         "eslint-plugin-react-refresh": "^0.4.24",
         "globals": "^16.5.0",
-        "typescript": "~5.9.3",
-        "typescript-eslint": "^8.46.3",
-        "vite": "^7.2.2",
         "postcss-preset-mantine": "^1.18.0",
         "postcss-simple-vars": "^7.0.1",
-        "@tanstack/router-plugin": "^1.134.13"
+        "typescript": "~5.9.3",
+        "typescript-eslint": "^8.46.3",
+        "vite": "^7.2.2"
     }
 }
