@@ -2,10 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import ProjectShell from "../../components/ProjectShell/ProjectShell";
 import { Container, Title } from "@mantine/core";
 
-
-export const Route = createFileRoute('/project/resources')({
-  component: ResourcesComponent,
-})
+export const Route = createFileRoute("/project/resources")({
+	component: ResourcesComponent,
+});
 
 function ResourcesComponent() {
 	return (

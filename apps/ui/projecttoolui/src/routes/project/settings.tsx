@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import ProjectShell from "../../components/ProjectShell/ProjectShell";
-import { ActionIcon, Box, Button, Card, Container, Flex, Paper, TextInput, Title } from "@mantine/core";
+import { ActionIcon, Button, Container, Flex, TextInput, Title } from "@mantine/core";
 import ProjectPageMainTitle from "../../components/ProjectComponents/ProjectPageMainTitle";
 import ProjectCard from "../../components/ProjectComponents/ProjectCard";
 import { useSnapshot } from "valtio";

@@ -11,12 +11,14 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectIndexRouteImport } from './routes/project/index'
+import { Route as DataIndexRouteImport } from './routes/data/index'
 import { Route as ProjectTechnologyRouteImport } from './routes/project/technology'
 import { Route as ProjectSettingsRouteImport } from './routes/project/settings'
 import { Route as ProjectResourcesRouteImport } from './routes/project/resources'
 import { Route as ProjectPricingRouteImport } from './routes/project/pricing'
 import { Route as ProjectPhasesRouteImport } from './routes/project/phases'
 import { Route as ProjectDashboardRouteImport } from './routes/project/dashboard'
+import { Route as DataRolesRouteImport } from './routes/data/roles'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -26,6 +28,11 @@ const IndexRoute = IndexRouteImport.update({
 const ProjectIndexRoute = ProjectIndexRouteImport.update({
   id: '/project/',
   path: '/project/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DataIndexRoute = DataIndexRouteImport.update({
+  id: '/data/',
+  path: '/data/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectTechnologyRoute = ProjectTechnologyRouteImport.update({
@@ -58,79 +65,98 @@ const ProjectDashboardRoute = ProjectDashboardRouteImport.update({
   path: '/project/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DataRolesRoute = DataRolesRouteImport.update({
+  id: '/data/roles',
+  path: '/data/roles',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/data/roles': typeof DataRolesRoute
   '/project/dashboard': typeof ProjectDashboardRoute
   '/project/phases': typeof ProjectPhasesRoute
   '/project/pricing': typeof ProjectPricingRoute
   '/project/resources': typeof ProjectResourcesRoute
   '/project/settings': typeof ProjectSettingsRoute
   '/project/technology': typeof ProjectTechnologyRoute
+  '/data': typeof DataIndexRoute
   '/project': typeof ProjectIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/data/roles': typeof DataRolesRoute
   '/project/dashboard': typeof ProjectDashboardRoute
   '/project/phases': typeof ProjectPhasesRoute
   '/project/pricing': typeof ProjectPricingRoute
   '/project/resources': typeof ProjectResourcesRoute
   '/project/settings': typeof ProjectSettingsRoute
   '/project/technology': typeof ProjectTechnologyRoute
+  '/data': typeof DataIndexRoute
   '/project': typeof ProjectIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/data/roles': typeof DataRolesRoute
   '/project/dashboard': typeof ProjectDashboardRoute
   '/project/phases': typeof ProjectPhasesRoute
   '/project/pricing': typeof ProjectPricingRoute
   '/project/resources': typeof ProjectResourcesRoute
   '/project/settings': typeof ProjectSettingsRoute
   '/project/technology': typeof ProjectTechnologyRoute
+  '/data/': typeof DataIndexRoute
   '/project/': typeof ProjectIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/data/roles'
     | '/project/dashboard'
     | '/project/phases'
     | '/project/pricing'
     | '/project/resources'
     | '/project/settings'
     | '/project/technology'
+    | '/data'
     | '/project'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/data/roles'
     | '/project/dashboard'
     | '/project/phases'
     | '/project/pricing'
     | '/project/resources'
     | '/project/settings'
     | '/project/technology'
+    | '/data'
     | '/project'
   id:
     | '__root__'
     | '/'
+    | '/data/roles'
     | '/project/dashboard'
     | '/project/phases'
     | '/project/pricing'
     | '/project/resources'
     | '/project/settings'
     | '/project/technology'
+    | '/data/'
     | '/project/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DataRolesRoute: typeof DataRolesRoute
   ProjectDashboardRoute: typeof ProjectDashboardRoute
   ProjectPhasesRoute: typeof ProjectPhasesRoute
   ProjectPricingRoute: typeof ProjectPricingRoute
   ProjectResourcesRoute: typeof ProjectResourcesRoute
   ProjectSettingsRoute: typeof ProjectSettingsRoute
   ProjectTechnologyRoute: typeof ProjectTechnologyRoute
+  DataIndexRoute: typeof DataIndexRoute
   ProjectIndexRoute: typeof ProjectIndexRoute
 }
 
@@ -148,6 +174,13 @@ declare module '@tanstack/react-router' {
       path: '/project'
       fullPath: '/project'
       preLoaderRoute: typeof ProjectIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/data/': {
+      id: '/data/'
+      path: '/data'
+      fullPath: '/data'
+      preLoaderRoute: typeof DataIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/project/technology': {
@@ -192,17 +225,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/data/roles': {
+      id: '/data/roles'
+      path: '/data/roles'
+      fullPath: '/data/roles'
+      preLoaderRoute: typeof DataRolesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DataRolesRoute: DataRolesRoute,
   ProjectDashboardRoute: ProjectDashboardRoute,
   ProjectPhasesRoute: ProjectPhasesRoute,
   ProjectPricingRoute: ProjectPricingRoute,
   ProjectResourcesRoute: ProjectResourcesRoute,
   ProjectSettingsRoute: ProjectSettingsRoute,
   ProjectTechnologyRoute: ProjectTechnologyRoute,
+  DataIndexRoute: DataIndexRoute,
   ProjectIndexRoute: ProjectIndexRoute,
 }
 export const routeTree = rootRouteImport

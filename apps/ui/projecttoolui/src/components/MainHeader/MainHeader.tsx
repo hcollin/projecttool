@@ -23,7 +23,7 @@ const MainHeader = () => {
                 <AnchorLink to="/project" style={linkStyle}>
                     Projects
                 </AnchorLink>
-                <AnchorLink to="/" style={linkStyle}>
+                <AnchorLink to="/data" style={linkStyle}>
                     Data
                 </AnchorLink>
                 <AnchorLink to="/" style={linkStyle}>

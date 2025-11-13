@@ -9,7 +9,7 @@
 		"module": "ESNext",
 		"types": ["vite/client"],
 		"skipLibCheck": true,
-
+		"outDir": "./dist",
 		"jsx": "react-jsx"
 	},
 	"include": ["src"]
