@@ -1,7 +1,8 @@
-import { CURRENCY, IHourlyPriceGroup, IProject, IRole, ROLESENIORITY } from "@frosttroll/projecttoolmodels";
+import { CURRENCY, IHourlyPriceGroup, IProject, IRole, IPhase, ROLESENIORITY } from "@frosttroll/projecttoolmodels";
 
 import activeProjectStore from "./activeProjectStore";
 import dataRolesStore from "../data/roles/dataRolesStore";
+import { rnd } from "rndlib";
 
 /**
  * Create a new unsaved project and set it as the active project.
@@ -133,12 +134,66 @@ export function actionAddNewEmptyPriceGroupToActiveProject(): void {
     }
 }
 
+/**
+ * Remove a price group from the active project
+ * @param prgGuid
+ */
 export function actionRemovePriceGroupFromActiveProject(prgGuid: string): void {
     if (activeProjectStore.project) {
         const prgs = activeProjectStore.project.prices.hourlypricegroups;
         const nprgs = prgs.filter((p) => p.guid !== prgGuid);
         if (nprgs.length !== prgs.length) {
             activeProjectStore.project.prices.hourlypricegroups = nprgs;
+            activeProjectStore.unsavedChanges = true;
+        }
+    }
+}
+
+export function actionUpdateProjectPhaseInActiveProject(updatedPhase: IPhase): void {
+    if (activeProjectStore.project) {
+        const phases = activeProjectStore.project.phases;
+        const nphases = phases.map((phase) => {
+            if (phase.guid === updatedPhase.guid) {
+                return { ...updatedPhase };
+            }
+            return phase;
+        });
+        activeProjectStore.project.phases = nphases;
+        activeProjectStore.unsavedChanges = true;
+    }
+}
+
+export function actionAddNewPhaseToActiveProject(): void {
+    if (!activeProjectStore.project) {
+        return;
+    }
+
+    const projectStart = activeProjectStore.project.start;
+
+    const newPhase: IPhase = {
+        guid: `phase-${Date.now()}`,
+        organizationId: activeProjectStore.project!.organizationId,
+        name: `New Phase`,
+        start: projectStart ? { ts: projectStart } : {},
+        end: {
+            lengthInWorkingDays: rnd(10, 40),
+        },
+        allocations: [],
+    };
+
+    if (activeProjectStore.project) {
+        activeProjectStore.project.phases.push(newPhase);
+        activeProjectStore.unsavedChanges = true;
+    }
+}
+
+
+export function actionRemovePhaseFromActiveProject(phaseGuid: string): void {
+    if (activeProjectStore.project) {
+        const phases = activeProjectStore.project.phases;
+        const nphases = phases.filter((p) => p.guid !== phaseGuid);
+        if (nphases.length !== phases.length) {
+            activeProjectStore.project.phases = nphases;
             activeProjectStore.unsavedChanges = true;
         }
     }
