@@ -1,17 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
+
+import { Container } from "@mantine/core";
+
 import ProjectShell from "../../components/ProjectShell/ProjectShell";
-import { Container, Title } from "@mantine/core";
+import ProjectPageMainTitle from "../../components/ProjectComponents/ProjectPageMainTitle";
+import ProjectPriceHourlyPriceGroupsCard from "../../components/ProjectComponents/pricing/ProjectPriceHourlyPriceGroupsCard";
 
 export const Route = createFileRoute("/project/pricing")({
-	component: PricingComponent,
+    component: PricingComponent,
 });
 
 function PricingComponent() {
-	return (
-		<ProjectShell>
-			<Container size="xl">
-				<Title order={1}>Project Pricing</Title>
-			</Container>
-		</ProjectShell>
-	);
+    return (
+        <ProjectShell>
+            <Container size="xl">
+                <ProjectPageMainTitle>Pricing</ProjectPageMainTitle>
+
+                <ProjectPriceHourlyPriceGroupsCard />
+            </Container>
+        </ProjectShell>
+    );
 }

@@ -1,17 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Container } from "@mantine/core";
+
 import ProjectShell from "../../components/ProjectShell/ProjectShell";
-import { Container, Title } from "@mantine/core";
+import ProjectPageMainTitle from "../../components/ProjectComponents/ProjectPageMainTitle";
+import ProjectResourceRoleCard from "../../components/ProjectComponents/resources/ProjectResourceRoleCard";
 
 export const Route = createFileRoute("/project/resources")({
-	component: ResourcesComponent,
+    component: ResourcesComponent,
 });
 
 function ResourcesComponent() {
-	return (
-		<ProjectShell>
-			<Container size="xl">
-				<Title order={1}>Project Resources</Title>
-			</Container>
-		</ProjectShell>
-	);
+    return (
+        <ProjectShell>
+            <Container size="xl">
+                <ProjectPageMainTitle>Project Resources</ProjectPageMainTitle>
+
+                <ProjectResourceRoleCard />
+            </Container>
+        </ProjectShell>
+    );
 }
