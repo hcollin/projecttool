@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import ProjectShell from "../../components/ProjectShell/ProjectShell";
-import { ActionIcon, Button, Container, Flex, TextInput, Title } from "@mantine/core";
+import { ActionIcon, Box, Button, Container, Flex, TextInput, Title } from "@mantine/core";
 import ProjectPageMainTitle from "../../components/ProjectComponents/ProjectPageMainTitle";
 import ProjectCard from "../../components/ProjectComponents/ProjectCard";
 import { useSnapshot } from "valtio";
@@ -10,6 +10,8 @@ import { actionUpdateActiveProject } from "../../stores/activeproject/activeProj
 import { IProject } from "common/projecttoolmodels/dist";
 import { IconDice6Filled } from "@tabler/icons-react";
 import { generateRandomProjectName } from "@frosttroll/projecttoolutils";
+import { DateInput } from "@mantine/dates";
+import dayjs from "dayjs";
 
 export const Route = createFileRoute("/project/settings")({
 	component: ProjectSettingsComponent,
@@ -22,6 +24,9 @@ function ProjectSettingsComponent() {
 	const [realname, setRealname] = useState(aps.project?.realname || "");
 	const [clientName, setClientName] = useState(aps.project?.clientName || "");
 
+	const [startDate, setStartDate] = useState<string | null>(aps.project?.start ? dayjs(aps.project.start).format("YYYY-MM-DD") : null);
+	const [endDate, setEndDate] = useState<string | null>(aps.project?.end ? dayjs(aps.project.end).format("YYYY-MM-DD") : null);
+
 	const handleSaveChanges = () => {
 		const np: IProject = { ...(aps.project as IProject), codename: codename };
 		if (realname.length > 0) {
@@ -30,6 +35,15 @@ function ProjectSettingsComponent() {
 		if (clientName.length > 0) {
 			np.clientName = clientName;
 		}
+
+		if (startDate) {
+			np.start = dayjs(startDate).startOf("day").valueOf();
+		}
+
+		if (endDate) {
+			np.end = dayjs(endDate).startOf("day").valueOf();
+		}
+
 		actionUpdateActiveProject(np);
 	};
 
@@ -89,6 +103,38 @@ function ProjectSettingsComponent() {
 						value={clientName}
 						onChange={(e) => setClientName(e.target.value)}
 					/>
+				</ProjectCard>
+
+				<Title order={2}>Timeline</Title>
+				<ProjectCard mt="lg">
+					<Flex align="center" justify="flex-start" mb="lg" gap="md">
+						<Box>
+							<DateInput
+								clearable
+								minDate={dayjs().startOf("day").subtract(14, "day").format("YYYY-MM-DD")}
+								label="Project Start Date"
+								description="The planned start date of the project."
+								placeholder="Select start date"
+								withWeekNumbers
+								locale="fi"
+								value={startDate}
+								onChange={(date) => setStartDate(date ? dayjs(date).format("YYYY-MM-DD") : null)}
+							/>
+						</Box>
+						<Box>
+							<DateInput
+								clearable
+								minDate={dayjs().startOf("day").subtract(14, "day").format("YYYY-MM-DD")}
+								label="Project End Date or Deadline"
+								description="The planned end date or deadline of the project."
+								placeholder="Select end date"
+								withWeekNumbers
+								locale="fi"
+								value={endDate}
+								onChange={(date) => setEndDate(date ? dayjs(date).format("YYYY-MM-DD") : null)}
+							/>
+						</Box>
+					</Flex>
 				</ProjectCard>
 
 				<ProjectCard mt="lg">

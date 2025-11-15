@@ -6,17 +6,17 @@ import ProjectPageMainTitle from "../../components/ProjectComponents/ProjectPage
 import ProjectResourceRoleCard from "../../components/ProjectComponents/resources/ProjectResourceRoleCard";
 
 export const Route = createFileRoute("/project/resources")({
-    component: ResourcesComponent,
+	component: ResourcesComponent,
 });
 
 function ResourcesComponent() {
-    return (
-        <ProjectShell>
-            <Container size="xl">
-                <ProjectPageMainTitle>Project Resources</ProjectPageMainTitle>
+	return (
+		<ProjectShell>
+			<Container size="xl">
+				<ProjectPageMainTitle>Project Resources</ProjectPageMainTitle>
 
-                <ProjectResourceRoleCard />
-            </Container>
-        </ProjectShell>
-    );
+				<ProjectResourceRoleCard />
+			</Container>
+		</ProjectShell>
+	);
 }

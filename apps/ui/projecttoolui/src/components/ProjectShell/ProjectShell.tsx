@@ -3,90 +3,106 @@ import { AppShell, Divider, NavLink } from "@mantine/core";
 import { Link } from "@tanstack/react-router";
 import { useSnapshot } from "valtio";
 
+// IMPORT: Common Models
+import { IProject } from "@frosttroll/projecttoolmodels";
+
 // IMPORT: Custom Components
 import MainHeader from "../MainHeader/MainHeader";
 import NavLinkConfirm from "../NavLinkConfirm/NavLinkConfirm";
+import ProjectFooter from "../ProjectComponents/ProjectFooter";
 
 // IMPORT: Stores & Actions
 import activeProjectStore from "../../stores/activeproject/activeProjectStore";
 import { actionSaveActiveProject } from "../../stores/activeproject/activeProjectActions";
+import { actionCreateNewProject, actionStoreProjectToLocalStorage } from "../../stores/generalActions";
 
 // IMPORT: Icons
-import { IconDeviceFloppy, IconOctagonPlus } from "@tabler/icons-react";
+import {
+	IconCalendarMonth,
+	IconClockDollar,
+	IconDashboard,
+	IconDeviceFloppy,
+	IconFolderOpen,
+	IconOctagonPlus,
+	IconSettings,
+	IconUsersGroup,
+} from "@tabler/icons-react";
 
 // IMPORT: Styles
 import "./project-shell.css";
-import { actionCreateNewProject } from "../../stores/generalActions";
 
 const ProjectShell = (props: { children: React.ReactNode }) => {
-    const aps = useSnapshot(activeProjectStore);
+	const aps = useSnapshot(activeProjectStore);
 
-    return (
-        <AppShell
-            padding={0}
-            layout="default"
-            withBorder={true}
-            header={{ height: 80 }}
-            navbar={{
-                width: "300px",
-                breakpoint: "sm",
-                // collapsed: { mobile: !navOpenMobile, desktop: !navOpenMobile },
-            }}
-            aside={{
-                width: 200,
-                collapsed: { mobile: true, desktop: true },
-                breakpoint: "lg",
-            }}
-            className="project-shell"
-        >
-            <AppShell.Header>
-                <MainHeader />
-            </AppShell.Header>
+	return (
+		<AppShell
+			padding={0}
+			layout="alt"
+			withBorder={true}
+			header={{ height: 80 }}
+			footer={{ height: 60 }}
+			navbar={{
+				width: "300px",
+				breakpoint: "sm",
+				// collapsed: { mobile: !navOpenMobile, desktop: !navOpenMobile },
+			}}
+			aside={{
+				width: 200,
+				collapsed: { mobile: true, desktop: true },
+				breakpoint: "lg",
+			}}
+			className="project-shell"
+		>
+			<AppShell.Header>
+				<MainHeader />
+			</AppShell.Header>
 
-            <AppShell.Navbar className="project-navbar">
-                <NavLinkConfirm
-                    label="New Project"
-                    confirmMessage="Are you sure you want to create a new project?"
-                    skipConfirmation={aps.unsavedChanges === false}
-                    onClick={() => {
-                        actionCreateNewProject();
-                    }}
-                    leftSection={<IconOctagonPlus />}
-                />
+			<AppShell.Navbar className="project-navbar">
+				<NavLinkConfirm
+					label="New Project"
+					confirmMessage="Are you sure you want to create a new project?"
+					skipConfirmation={aps.unsavedChanges === false}
+					onClick={() => {
+						actionCreateNewProject();
+					}}
+					leftSection={<IconOctagonPlus />}
+				/>
 
-                <NavLink
-                    label={`Save Project${aps.project ? ": " + aps.project.codename : ""}`}
-                    disabled={!aps.unsavedChanges}
-                    leftSection={<IconDeviceFloppy />}
-                    onClick={() => {
-                        actionSaveActiveProject();
-                    }}
-                />
+				<NavLink
+					label={`Save Project${aps.project ? ": " + aps.project.codename : ""}`}
+					disabled={!aps.unsavedChanges}
+					leftSection={<IconDeviceFloppy />}
+					onClick={() => {
+						if (!aps.project) {
+							return;
+						}
+						actionStoreProjectToLocalStorage(aps.project as IProject);
+						actionSaveActiveProject();
+					}}
+				/>
 
-                <Divider
-                    label={aps.project ? aps.project.codename : "No Active Project"}
-                    labelPosition="center"
-                    my="sm"
-                />
-                <NavLink label="Home" component={Link} to="/project/dashboard" disabled={!aps.project} />
-                <NavLink label="Settings" component={Link} to="/project/settings" disabled={!aps.project} />
+				<NavLink label="Load Project" leftSection={<IconFolderOpen />} component={Link} to="/project/listprojects" />
 
-                <Divider label="Project Management" labelPosition="center" my="sm" />
-                <NavLink label="Phases" component={Link} to="/project/phases" disabled={!aps.project} />
-                <NavLink label="Pricing" component={Link} to="/project/pricing" disabled={!aps.project} />
-                <NavLink label="Resources" component={Link} to="/project/resources" disabled={!aps.project} />
+				<Divider label={aps.project ? aps.project.codename : "No Active Project"} labelPosition="center" my="sm" />
+				<NavLink label={"Dashboard"} component={Link} to="/project/dashboard" disabled={!aps.project} leftSection={<IconDashboard />} />
+				<NavLink label="Settings" component={Link} to="/project/settings" disabled={!aps.project} leftSection={<IconSettings />} />
 
-                <Divider label="Solution" labelPosition="center" my="sm" />
-                <NavLink label="Technologies" component={Link} to="/project/technology" disabled={!aps.project} />
-            </AppShell.Navbar>
+				<Divider label="Project Management" labelPosition="center" my="sm" />
+				<NavLink label="Phases" component={Link} to="/project/phases" disabled={!aps.project} leftSection={<IconCalendarMonth />} />
+				<NavLink label="Pricing" component={Link} to="/project/pricing" disabled={!aps.project} leftSection={<IconClockDollar />} />
+				<NavLink label="Resources" component={Link} to="/project/resources" disabled={!aps.project} leftSection={<IconUsersGroup />} />
 
-            <AppShell.Main className="main-content">{props.children}</AppShell.Main>
+				<Divider label="Solution" labelPosition="center" my="sm" />
+				<NavLink label="Technologies" component={Link} to="/project/technology" disabled={!aps.project} />
+			</AppShell.Navbar>
 
-            <AppShell.Footer>
-                <p>&copy; {new Date().getFullYear()} Henrik Collin</p>
-            </AppShell.Footer>
-        </AppShell>
-    );
+			<AppShell.Main className="main-content">{props.children}</AppShell.Main>
+
+			<AppShell.Footer>
+				<ProjectFooter />
+			</AppShell.Footer>
+		</AppShell>
+	);
 };
 
 export default ProjectShell;

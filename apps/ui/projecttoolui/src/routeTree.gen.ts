@@ -17,6 +17,7 @@ import { Route as ProjectSettingsRouteImport } from './routes/project/settings'
 import { Route as ProjectResourcesRouteImport } from './routes/project/resources'
 import { Route as ProjectPricingRouteImport } from './routes/project/pricing'
 import { Route as ProjectPhasesRouteImport } from './routes/project/phases'
+import { Route as ProjectListprojectsRouteImport } from './routes/project/listprojects'
 import { Route as ProjectDashboardRouteImport } from './routes/project/dashboard'
 import { Route as DataRolesRouteImport } from './routes/data/roles'
 
@@ -60,6 +61,11 @@ const ProjectPhasesRoute = ProjectPhasesRouteImport.update({
   path: '/project/phases',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProjectListprojectsRoute = ProjectListprojectsRouteImport.update({
+  id: '/project/listprojects',
+  path: '/project/listprojects',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectDashboardRoute = ProjectDashboardRouteImport.update({
   id: '/project/dashboard',
   path: '/project/dashboard',
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/data/roles': typeof DataRolesRoute
   '/project/dashboard': typeof ProjectDashboardRoute
+  '/project/listprojects': typeof ProjectListprojectsRoute
   '/project/phases': typeof ProjectPhasesRoute
   '/project/pricing': typeof ProjectPricingRoute
   '/project/resources': typeof ProjectResourcesRoute
@@ -87,6 +94,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/data/roles': typeof DataRolesRoute
   '/project/dashboard': typeof ProjectDashboardRoute
+  '/project/listprojects': typeof ProjectListprojectsRoute
   '/project/phases': typeof ProjectPhasesRoute
   '/project/pricing': typeof ProjectPricingRoute
   '/project/resources': typeof ProjectResourcesRoute
@@ -100,6 +108,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/data/roles': typeof DataRolesRoute
   '/project/dashboard': typeof ProjectDashboardRoute
+  '/project/listprojects': typeof ProjectListprojectsRoute
   '/project/phases': typeof ProjectPhasesRoute
   '/project/pricing': typeof ProjectPricingRoute
   '/project/resources': typeof ProjectResourcesRoute
@@ -114,6 +123,7 @@ export interface FileRouteTypes {
     | '/'
     | '/data/roles'
     | '/project/dashboard'
+    | '/project/listprojects'
     | '/project/phases'
     | '/project/pricing'
     | '/project/resources'
@@ -126,6 +136,7 @@ export interface FileRouteTypes {
     | '/'
     | '/data/roles'
     | '/project/dashboard'
+    | '/project/listprojects'
     | '/project/phases'
     | '/project/pricing'
     | '/project/resources'
@@ -138,6 +149,7 @@ export interface FileRouteTypes {
     | '/'
     | '/data/roles'
     | '/project/dashboard'
+    | '/project/listprojects'
     | '/project/phases'
     | '/project/pricing'
     | '/project/resources'
@@ -151,6 +163,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DataRolesRoute: typeof DataRolesRoute
   ProjectDashboardRoute: typeof ProjectDashboardRoute
+  ProjectListprojectsRoute: typeof ProjectListprojectsRoute
   ProjectPhasesRoute: typeof ProjectPhasesRoute
   ProjectPricingRoute: typeof ProjectPricingRoute
   ProjectResourcesRoute: typeof ProjectResourcesRoute
@@ -218,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectPhasesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/project/listprojects': {
+      id: '/project/listprojects'
+      path: '/project/listprojects'
+      fullPath: '/project/listprojects'
+      preLoaderRoute: typeof ProjectListprojectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/project/dashboard': {
       id: '/project/dashboard'
       path: '/project/dashboard'
@@ -239,6 +259,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DataRolesRoute: DataRolesRoute,
   ProjectDashboardRoute: ProjectDashboardRoute,
+  ProjectListprojectsRoute: ProjectListprojectsRoute,
   ProjectPhasesRoute: ProjectPhasesRoute,
   ProjectPricingRoute: ProjectPricingRoute,
   ProjectResourcesRoute: ProjectResourcesRoute,
