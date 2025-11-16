@@ -1,5 +1,5 @@
 // IMPORT: General Libraries
-import { AppShell, Divider, NavLink } from "@mantine/core";
+import { AppShell, Divider, NavLink, Title } from "@mantine/core";
 import { Link } from "@tanstack/react-router";
 import { useSnapshot } from "valtio";
 
@@ -30,6 +30,7 @@ import {
 
 // IMPORT: Styles
 import "./project-shell.css";
+import AnchorLink from "../AnchorLink/AnchorLink";
 
 const ProjectShell = (props: { children: React.ReactNode }) => {
 	const aps = useSnapshot(activeProjectStore);
@@ -58,6 +59,10 @@ const ProjectShell = (props: { children: React.ReactNode }) => {
 			</AppShell.Header>
 
 			<AppShell.Navbar className="project-navbar">
+				<AnchorLink to="/" style={{ padding: "0.5rem", marginBottom: "1rem" }}>
+					<Title order={1}>Project Tool</Title>
+				</AnchorLink>
+
 				<NavLinkConfirm
 					label="New Project"
 					confirmMessage="Are you sure you want to create a new project?"

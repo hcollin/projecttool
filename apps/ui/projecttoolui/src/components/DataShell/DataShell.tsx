@@ -1,5 +1,5 @@
 // IMPORT: General Libraries
-import { AppShell, Divider, NavLink } from "@mantine/core";
+import { AppShell, Divider, NavLink, Title } from "@mantine/core";
 import { Link } from "@tanstack/react-router";
 import { useSnapshot } from "valtio";
 
@@ -13,6 +13,7 @@ import activeProjectStore from "../../stores/activeproject/activeProjectStore";
 
 // IMPORT: Styles
 import "./data-shell.css";
+import AnchorLink from "../AnchorLink/AnchorLink";
 
 const DataShell = (props: { children: React.ReactNode }) => {
 	const aps = useSnapshot(activeProjectStore);
@@ -20,7 +21,7 @@ const DataShell = (props: { children: React.ReactNode }) => {
 	return (
 		<AppShell
 			padding={0}
-			layout="default"
+			layout="alt"
 			withBorder={true}
 			header={{ height: 80 }}
 			navbar={{
@@ -40,6 +41,9 @@ const DataShell = (props: { children: React.ReactNode }) => {
 			</AppShell.Header>
 
 			<AppShell.Navbar className="project-navbar">
+				<AnchorLink to="/" style={{ padding: "0.5rem", marginBottom: "1rem" }}>
+					<Title order={1}>Project Tool</Title>
+				</AnchorLink>
 				<Divider label="Resource data" labelPosition="center" my="sm" />
 				<NavLink label="Roles" component={Link} to="/data/roles" />
 			</AppShell.Navbar>

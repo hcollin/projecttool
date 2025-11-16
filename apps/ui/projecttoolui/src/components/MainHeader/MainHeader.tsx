@@ -12,9 +12,7 @@ const MainHeader = () => {
 
     return (
         <Flex align="center" justify="space-between" h="100%" px="md">
-            <AnchorLink to="/">
-                <Title order={1}>Project Tool</Title>
-            </AnchorLink>
+            
 
             <Box>
                 <AnchorLink to="/" style={linkStyle}>
