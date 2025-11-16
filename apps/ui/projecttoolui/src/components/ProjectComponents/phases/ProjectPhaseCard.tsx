@@ -1,13 +1,16 @@
-import { Box, Button, Card, Divider, Flex, Stack, Text, Title } from "@mantine/core";
-import { IPhase, IProject, IRole, ROLESENIORITY } from "@frosttroll/projecttoolmodels";
+import { Alert, Box, Button, Card, Divider, Flex, NumberInput, Select, Stack, Switch, Text, Title } from "@mantine/core";
+import { IPhase, IPhaseStart, IProject, IRole, ROLESENIORITY } from "@frosttroll/projecttoolmodels";
 import TextInputEdit from "../../TextInputEdit/TextInputEdit";
 import {
 	actionAddRoleAllocationToPhaseInActiveProject,
 	actionRemovePhaseFromActiveProject,
 	actionUpdateProjectPhaseInActiveProject,
 } from "../../../stores/activeproject/activeProjectActions";
-import { IconEdit, IconTrash } from "@tabler/icons-react";
+import { IconCancel, IconCheck, IconEdit, IconTrash } from "@tabler/icons-react";
 import EndSlider from "../../EndSlider/EndSlider";
+import { useEffect, useState } from "react";
+import { DatePickerInput } from "@mantine/dates";
+import dayjs from "dayjs";
 
 interface ProjectPhaseCardProps {
 	phase: IPhase;
@@ -15,6 +18,8 @@ interface ProjectPhaseCardProps {
 }
 
 const ProjectPhaseCard = ({ phase, project }: ProjectPhaseCardProps) => {
+	const [editTimeMode, setEditTimeMode] = useState<{ start: boolean; end: boolean }>({ start: false, end: false });
+
 	function handlePhaseNameChange(newName: string) {
 		actionUpdateProjectPhaseInActiveProject({ ...phase, name: newName });
 	}
@@ -27,6 +32,11 @@ const ProjectPhaseCard = ({ phase, project }: ProjectPhaseCardProps) => {
 
 	function handleAllocationChange(roleGuid: string, value: number) {
 		actionAddRoleAllocationToPhaseInActiveProject(phase.guid, roleGuid, value);
+	}
+
+	function handleEditStartTime(newStart: IPhaseStart) {
+		actionUpdateProjectPhaseInActiveProject({ ...phase, start: newStart });
+		setEditTimeMode({ start: false, end: false });
 	}
 
 	const start = phase.start;
@@ -46,28 +56,51 @@ const ProjectPhaseCard = ({ phase, project }: ProjectPhaseCardProps) => {
 
 			<Divider my="xs" />
 
-			<Flex gap="lg" align="center" justify="flex-start">
-				<Flex>
-					<Box mr="md">
-						<Text size="md">Start</Text>
-						{start.atProjectStart && <Text size="lg">{phase.start.atProjectStart ? "At project start" : ""}</Text>}
-					</Box>
+			{editTimeMode.start && (
+				<StartTimeEditor phase={phase} project={project} onSave={handleEditStartTime} onCancel={() => setEditTimeMode({ start: false, end: false })} />
+			)}
 
-					<Button variant="filled" size="xs" style={{ height: "auto" }}>
-						<IconEdit size="20" />
-					</Button>
-				</Flex>
+			{editTimeMode.start === false && editTimeMode.end === false && (
+				<Flex gap="lg" align="center" justify="flex-start">
+					<Flex>
+						<Box mr="md">
+							<Text size="md">Start</Text>
+							{start.atProjectStart && <Text size="lg">At project start <span style={{fontSize: "0.9em"}}>{dayjs(project.start).format("DD.MM.YYYY")}</span></Text>}
+							{start.afterPhaseGuid && (
+								<Text size="lg">
+									<span style={{ fontSize: "0.9em" }}>After:</span>{" "}
+									{project.phases.find((p) => p.guid === start.afterPhaseGuid)?.name || "INVALID PHASE"}
+								</Text>
+							)}
+							{start.ts && start.ts > 0 && (
+								<Text size="lg">
+									{dayjs(start.ts).format("DD.MM.YYYY")}
+								</Text>
+							)}
 
-				<Flex>
-					<Box mr="md">
-						<Text size="md">End</Text>
-						{end.atProjectEnd && <Text size="lg">{phase.end.atProjectEnd ? "At project end" : ""}</Text>}
-					</Box>
-					<Button variant="filled" size="xs" style={{ height: "auto" }}>
-						<IconEdit size="20" />
-					</Button>
+							{start.offsetInDays !== undefined && start.offsetInDays !== 0 && (
+								<Text size="lg">
+									<span style={{ fontSize: "0.9em" }}>Offset:</span> {start.offsetInDays} days
+								</Text>
+							)}
+						</Box>
+
+						<Button variant="filled" size="xs" style={{ height: "auto" }} onClick={() => setEditTimeMode({ start: true, end: false })}>
+							<IconEdit size="20" />
+						</Button>
+					</Flex>
+
+					<Flex>
+						<Box mr="md">
+							<Text size="md">End</Text>
+							{end.atProjectEnd && <Text size="lg">{phase.end.atProjectEnd ? "At project end" : ""}</Text>}
+						</Box>
+						<Button variant="filled" size="xs" style={{ height: "auto" }} onClick={() => setEditTimeMode({ start: false, end: true })}>
+							<IconEdit size="20" />
+						</Button>
+					</Flex>
 				</Flex>
-			</Flex>
+			)}
 
 			<Divider my="xs" />
 
@@ -132,6 +165,122 @@ const PhaseRoleAllocation = (props: { phase: IPhase; role: IRole; onChange: (val
 				<Title order={6}>{alloc ? (5 / 100) * alloc.allocation : 0} d/week</Title>
 			</Box>
 		</Flex>
+	);
+};
+
+const StartTimeEditor = (props: { phase: IPhase; project: IProject; onSave: (start: IPhaseStart) => void; onCancel: () => void }) => {
+	const start = props.phase.start;
+
+	const [atPrjStart, setAtPrjStart] = useState<boolean>(start.atProjectStart || false);
+	const [startDate, setStartDate] = useState<number>(start.ts || 0);
+	const [afterPhaseGuid, setAfterPhaseGuid] = useState<string>(start.afterPhaseGuid || "");
+	const [offsetInDays, setOffsetInDays] = useState<number>(start.offsetInDays || 0);
+
+	const [valid, setValid] = useState<boolean>(true);
+
+	useEffect(() => {
+		if (atPrjStart) {
+			setValid(true);
+			return;
+		}
+		if (startDate > 0) {
+			setValid(true);
+			return;
+		}
+		if (afterPhaseGuid !== "") {
+			setValid(true);
+			return;
+		}
+		setValid(false);
+	}, [atPrjStart, startDate, afterPhaseGuid, offsetInDays]);
+
+	function handleToggleAtProjectStart(checked: boolean) {
+		if (checked) {
+			setStartDate(0);
+			setAfterPhaseGuid("");
+		}
+		setAtPrjStart(checked);
+	}
+
+	function handleTargetStartDateChange(date: string | null) {
+		if (date) {
+			setAtPrjStart(false);
+			setStartDate(dayjs(date).valueOf());
+			setAfterPhaseGuid("");
+		}
+	}
+
+	function handleAfterPhaseChange(phaseGuid: string) {
+		setAfterPhaseGuid(phaseGuid);
+		setAtPrjStart((prev) => (prev === true ? false : prev));
+		setStartDate((prev) => (prev !== 0 ? 0 : prev));
+	}
+
+	function handleSave() {
+		const nstart: IPhaseStart = {
+			atProjectStart: atPrjStart,
+			ts: startDate > 0 ? startDate : undefined,
+			afterPhaseGuid: afterPhaseGuid !== "" ? afterPhaseGuid : undefined,
+			offsetInDays: offsetInDays !== undefined && offsetInDays !== 0 ? offsetInDays : undefined,
+		};
+
+		console.log("Saving new phase start time:", nstart);
+
+		props.onSave(nstart);
+	}
+
+	const validPhases = props.project.phases.filter((p) => p.guid !== props.phase.guid);
+
+	return (
+		<>
+			<Flex align="center" justify="space-between" gap="md" style={{ height: "5rem" }}>
+				<Text size="sm">Start time:</Text>
+				<Box>
+					<Switch label="At project start" checked={atPrjStart} onChange={(event) => handleToggleAtProjectStart(event.currentTarget.checked)} />
+				</Box>
+
+				<Box>
+					<DatePickerInput
+						placeholder="Pick a phase date"
+						label="Start at date"
+						value={startDate > 0 ? dayjs(startDate).format("YYYY-MM-DD") : null}
+						onChange={(date) => handleTargetStartDateChange(date)}
+					/>
+				</Box>
+
+				<Box>
+					<Select
+						data={validPhases.map((p) => ({ value: p.guid, label: p.name }))}
+						label="Start After phase"
+						placeholder="Select a phase"
+						value={afterPhaseGuid !== "" ? afterPhaseGuid : null}
+						onChange={(val) => handleAfterPhaseChange(val || "")}
+					/>
+				</Box>
+
+				<Box>
+					<NumberInput
+						label="Offset in days"
+						value={offsetInDays}
+						onChange={(value) => setOffsetInDays(typeof value === "string" ? parseInt(value) : value)}
+					/>
+				</Box>
+
+				<Box style={{ height: "100%" }}>
+					<Button variant="outline" onClick={props.onCancel} mr="sm" style={{ height: "100%" }}>
+						<IconCancel size={20} />
+					</Button>
+					<Button variant="contained" onClick={handleSave} style={{ height: "100%" }} disabled={!valid}>
+						<IconCheck size={20} />
+					</Button>
+				</Box>
+			</Flex>
+			{!valid && (
+				<Alert variant="light" color="red" title="Invalid start time configuration" mt="md">
+					Please specify at least one start time option.
+				</Alert>
+			)}
+		</>
 	);
 };
 

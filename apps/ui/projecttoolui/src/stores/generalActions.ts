@@ -62,6 +62,7 @@ export function actionStoreProjectToLocalStorage(project: IProject) {
 		} else {
 			projects.push(project);
 		}
+
 		localStorage.setItem(`projecttool-projects`, JSON.stringify(projects));
 	} else {
 		console.log(`Storing new project ${project.codename} to localStorage`);
