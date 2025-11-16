@@ -41,7 +41,7 @@ export function actionCreateNewProject() {
 			atProjectStart: true,
 		},
 		end: {
-			lengthInWorkingDays: 20,
+			atProjectEnd: true,
 		},
 		allocations: [],
 	};
@@ -77,3 +77,11 @@ export function actionLoadProjectsFromLocalStorage(): IProject[] {
 	return [];
 }
 
+export function actionDeleteProjectFromLocalStorage(projectGuid: string) {
+	const existing = localStorage.getItem(`projecttool-projects`);
+	if (existing) {
+		const projects = JSON.parse(existing) as IProject[];
+		const updatedProjects = projects.filter((p) => p.guid !== projectGuid);
+		localStorage.setItem(`projecttool-projects`, JSON.stringify(updatedProjects));
+	}
+}

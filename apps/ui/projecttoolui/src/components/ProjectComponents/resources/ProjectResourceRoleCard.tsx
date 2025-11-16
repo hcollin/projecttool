@@ -63,8 +63,6 @@ const ProjectResourceRoleCard = () => {
 		return null;
 	}
 
-	console.log("Rendering ProjectResourceRoleCard, roles:", apr.project?.roles);
-
 	return (
 		<>
 			<ProjectCardHeader

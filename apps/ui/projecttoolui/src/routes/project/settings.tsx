@@ -7,7 +7,7 @@ import { useSnapshot } from "valtio";
 import activeProjectStore from "../../stores/activeproject/activeProjectStore";
 import { useState } from "react";
 import { actionUpdateActiveProject } from "../../stores/activeproject/activeProjectActions";
-import { IProject } from "common/projecttoolmodels/dist";
+import { IProject, IRole } from "common/projecttoolmodels/dist";
 import { IconDice6Filled } from "@tabler/icons-react";
 import { generateRandomProjectName } from "@frosttroll/projecttoolutils";
 import { DateInput } from "@mantine/dates";
@@ -28,6 +28,9 @@ function ProjectSettingsComponent() {
 	const [endDate, setEndDate] = useState<string | null>(aps.project?.end ? dayjs(aps.project.end).format("YYYY-MM-DD") : null);
 
 	const handleSaveChanges = () => {
+		if (aps.project === null) {
+			return;
+		}
 		const np: IProject = { ...(aps.project as IProject), codename: codename };
 		if (realname.length > 0) {
 			np.realname = realname;
@@ -44,6 +47,13 @@ function ProjectSettingsComponent() {
 			np.end = dayjs(endDate).startOf("day").valueOf();
 		}
 
+		np.roles = [...(aps.project.roles as IProject["roles"])];
+		np.phases = [...(aps.project.phases as IProject["phases"])];
+		np.prices = {
+			hourlypricegroups: [...(aps.project.prices.hourlypricegroups as IProject["prices"]["hourlypricegroups"])],
+			fixedprices: [...(aps.project.prices.fixedprices as IProject["prices"]["fixedprices"])],
+		};
+		// np.prices = { ...(aps.project.prices as IProject["prices"]) };
 		actionUpdateActiveProject(np);
 	};
 

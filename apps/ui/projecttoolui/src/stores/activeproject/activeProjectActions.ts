@@ -1,4 +1,4 @@
-import { CURRENCY, IHourlyPriceGroup, IProject, IRole, IPhase, ROLESENIORITY } from "@frosttroll/projecttoolmodels";
+import { CURRENCY, IHourlyPriceGroup, IProject, IRole, IPhase, ROLESENIORITY, IPhaseAllocation } from "@frosttroll/projecttoolmodels";
 
 import activeProjectStore from "./activeProjectStore";
 import dataRolesStore from "../data/roles/dataRolesStore";
@@ -29,8 +29,19 @@ export function actionSaveActiveProject(): void {
  * @param project
  */
 export function actionUpdateActiveProject(project: IProject): void {
+	if (!activeProjectStore.project) {
+		console.warn("No active project to update.");
+		return;
+	}
+	if (project.guid !== activeProjectStore.project.guid) {
+		console.warn("Trying to update active project with a different project GUID.");
+		return;
+	}
+	// console.log("CURRENT PROJECT BEFORE UPDATE:", { ...activeProjectStore.project });
+	// console.log("UPDATING ACTIVE PROJECT TO:", { ...project });
 	activeProjectStore.project = { ...project };
 	activeProjectStore.unsavedChanges = true;
+	// console.log("AFTER UPDATE ACTIVE PROJECT TO:", { ...activeProjectStore.project });
 }
 
 /**
@@ -123,6 +134,9 @@ export function actionUpdatePriceGroupInActiveProject(updatedPriceGroup: IHourly
 export function actionAddNewEmptyPriceGroupToActiveProject(): void {
 	if (activeProjectStore.project) {
 		const defaultPriceGroup = activeProjectStore.project.prices.hourlypricegroups[0];
+		if (!defaultPriceGroup) {
+			console.warn("No existing default price group to base the new price group on.");
+		}
 		const targetCurrency = defaultPriceGroup ? defaultPriceGroup.currency : CURRENCY.EUR;
 		const targetPrice = defaultPriceGroup ? defaultPriceGroup.price : 100;
 		const newPrg: IHourlyPriceGroup = {
@@ -133,7 +147,11 @@ export function actionAddNewEmptyPriceGroupToActiveProject(): void {
 			currency: targetCurrency,
 			permanent: false,
 		};
+		if (!activeProjectStore.project.prices.hourlypricegroups) {
+			activeProjectStore.project.prices.hourlypricegroups = [];
+		}
 		activeProjectStore.project.prices.hourlypricegroups.push(newPrg);
+		activeProjectStore.unsavedChanges = true;
 	}
 }
 
@@ -152,6 +170,10 @@ export function actionRemovePriceGroupFromActiveProject(prgGuid: string): void {
 	}
 }
 
+/**
+ * Update an existing project phase in the active project
+ * @param updatedPhase
+ */
 export function actionUpdateProjectPhaseInActiveProject(updatedPhase: IPhase): void {
 	if (activeProjectStore.project) {
 		const phases = activeProjectStore.project.phases;
@@ -166,20 +188,24 @@ export function actionUpdateProjectPhaseInActiveProject(updatedPhase: IPhase): v
 	}
 }
 
+/**
+ * Add new empty phase to the active project
+ * @returns
+ */
 export function actionAddNewPhaseToActiveProject(): void {
 	if (!activeProjectStore.project) {
 		return;
 	}
 
-	const projectStart = activeProjectStore.project.start;
+	// const projectStart = activeProjectStore.project.start;
 
 	const newPhase: IPhase = {
 		guid: `phase-${Date.now()}`,
 		organizationId: activeProjectStore.project!.organizationId,
 		name: `New Phase`,
-		start: projectStart ? { ts: projectStart } : {},
+		start: { atProjectStart: true },
 		end: {
-			lengthInWorkingDays: rnd(10, 40),
+			atProjectEnd: true,
 		},
 		allocations: [],
 	};
@@ -190,6 +216,10 @@ export function actionAddNewPhaseToActiveProject(): void {
 	}
 }
 
+/**
+ * Remove a phase from the active project.
+ * @param phaseGuid
+ */
 export function actionRemovePhaseFromActiveProject(phaseGuid: string): void {
 	if (activeProjectStore.project) {
 		const phases = activeProjectStore.project.phases;
@@ -198,5 +228,28 @@ export function actionRemovePhaseFromActiveProject(phaseGuid: string): void {
 			activeProjectStore.project.phases = nphases;
 			activeProjectStore.unsavedChanges = true;
 		}
+	}
+}
+
+export function actionAddRoleAllocationToPhaseInActiveProject(phaseGuid: string, roleGuid: string, allocation: number): void {
+	if (activeProjectStore.project) {
+		const phases = activeProjectStore.project.phases;
+
+		const nphases = phases.map((phase) => {
+			if (phase.guid === phaseGuid) {
+				const newAllocs: IPhaseAllocation[] = phase.allocations ? [...phase.allocations] : [];
+
+				const existingAlloc = newAllocs.find((a) => a.roleGuid === roleGuid);
+				if (existingAlloc) {
+					existingAlloc.allocation = allocation;
+				} else {
+					newAllocs.push({ roleGuid, allocation });
+				}
+				return { ...phase, allocations: newAllocs };
+			}
+			return phase;
+		});
+		activeProjectStore.project.phases = nphases;
+		activeProjectStore.unsavedChanges = true;
 	}
 }

@@ -1,13 +1,21 @@
+// IMPORT: General libaries
 import { createFileRoute } from "@tanstack/react-router";
-import ProjectShell from "../../components/ProjectShell/ProjectShell";
-import { Box, Button, Container, Flex, Stack, Text } from "@mantine/core";
-import ProjectPageMainTitle from "../../components/ProjectComponents/ProjectPageMainTitle";
-import { IProject } from "@frosttroll/projecttoolmodels";
+import { IconFolderOpen, IconTrash } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
-import { actionLoadProjectsFromLocalStorage } from "../../stores/generalActions";
+import { Box, Button, Container, Flex, Stack, Text } from "@mantine/core";
+
+// IMPORT: Custom components
+import ProjectShell from "../../components/ProjectShell/ProjectShell";
+import ProjectPageMainTitle from "../../components/ProjectComponents/ProjectPageMainTitle";
 import ProjectCard from "../../components/ProjectComponents/ProjectCard";
+import ConfirmButton from "../../components/ConfirmButton/ConfirmButton";
+
+// IMPORT: Stores and actions
+import { actionDeleteProjectFromLocalStorage, actionLoadProjectsFromLocalStorage } from "../../stores/generalActions";
 import { actionSetActiveProject } from "../../stores/activeproject/activeProjectActions";
-import { IconFolderOpen } from "@tabler/icons-react";
+
+// IMPORT: Common models
+import { IProject } from "@frosttroll/projecttoolmodels";
 
 export const Route = createFileRoute("/project/listprojects")({
 	component: ListProjectsComponent,
@@ -26,6 +34,14 @@ function ListProjectsComponent() {
 
 	function handleLoadProject(project: IProject) {
 		actionSetActiveProject(project);
+	}
+
+	function handleDeleteProject(projectGuid: string) {
+		actionDeleteProjectFromLocalStorage(projectGuid);
+
+		// Load updated projects list
+		const storedProjects = actionLoadProjectsFromLocalStorage();
+		setProjects(storedProjects);
 	}
 
 	return (
@@ -51,6 +67,15 @@ function ListProjectsComponent() {
 								) : null}
 
 								<Box>
+									<ConfirmButton
+										variant="filled"
+										onClick={() => handleDeleteProject(project.guid)}
+										color="red"
+										mr="md"
+										question="Are you sure you want to delete this project?"
+									>
+										<IconTrash />
+									</ConfirmButton>
 									<Button variant="contained" onClick={() => handleLoadProject(project)} leftSection={<IconFolderOpen />}>
 										Load Project
 									</Button>
