@@ -1,0 +1,46 @@
+div.phase-bar-container {
+    div.phase-bar-part {
+        overflow: visible;
+        padding: 2px 4px;
+        position: relative;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+
+        .name {
+            margin-right: 0.5rem;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        .percentage {
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        &.unassigned {
+            font-style: italic;
+            font-size: 0.8em;
+        }
+
+        &.unassigned:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.1),
+                rgba(255, 255, 255, 0.1) 5px,
+                rgba(0, 0, 0, 0.1) 5px,
+                rgba(0, 0, 0, 0.1) 10px
+            );
+            z-index: 1;
+        }
+    }
+}

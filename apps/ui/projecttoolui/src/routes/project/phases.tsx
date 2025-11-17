@@ -17,6 +17,8 @@ import { IconPlus } from "@tabler/icons-react";
 import { actionAddNewPhaseToActiveProject } from "../../stores/activeproject/activeProjectActions";
 import { useState } from "react";
 import ProjectPhaseInfoRow from "../../components/ProjectComponents/phases/ProjectPhaseInfoRow";
+import ProjectPhaseBar from "../../components/ProjectPhaseBar/ProjectPhaseBar";
+import ProjectCard from "../../components/ProjectComponents/ProjectCard";
 
 export const Route = createFileRoute("/project/phases")({
     component: PhasesComponent,
@@ -41,6 +43,10 @@ function PhasesComponent() {
         <ProjectShell>
             <Container size="xl">
                 <ProjectPageMainTitle>Project Phases</ProjectPageMainTitle>
+
+                <ProjectCard>
+                    <ProjectPhaseBar />
+                </ProjectCard>
 
                 {prj.phases.map((phase) => {
                     if (editGuid !== phase.guid) {

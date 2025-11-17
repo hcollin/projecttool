@@ -1,20 +1,28 @@
 import { IPhase } from "@frosttroll/models/models/project/iPhase";
 import { IProject } from "@frosttroll/models/models/project/iProject";
 import { DateTime, Duration } from "luxon";
-import { utilCalculateWorkdaysBetweenTimes } from "../time/timeUtils";
+import { utilCalculatePlusWorkingDaysFromTs, utilCalculateWorkdaysBetweenTimes } from "../time/timeUtils";
 
 /**
  * Return the duration of a phase in days
  * @param phase
  * @param project
  */
-export function utilCalulatePhaseDuration(phase: IPhase, project: IProject, inWorkDays?: boolean): number {
+export function utilCalculatePhaseDuration(phase: IPhase, project: IProject, inWorkDays?: boolean): number {
     let start: number = utilGetPhaseStartTs(phase, project);
     let end: number = utilGetPhaseEndTs(phase, project);
 
     if (end > start) {
         if (inWorkDays) {
-            const workdays = utilCalculateWorkdaysBetweenTimes(start, end);
+            const workdays = utilCalculateWorkdaysBetweenTimes(start, end, true);
+            // console.log(
+            //     `Calculated workday duration for phase ${phase.name} in ${project.codename} from`,
+            //     DateTime.fromMillis(start).toISODate(),
+            //     "to",
+            //     DateTime.fromMillis(end).toISODate(),
+            //     "workdays:",
+            //     workdays
+            // );
             return workdays;
         }
 
@@ -32,10 +40,10 @@ export function utilGetPhaseStartTs(phase: IPhase, project: IProject): number {
     let start: number = 0;
 
     if (phase.start.atProjectStart) {
-        start = project.start;
+        start = DateTime.fromMillis(project.start).startOf("day").toMillis();
     }
     if (phase.start.ts) {
-        start = phase.start.ts;
+        start = DateTime.fromMillis(phase.start.ts).startOf("day").toMillis();
     }
     if (phase.start.afterPhaseGuid) {
         const refPhase = project.phases.find((p) => p.guid === phase.start.afterPhaseGuid);
@@ -47,7 +55,7 @@ export function utilGetPhaseStartTs(phase: IPhase, project: IProject): number {
 
     if (start === 0) {
         console.warn(`Phase ${phase.name} has no valid start, defaulting to project start`);
-        start = project.start;
+        start = DateTime.fromMillis(project.start).startOf("day").toMillis();
     }
 
     return DateTime.fromMillis(start)
@@ -59,18 +67,16 @@ export function utilGetPhaseEndTs(phase: IPhase, project: IProject): number {
     let end: number = 0;
 
     if (phase.end.ts) {
-        end = phase.end.ts;
+        end = DateTime.fromMillis(phase.end.ts).startOf("day").toMillis();
     }
 
     if (phase.end.lengthInWorkingDays) {
         const startTs = utilGetPhaseStartTs(phase, project);
-        end = DateTime.fromMillis(startTs)
-            .plus({ days: phase.end.lengthInWorkingDays || 0 })
-            .toMillis();
+        return utilCalculatePlusWorkingDaysFromTs(startTs, phase.end.lengthInWorkingDays || 0);
     }
 
     if (phase.end.atProjectEnd) {
-        end = project.end;
+        end = DateTime.fromMillis(project.end).startOf("day").toMillis();
     }
 
     if (phase.end.whenPhaseGuidEnds) {
@@ -99,7 +105,7 @@ export function utilGetPhaseEndTs(phase: IPhase, project: IProject): number {
  * @returns
  */
 export function utilCalculatePhasePrice(phase: IPhase, project: IProject): number {
-    const workDays = utilCalulatePhaseDuration(phase, project, true);
+    const workDays = utilCalculatePhaseDuration(phase, project, true);
     let price = 0;
 
     phase.allocations.forEach((alloc) => {

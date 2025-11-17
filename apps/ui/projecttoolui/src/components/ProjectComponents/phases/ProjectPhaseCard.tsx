@@ -1,30 +1,27 @@
+import { Box, Button, Card, Divider, Flex, Stack, Text, Title } from "@mantine/core";
 import {
-    Alert,
-    Box,
-    Button,
-    Card,
-    Divider,
-    Flex,
-    NumberInput,
-    Select,
-    Stack,
-    Switch,
-    Text,
-    Title,
-} from "@mantine/core";
-import { IPhase, IPhaseEnd, IPhaseStart, IProject, IRole, ROLESENIORITY } from "@frosttroll/projecttoolmodels";
+    IPhase,
+    IPhaseEnd,
+    IPhaseStart,
+    IProject,
+    IRole,
+    ROLESENIORITY,
+    utilGetPhaseEndTs,
+    utilGetPhaseStartTs,
+} from "@frosttroll/projecttoolmodels";
 import TextInputEdit from "../../TextInputEdit/TextInputEdit";
 import {
     actionAddRoleAllocationToPhaseInActiveProject,
     actionRemovePhaseFromActiveProject,
     actionUpdateProjectPhaseInActiveProject,
 } from "../../../stores/activeproject/activeProjectActions";
-import { IconCancel, IconCheck, IconEdit, IconTrash, IconX } from "@tabler/icons-react";
+import { IconEdit, IconTrash, IconX } from "@tabler/icons-react";
 import EndSlider from "../../EndSlider/EndSlider";
 import { useState } from "react";
-import { DatePickerInput } from "@mantine/dates";
 import dayjs from "dayjs";
 import { DateTime } from "luxon";
+import EndTimeEditor from "./EndTimeEditor";
+import StartTimeEditor from "./StartTimeEditor";
 
 interface ProjectPhaseCardProps {
     phase: IPhase;
@@ -61,6 +58,9 @@ const ProjectPhaseCard = ({ phase, project, onClose }: ProjectPhaseCardProps) =>
 
     const start = phase.start;
     const end = phase.end;
+
+    const startTs = utilGetPhaseStartTs(phase, project);
+    const endTs = utilGetPhaseEndTs(phase, project);
 
     return (
         <Card mb="md">
@@ -108,32 +108,13 @@ const ProjectPhaseCard = ({ phase, project, onClose }: ProjectPhaseCardProps) =>
             )}
 
             {editTimeMode.start === false && editTimeMode.end === false && (
-                <Flex gap="lg" align="center" justify="flex-start">
-                    <Flex>
+                <Flex gap="lg" align="flex-start" justify="flex-start" style={{ height: "5.5rem" }}>
+                    <Flex style={{ height: "100%", width: "25%" }} flex="0 0 auto" justify="space-between">
                         <Box mr="md">
-                            <Text size="md">Start</Text>
-                            {start.atProjectStart && (
-                                <Text size="lg">
-                                    At project start{" "}
-                                    <span style={{ fontSize: "0.9em" }}>
-                                        {dayjs(project.start).format("DD.MM.YYYY")}
-                                    </span>
-                                </Text>
-                            )}
-                            {start.afterPhaseGuid && (
-                                <Text size="lg">
-                                    <span style={{ fontSize: "0.9em" }}>After:</span>{" "}
-                                    {project.phases.find((p) => p.guid === start.afterPhaseGuid)?.name ||
-                                        "INVALID PHASE"}
-                                </Text>
-                            )}
-                            {start.ts && start.ts > 0 && <Text size="lg">{dayjs(start.ts).format("DD.MM.YYYY")}</Text>}
-
-                            {start.offsetInDays !== undefined && start.offsetInDays !== 0 && (
-                                <Text size="lg">
-                                    <span style={{ fontSize: "0.9em" }}>Offset:</span> {start.offsetInDays} days
-                                </Text>
-                            )}
+                            <Text size="md" c="gray.6">
+                                Phase starts
+                            </Text>
+                            <ProjectStartTime start={start} project={project} />
                         </Box>
 
                         <Button
@@ -146,34 +127,12 @@ const ProjectPhaseCard = ({ phase, project, onClose }: ProjectPhaseCardProps) =>
                         </Button>
                     </Flex>
 
-                    <Flex>
+                    <Flex style={{ height: "100%", width: "25%" }} flex="0 0 auto" justify="space-between">
                         <Box mr="md">
-                            <Text size="md">End</Text>
-                            {end.atProjectEnd && (
-                                <Text size="lg">
-                                    At project end{" "}
-                                    <span style={{ fontSize: "0.9em" }}>
-                                        {DateTime.fromMillis(project.end)
-                                            .setLocale("fi")
-                                            .toLocaleString(DateTime.DATE_SHORT)}
-                                    </span>
-                                </Text>
-                            )}
-                            {end.ts && <Text size="lg">{dayjs(end.ts).format("DD.MM.YYYY")}</Text>}
-                            {end.whenPhaseGuidEnds && (
-                                <Text size="lg">
-                                    <span style={{ fontSize: "0.9em" }}>After:</span>{" "}
-                                    {project.phases.find((p) => p.guid === end.whenPhaseGuidEnds)?.name ||
-                                        "INVALID PHASE"}
-                                </Text>
-                            )}
-                            {end.whenPhaseGuidStarts && (
-                                <Text size="lg">
-                                    <span style={{ fontSize: "0.9em" }}>Before:</span>{" "}
-                                    {project.phases.find((p) => p.guid === end.whenPhaseGuidStarts)?.name ||
-                                        "INVALID PHASE"}
-                                </Text>
-                            )}
+                            <Text size="md" c="gray.6">
+                                Phase ends
+                            </Text>
+                            <ProjectEndTime end={end} project={project} />
                         </Box>
                         <Button
                             variant="filled"
@@ -184,6 +143,21 @@ const ProjectPhaseCard = ({ phase, project, onClose }: ProjectPhaseCardProps) =>
                             <IconEdit size="20" />
                         </Button>
                     </Flex>
+
+                    <Box flex="1 1 auto" style={{ width: "50%" }}>
+                        <Text size="md" c="gray.6">
+                            Phase time info
+                        </Text>
+                        <Flex align="center" gap="xs">
+                            <Text size="lg">
+                                {DateTime.fromMillis(startTs).setLocale("fi").toLocaleString(DateTime.DATE_SHORT)}
+                            </Text>
+                            <Text size="md">-</Text>
+                            <Text size="lg">
+                                {DateTime.fromMillis(endTs).setLocale("fi").toLocaleString(DateTime.DATE_SHORT)}
+                            </Text>
+                        </Flex>
+                    </Box>
                 </Flex>
             )}
 
@@ -253,260 +227,117 @@ const PhaseRoleAllocation = (props: { phase: IPhase; role: IRole; onChange: (val
     );
 };
 
-const StartTimeEditor = (props: {
-    phase: IPhase;
-    project: IProject;
-    onSave: (start: IPhaseStart) => void;
-    onCancel: () => void;
-}) => {
-    const start = props.phase.start;
+const ProjectStartTime = (props: { start: IPhaseStart; project: IProject }) => {
+    const { start, project } = props;
 
-    const [atPrjStart, setAtPrjStart] = useState<boolean>(start.atProjectStart || false);
-    const [startDate, setStartDate] = useState<number>(start.ts || 0);
-    const [afterPhaseGuid, setAfterPhaseGuid] = useState<string>(start.afterPhaseGuid || "");
-    const [offsetInDays, setOffsetInDays] = useState<number>(start.offsetInDays || 0);
+    const OffSet =
+        start.offsetInDays !== undefined && start.offsetInDays !== 0 ? (
+            <Text size="lg">
+                <span style={{ fontSize: "0.9em" }}>Offset:</span> {start.offsetInDays} days
+            </Text>
+        ) : null;
 
-    let valid = false;
-    if (atPrjStart) {
-        valid = true;
-    } else if (startDate > 0) {
-        valid = true;
-    } else if (afterPhaseGuid !== "") {
-        valid = true;
+    if (start.atProjectStart) {
+        return (
+            <>
+                <Text size="lg">
+                    At project start{" "}
+                    <span style={{ fontSize: "0.9em" }}>{dayjs(project.start).format("DD.MM.YYYY")}</span>
+                </Text>
+                {OffSet !== null && OffSet}
+            </>
+        );
     }
 
-    function handleToggleAtProjectStart(checked: boolean) {
-        if (checked) {
-            setStartDate(0);
-            setAfterPhaseGuid("");
-        }
-        setAtPrjStart(checked);
+    if (start.afterPhaseGuid) {
+        return (
+            <>
+                <Text size="lg">
+                    <span style={{ fontSize: "0.9em" }}>After:</span>{" "}
+                    {project.phases.find((p) => p.guid === start.afterPhaseGuid)?.name || "INVALID PHASE"}
+                </Text>
+                {OffSet !== null && OffSet}
+            </>
+        );
     }
 
-    function handleTargetStartDateChange(date: string | null) {
-        if (date) {
-            setAtPrjStart(false);
-            setStartDate(dayjs(date).valueOf());
-            setAfterPhaseGuid("");
-        }
+    if (start.ts && start.ts > 0) {
+        return (
+            <>
+                <Text size="lg">{dayjs(start.ts).format("DD.MM.YYYY")}</Text>
+                {OffSet !== null && OffSet}
+            </>
+        );
     }
 
-    function handleAfterPhaseChange(phaseGuid: string) {
-        setAfterPhaseGuid(phaseGuid);
-        setAtPrjStart((prev) => (prev === true ? false : prev));
-        setStartDate((prev) => (prev !== 0 ? 0 : prev));
-    }
-
-    function handleSave() {
-        const nstart: IPhaseStart = {
-            atProjectStart: atPrjStart,
-            ts: startDate > 0 ? startDate : undefined,
-            afterPhaseGuid: afterPhaseGuid !== "" ? afterPhaseGuid : undefined,
-            offsetInDays: offsetInDays !== undefined && offsetInDays !== 0 ? offsetInDays : undefined,
-        };
-
-        console.log("Saving new phase start time:", nstart);
-
-        props.onSave(nstart);
-    }
-
-    const validPhases = props.project.phases.filter((p) => p.guid !== props.phase.guid);
-
-    return (
-        <>
-            <Flex align="center" justify="space-between" gap="md" style={{ height: "5rem" }}>
-                <Text size="sm">Start time:</Text>
-                <Box>
-                    <Switch
-                        label="At project start"
-                        checked={atPrjStart}
-                        onChange={(event) => handleToggleAtProjectStart(event.currentTarget.checked)}
-                    />
-                </Box>
-
-                <Box>
-                    <DatePickerInput
-                        placeholder="Pick a phase date"
-                        label="Start at date"
-                        value={startDate > 0 ? dayjs(startDate).format("YYYY-MM-DD") : null}
-                        onChange={(date) => handleTargetStartDateChange(date)}
-                    />
-                </Box>
-
-                <Box>
-                    <Select
-                        data={validPhases.map((p) => ({ value: p.guid, label: p.name }))}
-                        label="Start After phase"
-                        placeholder="Select a phase"
-                        value={afterPhaseGuid !== "" ? afterPhaseGuid : null}
-                        onChange={(val) => handleAfterPhaseChange(val || "")}
-                    />
-                </Box>
-
-                <Box>
-                    <NumberInput
-                        label="Offset in days"
-                        value={offsetInDays}
-                        onChange={(value) => setOffsetInDays(typeof value === "string" ? parseInt(value) : value)}
-                    />
-                </Box>
-
-                <Box style={{ height: "100%" }}>
-                    <Button variant="outline" onClick={props.onCancel} mr="sm" style={{ height: "100%" }}>
-                        <IconCancel size={20} />
-                    </Button>
-                    <Button variant="contained" onClick={handleSave} style={{ height: "100%" }} disabled={!valid}>
-                        <IconCheck size={20} />
-                    </Button>
-                </Box>
-            </Flex>
-            {!valid && (
-                <Alert variant="light" color="red" title="Invalid start time configuration" mt="md">
-                    Please specify at least one start time option.
-                </Alert>
-            )}
-        </>
-    );
+    return <Text size="lg">No start time defined</Text>;
 };
 
-const EndTimeEditor = (props: {
-    phase: IPhase;
-    project: IProject;
-    onSave: (start: IPhaseStart) => void;
-    onCancel: () => void;
-}) => {
-    const end = props.phase.end;
+const ProjectEndTime = (props: { end: IPhaseEnd; project: IProject }) => {
+    const { end, project } = props;
 
-    const [atPrjEnd, setAtPrjEnd] = useState<boolean>(end.atProjectEnd || false);
-    const [endDate, setEndDate] = useState<number>(end.ts || 0);
-    const [whenPhaseEnds, setWhenPhaseEnds] = useState<string>(end.whenPhaseGuidEnds || "");
-    const [whenPhaseStarts, setWhenPhaseStarts] = useState<string>(end.whenPhaseGuidStarts || "");
-    const [offsetInDays, setOffsetInDays] = useState<number>(end.offsetInDays || 0);
+    const OffSet =
+        end.offsetInDays && end.offsetInDays > 0 ? (
+            <Text size="lg">
+                <span style={{ fontSize: "0.9em" }}>Offset:</span> {end.offsetInDays} days
+            </Text>
+        ) : null;
 
-    let valid = false;
-    if (atPrjEnd) {
-        valid = true;
-    } else if (endDate > 0) {
-        valid = true;
-    } else if (whenPhaseEnds !== "") {
-        valid = true;
+    if (end.atProjectEnd) {
+        return (
+            <>
+                <Text size="lg">
+                    At project end{" "}
+                    <span style={{ fontSize: "0.9em" }}>
+                        {DateTime.fromMillis(project.end).setLocale("fi").toLocaleString(DateTime.DATE_SHORT)}
+                    </span>
+                </Text>
+                {OffSet !== null && OffSet}
+            </>
+        );
     }
 
-    function handleToggleAtProjectEnd(checked: boolean) {
-        if (checked) {
-            setEndDate(0);
-            setWhenPhaseEnds("");
-            setWhenPhaseStarts("");
-        }
-        setAtPrjEnd(checked);
+    if (end.ts) {
+        return (
+            <>
+                <Text size="lg">{dayjs(end.ts).format("DD.MM.YYYY")}</Text>
+                {OffSet !== null && OffSet}
+            </>
+        );
     }
 
-    function handleTargetEndDateChange(date: string | null) {
-        if (date) {
-            setAtPrjEnd(false);
-            setEndDate(dayjs(date).valueOf());
-            setWhenPhaseEnds("");
-            setWhenPhaseStarts("");
-        }
+    if (end.whenPhaseGuidEnds) {
+        return (
+            <>
+                <Text size="lg">
+                    <span style={{ fontSize: "0.9em" }}>After:</span>{" "}
+                    {project.phases.find((p) => p.guid === end.whenPhaseGuidEnds)?.name || "INVALID PHASE"}
+                </Text>
+                {OffSet !== null && OffSet}
+            </>
+        );
     }
 
-    function handleAfterPhaseEnds(phaseGuid: string) {
-        setWhenPhaseEnds(phaseGuid);
-        setWhenPhaseStarts("");
-        setAtPrjEnd((prev) => (prev === true ? false : prev));
-        setEndDate((prev) => (prev !== 0 ? 0 : prev));
+    if (end.whenPhaseGuidStarts) {
+        return (
+            <>
+                <Text size="lg">
+                    <span style={{ fontSize: "0.9em" }}>Before:</span>{" "}
+                    {project.phases.find((p) => p.guid === end.whenPhaseGuidStarts)?.name || "INVALID PHASE"}
+                </Text>
+                {OffSet !== null && OffSet}
+            </>
+        );
+    }
+    if (end.lengthInWorkingDays && end.lengthInWorkingDays > 0) {
+        return (
+            <Text size="lg">
+                <span style={{ fontSize: "0.9em" }}>Days:</span> {end.lengthInWorkingDays} working days
+            </Text>
+        );
     }
 
-    function handleAfterPhaseStarts(phaseGuid: string) {
-        setWhenPhaseStarts(phaseGuid);
-        setWhenPhaseEnds("");
-        setAtPrjEnd((prev) => (prev === true ? false : prev));
-        setEndDate((prev) => (prev !== 0 ? 0 : prev));
-    }
-
-    function handleSave() {
-        const nend: IPhaseEnd = {
-            atProjectEnd: atPrjEnd,
-            ts: endDate > 0 ? endDate : undefined,
-            whenPhaseGuidEnds: whenPhaseEnds !== "" ? whenPhaseEnds : undefined,
-            whenPhaseGuidStarts: whenPhaseStarts !== "" ? whenPhaseStarts : undefined,
-            offsetInDays: offsetInDays !== undefined && offsetInDays !== 0 ? offsetInDays : undefined,
-        };
-
-        console.log("Saving new phase end time:", nend);
-
-        props.onSave(nend);
-    }
-
-    const validPhases = props.project.phases.filter((p) => p.guid !== props.phase.guid);
-
-    console.log("PROJECT END", props.project.end, "\nPHASE END", end);
-
-    return (
-        <>
-            <Flex align="center" justify="space-between" gap="md" style={{ height: "5rem" }}>
-                <Text size="sm">Start time:</Text>
-                <Box>
-                    <Switch
-                        label="At project end"
-                        checked={atPrjEnd}
-                        onChange={(event) => handleToggleAtProjectEnd(event.currentTarget.checked)}
-                    />
-                </Box>
-
-                <Box>
-                    <DatePickerInput
-                        placeholder="Select date"
-                        label="End at date"
-                        value={endDate > 0 ? dayjs(endDate).format("YYYY-MM-DD") : null}
-                        onChange={(date) => handleTargetEndDateChange(date)}
-                    />
-                </Box>
-
-                <Box>
-                    <Select
-                        data={validPhases.map((p) => ({ value: p.guid, label: p.name }))}
-                        label="End After phase"
-                        placeholder="Select a phase"
-                        value={whenPhaseEnds !== "" ? whenPhaseEnds : null}
-                        onChange={(val) => handleAfterPhaseEnds(val || "")}
-                    />
-                </Box>
-
-                <Box>
-                    <Select
-                        data={validPhases.map((p) => ({ value: p.guid, label: p.name }))}
-                        label="End After phase"
-                        placeholder="Select a phase"
-                        value={whenPhaseStarts !== "" ? whenPhaseStarts : null}
-                        onChange={(val) => handleAfterPhaseStarts(val || "")}
-                    />
-                </Box>
-
-                <Box>
-                    <NumberInput
-                        label="Offset in days"
-                        value={offsetInDays}
-                        onChange={(value) => setOffsetInDays(typeof value === "string" ? parseInt(value) : value)}
-                    />
-                </Box>
-
-                <Box style={{ height: "100%" }}>
-                    <Button variant="outline" onClick={props.onCancel} mr="sm" style={{ height: "100%" }}>
-                        <IconCancel size={20} />
-                    </Button>
-                    <Button variant="contained" onClick={handleSave} style={{ height: "100%" }} disabled={!valid}>
-                        <IconCheck size={20} />
-                    </Button>
-                </Box>
-            </Flex>
-            {!valid && (
-                <Alert variant="light" color="red" title="Invalid end time configuration" mt="md">
-                    Please specify at least one end time option.
-                </Alert>
-            )}
-        </>
-    );
+    return <Text size="lg">No end time defined</Text>;
 };
 
 const allowMarks: { value: number; label: string }[] = [

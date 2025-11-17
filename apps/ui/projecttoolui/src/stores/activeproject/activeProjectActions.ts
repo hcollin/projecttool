@@ -6,6 +6,7 @@ import {
     IPhase,
     ROLESENIORITY,
     IPhaseAllocation,
+    utilGetPhaseStartTs,
 } from "@frosttroll/projecttoolmodels";
 
 import activeProjectStore from "./activeProjectStore";
@@ -192,6 +193,7 @@ export function actionUpdateProjectPhaseInActiveProject(updatedPhase: IPhase): v
         });
         activeProjectStore.project.phases = [...nphases];
         activeProjectStore.unsavedChanges = true;
+        actionSortPhasesInActiveProjectByStartTime();
     }
 }
 
@@ -220,6 +222,7 @@ export function actionAddNewPhaseToActiveProject(): void {
     if (activeProjectStore.project) {
         activeProjectStore.project.phases.push(newPhase);
         activeProjectStore.unsavedChanges = true;
+        actionSortPhasesInActiveProjectByStartTime();
     }
 }
 
@@ -234,6 +237,7 @@ export function actionRemovePhaseFromActiveProject(phaseGuid: string): void {
         if (nphases.length !== phases.length) {
             activeProjectStore.project.phases = nphases;
             activeProjectStore.unsavedChanges = true;
+            actionSortPhasesInActiveProjectByStartTime();
         }
     }
 }
@@ -264,6 +268,19 @@ export function actionAddRoleAllocationToPhaseInActiveProject(
             return { ...phase };
         });
         activeProjectStore.project.phases = [...nphases];
+        activeProjectStore.unsavedChanges = true;
+    }
+}
+
+export function actionSortPhasesInActiveProjectByStartTime(): void {
+    if (activeProjectStore.project) {
+        const phases = [...activeProjectStore.project.phases];
+        phases.sort((a, b) => {
+            const aStartTs = utilGetPhaseStartTs(a, activeProjectStore.project!);
+            const bStartTs = utilGetPhaseStartTs(b, activeProjectStore.project!);
+            return aStartTs - bStartTs;
+        });
+        activeProjectStore.project.phases = phases;
         activeProjectStore.unsavedChanges = true;
     }
 }

@@ -8,11 +8,16 @@ import {
     utilCalculateProjectPrice,
 } from "@frosttroll/projecttoolmodels";
 import { DateTime } from "luxon";
+import { useMemo } from "react";
 
 const ProjectFooter = () => {
     const aps = useSnapshot(activeProjectStore);
 
+    const totalPrice = useMemo(() => {
+        return utilCalculateProjectPrice(aps.project as IProject);
+    }, [aps.project]);
     const prj = aps.project;
+
     if (!prj) {
         return (
             <Flex>
@@ -20,8 +25,6 @@ const ProjectFooter = () => {
             </Flex>
         );
     }
-
-    const totalPrice = utilCalculateProjectPrice(prj as IProject);
 
     return (
         <Flex direction="row" align="center" justify="flex-start" px="md" style={{ height: "100%" }} gap="lg">
@@ -37,13 +40,17 @@ const ProjectFooter = () => {
                 <Text size="sm">
                     {DateTime.fromMillis(prj.start).setLocale("fi").toLocaleString(DateTime.DATE_SHORT)} -{" "}
                     {DateTime.fromMillis(prj.end).setLocale("fi").toLocaleString(DateTime.DATE_SHORT)}
-                    <span style={{marginLeft: "0.5rem"}}>{utilCalculateProjectDurationInDays(prj as IProject)} days</span>
+                    <span style={{ marginLeft: "0.5rem" }}>
+                        {utilCalculateProjectDurationInDays(prj as IProject)} days
+                    </span>
                 </Text>
             </Box>
             <Box>
                 <Title order={3}>
                     <NumberFormatter
                         value={totalPrice}
+                        decimalScale={2}
+                        decimalSeparator="."
                         thousandSeparator=" "
                         suffix={" " + prj.prices.hourlypricegroups[0].currency}
                     />
