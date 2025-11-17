@@ -19,3 +19,6 @@ export * from "./models/people/iTeam";
 
 export * from "./utils/people/roleutils";
 export * from "./utils/time/phasetimeutils";
+export * from "./utils/project/projectutils"
+export * from "./utils/project/phaseUtils";
+export * from "./utils/time/timeUtils";

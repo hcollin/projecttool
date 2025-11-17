@@ -33,6 +33,7 @@ export interface IPhaseEnd {
     lengthInWorkingDays?: number;
     whenPhaseGuidStarts?: string;
     whenPhaseGuidEnds?: string;
+	offsetInDays?: number;
 }
 
 

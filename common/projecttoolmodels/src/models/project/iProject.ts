@@ -8,7 +8,7 @@ export interface IProject extends IProjectBase {
     teams: string[]; // List of team IDs (references to ITeam.guid)
     roles: IRole[];
     start: number; // timestamp
-    end?: number; // timestamp
+    end: number; // timestamp
     prices: {
         hourlypricegroups: IHourlyPriceGroup[];
         fixedprices: IFixedPrice[];

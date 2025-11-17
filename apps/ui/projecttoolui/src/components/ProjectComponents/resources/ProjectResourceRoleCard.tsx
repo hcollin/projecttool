@@ -1,140 +1,183 @@
 import { convertRoleTemplateToRole, IRole, IRoleTemplate, ROLESENIORITY } from "@frosttroll/projecttoolmodels";
-import DataPicker from "../../DataPicker/DataPicker";
+
 import { EIconSet } from "../../Icons/IconSet";
 import ProjectCard from "../ProjectCard";
 import ProjectCardHeader from "../ProjectCardHeader";
 import { useState } from "react";
 import { useSnapshot } from "valtio";
-import dataRolesStore from "../../../stores/data/roles/dataRolesStore";
+import dataRolesStore, { IDataRolesStore } from "../../../stores/data/roles/dataRolesStore";
 import userStore from "../../../stores/user/userStore";
 import {
-	actionAddNewRoleToActiveProject,
-	actionRemoveRoleFromActiveProject,
-	actionUpdateRoleInActiveProject,
+    actionAddNewRoleToActiveProject,
+    actionRemoveRoleFromActiveProject,
+    actionUpdateRoleInActiveProject,
 } from "../../../stores/activeproject/activeProjectActions";
 import activeProjectStore from "../../../stores/activeproject/activeProjectStore";
-import { Box, Button, Flex, Select, Stack, Title } from "@mantine/core";
+import { Box, Button, Flex, Modal, Select, Stack, Title } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 
 const ProjectResourceRoleCard = () => {
-	const drs = useSnapshot(dataRolesStore);
+    const drs = useSnapshot(dataRolesStore);
 
-	const usr = useSnapshot(userStore);
+    const usr = useSnapshot(userStore);
 
-	const apr = useSnapshot(activeProjectStore);
+    const apr = useSnapshot(activeProjectStore);
 
-	const [isDataPickerOpen, setDataPickerOpen] = useState(false);
+    const [isDataPickerOpen, setDataPickerOpen] = useState(false);
 
-	function handleAddNewRole(rolet: IRoleTemplate) {
-		setDataPickerOpen(false);
-		const role = convertRoleTemplateToRole(rolet, usr.organizationId);
+    function handleAddNewRole(rolet: IRoleTemplate) {
+        setDataPickerOpen(false);
+        const role = convertRoleTemplateToRole(rolet, usr.organizationId);
 
-		actionAddNewRoleToActiveProject(role);
-	}
+        actionAddNewRoleToActiveProject(role);
+    }
 
-	function handleRemoveRole(roleGuid: string) {
-		actionRemoveRoleFromActiveProject(roleGuid);
-	}
+    function handleRemoveRole(roleGuid: string) {
+        actionRemoveRoleFromActiveProject(roleGuid);
+    }
 
-	function handleChangeSeniority(role: IRole, seniority: ROLESENIORITY | null) {
-		const updatedRole: IRole = { ...role };
-		if (seniority) {
-			updatedRole.seniority = seniority;
-		} else {
-			delete updatedRole.seniority;
-		}
+    function handleChangeSeniority(role: IRole, seniority: ROLESENIORITY | null) {
+        const updatedRole: IRole = { ...role };
+        if (seniority) {
+            updatedRole.seniority = seniority;
+        } else {
+            delete updatedRole.seniority;
+        }
 
-		actionUpdateRoleInActiveProject(updatedRole);
-	}
+        actionUpdateRoleInActiveProject(updatedRole);
+    }
 
-	function handleUpdatePriceGroup(role: IRole, priceGroupId: string | null) {
-		const updatedRole: IRole = { ...role };
-		if (priceGroupId) {
-			updatedRole.priceGroupId = priceGroupId;
-		} else {
-			delete updatedRole.priceGroupId;
-		}
+    function handleUpdatePriceGroup(role: IRole, priceGroupId: string | null) {
+        const updatedRole: IRole = { ...role };
+        if (priceGroupId) {
+            updatedRole.priceGroupId = priceGroupId;
+        } else {
+            delete updatedRole.priceGroupId;
+        }
 
-		actionUpdateRoleInActiveProject(updatedRole);
-	}
+        actionUpdateRoleInActiveProject(updatedRole);
+    }
 
-	const project = apr.project;
-	if (!project) {
-		return null;
-	}
+    const project = apr.project;
+    if (!project) {
+        return null;
+    }
 
-	return (
-		<>
-			<ProjectCardHeader
-				label="Roles"
-				dataType={EIconSet.USER}
-				addNewAction={() => {
-					console.log("ADD NEW ROLE!");
-					setDataPickerOpen(true);
-				}}
-			/>
-			<DataPicker<IRoleTemplate>
-				title="Select a role"
-				columns={4}
-				modalSize="90%"
-				isOpen={isDataPickerOpen}
-				onClose={() => setDataPickerOpen(false)}
-				options={drs.roles as IRoleTemplate[]}
-				valueKey="name"
-				onSelectOption={handleAddNewRole}
-			/>
-			<ProjectCard>
-				<Stack gap="sm">
-					{apr.project?.roles?.map((role, i) => {
-						const rt = drs.roles.find((r) => r.id === role.templateId);
-						return (
-							<Flex key={i} align="center">
-								<Title order={4} style={{ flex: "0 0 auto", width: "25%" }}>
-									{role.seniority && role.seniority !== ROLESENIORITY.MIDLEVEL ? role.seniority + " " : ""}
-									{role.name}
-								</Title>
+    return (
+        <>
+            <ProjectCardHeader
+                label="Roles"
+                dataType={EIconSet.USER}
+                addNewAction={() => {
+                    setDataPickerOpen(true);
+                }}
+            />
 
-								<Box style={{ flex: "0 0 auto", width: "15%", paddingRight: "1rem" }}>
-									<Select
-										placeholder="No seniority"
-										data={rt?.seniorities}
-										value={role.seniority}
-										onChange={(value) => {
-											handleChangeSeniority(role, value as ROLESENIORITY);
-										}}
-									/>
-								</Box>
+            <Modal opened={isDataPickerOpen} onClose={() => setDataPickerOpen(false)} title="Select a role" size="90%">
+                <RolePickerModal drs={drs as IDataRolesStore} handleAddNewRole={handleAddNewRole} />
+            </Modal>
+            <ProjectCard>
+                <Stack gap="sm">
+                    {apr.project?.roles?.map((role, i) => {
+                        const rt = drs.roles.find((r) => r.id === role.templateId);
+                        return (
+                            <Flex key={i} align="center">
+                                <Title order={4} style={{ flex: "0 0 auto", width: "25%" }}>
+                                    {role.seniority && role.seniority !== ROLESENIORITY.MIDLEVEL
+                                        ? role.seniority + " "
+                                        : ""}
+                                    {role.name}
+                                </Title>
 
-								<Box style={{ flex: "0 0 auto", width: "15%", paddingRight: "1rem" }}>
-									<Select
-										placeholder="No pricegroup"
-										data={project.prices.hourlypricegroups.map((pg) => ({
-											value: pg.guid,
-											label: `${pg.name} (${pg.price} ${pg.currency})`,
-										}))}
-										value={role.priceGroupId}
-										onChange={(value) => {
-											handleUpdatePriceGroup(role, value);
-										}}
-									/>
-								</Box>
+                                <Box style={{ flex: "0 0 auto", width: "15%", paddingRight: "1rem" }}>
+                                    <Select
+                                        placeholder="No seniority"
+                                        data={rt?.seniorities}
+                                        value={role.seniority}
+                                        onChange={(value) => {
+                                            handleChangeSeniority(role, value as ROLESENIORITY);
+                                        }}
+                                    />
+                                </Box>
 
-								{/* <Text size="xs" style={{ flex: "3 3 auto" }}>
+                                <Box style={{ flex: "0 0 auto", width: "15%", paddingRight: "1rem" }}>
+                                    <Select
+                                        placeholder="No pricegroup"
+                                        data={project.prices.hourlypricegroups.map((pg) => ({
+                                            value: pg.guid,
+                                            label: `${pg.name} (${pg.price} ${pg.currency})`,
+                                        }))}
+                                        value={role.priceGroupId}
+                                        onChange={(value) => {
+                                            handleUpdatePriceGroup(role, value);
+                                        }}
+                                    />
+                                </Box>
+
+                                {/* <Text size="xs" style={{ flex: "3 3 auto" }}>
                                     {role.description}
                                 </Text> */}
 
-								<Box style={{ flex: "1 1 auto", textAlign: "right" }}>
-									<Button variant="filled" size="sm" color="red" onClick={() => handleRemoveRole(role.guid)}>
-										<IconTrash />
-									</Button>
-								</Box>
-							</Flex>
-						);
-					})}
-				</Stack>
-			</ProjectCard>
-		</>
-	);
+                                <Box style={{ flex: "1 1 auto", textAlign: "right" }}>
+                                    <Button
+                                        variant="filled"
+                                        size="sm"
+                                        color="red"
+                                        onClick={() => handleRemoveRole(role.guid)}
+                                    >
+                                        <IconTrash />
+                                    </Button>
+                                </Box>
+                            </Flex>
+                        );
+                    })}
+                </Stack>
+            </ProjectCard>
+        </>
+    );
+};
+
+interface RolePickerModalProps {
+    drs: IDataRolesStore;
+    handleAddNewRole: (rolet: IRoleTemplate) => void;
+}
+const RolePickerModal = (props: RolePickerModalProps) => {
+    const { drs, handleAddNewRole } = props;
+
+    return (
+        <Flex gap="md" wrap="wrap">
+            {drs.roles.map((rolet, i) => {
+                const newGroup = i === 0 || rolet.groups.join(", ") !== (drs.roles[i - 1]?.groups.join(", ") || "");
+
+                return (
+                    <>
+                        {newGroup && (
+                            <Box style={{ flex: `1 1 auto`, width: "100%" }}>
+                                <Title order={4}>{rolet.groups.join(", ") || "Others"}</Title>
+                            </Box>
+                        )}
+
+                        <Button
+                            variant="filled"
+                            size="lg"
+                            style={{
+                                whiteSpace: "normal",
+                                textAlign: "center",
+                                height: "3rem",
+                                width: "19%",
+                                marginBottom: "0.5rem",
+                                flex: "0 0 auto",
+                            }}
+                            key={rolet.id}
+                            onClick={() => handleAddNewRole(rolet as IRoleTemplate)}
+                        >
+                            {rolet.name}
+                        </Button>
+                    </>
+                );
+            })}
+        </Flex>
+    );
 };
 
 export default ProjectResourceRoleCard;

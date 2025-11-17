@@ -1,6 +1,6 @@
 // IMPORT: Libraries
 import { createFileRoute } from "@tanstack/react-router";
-import { Button, Container, Flex } from "@mantine/core";
+import { Button, Card, Container, Flex } from "@mantine/core";
 import { useSnapshot } from "valtio";
 
 // IMPORT: Components
@@ -15,6 +15,8 @@ import activeProjectStore from "../../stores/activeproject/activeProjectStore";
 import { IPhase, IProject } from "@frosttroll/projecttoolmodels";
 import { IconPlus } from "@tabler/icons-react";
 import { actionAddNewPhaseToActiveProject } from "../../stores/activeproject/activeProjectActions";
+import { useState } from "react";
+import ProjectPhaseInfoRow from "../../components/ProjectComponents/phases/ProjectPhaseInfoRow";
 
 export const Route = createFileRoute("/project/phases")({
     component: PhasesComponent,
@@ -22,6 +24,8 @@ export const Route = createFileRoute("/project/phases")({
 
 function PhasesComponent() {
     const aps = useSnapshot(activeProjectStore);
+
+    const [editGuid, setEditGuid] = useState<string | null>(null);
 
     const prj = aps.project;
 
@@ -38,9 +42,33 @@ function PhasesComponent() {
             <Container size="xl">
                 <ProjectPageMainTitle>Project Phases</ProjectPageMainTitle>
 
-                {prj.phases.map((phase) => (
-                    <ProjectPhaseCard key={phase.guid} phase={phase as IPhase} project={prj as IProject} />
-                ))}
+                {prj.phases.map((phase) => {
+                    if (editGuid !== phase.guid) {
+                        return (
+                            <Card
+                                key={phase.guid}
+                                shadow="sm"
+                                mb="md"
+                                withBorder
+                                onClick={() => setEditGuid(phase.guid)}
+                            >
+                                <ProjectPhaseInfoRow
+                                    key={phase.guid}
+                                    phase={phase as IPhase}
+                                    project={prj as IProject}
+                                />
+                            </Card>
+                        );
+                    }
+                    return (
+                        <ProjectPhaseCard
+                            key={phase.guid}
+                            phase={phase as IPhase}
+                            project={prj as IProject}
+                            onClose={() => setEditGuid(null)}
+                        />
+                    );
+                })}
 
                 <Flex justify="flex-end" align="center">
                     <Button variant="filled" size="lg" onClick={handleCreateNewPhase}>
