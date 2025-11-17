@@ -16,6 +16,7 @@ import { Route as ProjectTechnologyRouteImport } from './routes/project/technolo
 import { Route as ProjectSummarytableRouteImport } from './routes/project/summarytable'
 import { Route as ProjectSettingsRouteImport } from './routes/project/settings'
 import { Route as ProjectResourcesRouteImport } from './routes/project/resources'
+import { Route as ProjectProjectchartsRouteImport } from './routes/project/projectcharts'
 import { Route as ProjectPricingRouteImport } from './routes/project/pricing'
 import { Route as ProjectPhasesRouteImport } from './routes/project/phases'
 import { Route as ProjectListprojectsRouteImport } from './routes/project/listprojects'
@@ -57,6 +58,11 @@ const ProjectResourcesRoute = ProjectResourcesRouteImport.update({
   path: '/project/resources',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProjectProjectchartsRoute = ProjectProjectchartsRouteImport.update({
+  id: '/project/projectcharts',
+  path: '/project/projectcharts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectPricingRoute = ProjectPricingRouteImport.update({
   id: '/project/pricing',
   path: '/project/pricing',
@@ -90,6 +96,7 @@ export interface FileRoutesByFullPath {
   '/project/listprojects': typeof ProjectListprojectsRoute
   '/project/phases': typeof ProjectPhasesRoute
   '/project/pricing': typeof ProjectPricingRoute
+  '/project/projectcharts': typeof ProjectProjectchartsRoute
   '/project/resources': typeof ProjectResourcesRoute
   '/project/settings': typeof ProjectSettingsRoute
   '/project/summarytable': typeof ProjectSummarytableRoute
@@ -104,6 +111,7 @@ export interface FileRoutesByTo {
   '/project/listprojects': typeof ProjectListprojectsRoute
   '/project/phases': typeof ProjectPhasesRoute
   '/project/pricing': typeof ProjectPricingRoute
+  '/project/projectcharts': typeof ProjectProjectchartsRoute
   '/project/resources': typeof ProjectResourcesRoute
   '/project/settings': typeof ProjectSettingsRoute
   '/project/summarytable': typeof ProjectSummarytableRoute
@@ -119,6 +127,7 @@ export interface FileRoutesById {
   '/project/listprojects': typeof ProjectListprojectsRoute
   '/project/phases': typeof ProjectPhasesRoute
   '/project/pricing': typeof ProjectPricingRoute
+  '/project/projectcharts': typeof ProjectProjectchartsRoute
   '/project/resources': typeof ProjectResourcesRoute
   '/project/settings': typeof ProjectSettingsRoute
   '/project/summarytable': typeof ProjectSummarytableRoute
@@ -135,6 +144,7 @@ export interface FileRouteTypes {
     | '/project/listprojects'
     | '/project/phases'
     | '/project/pricing'
+    | '/project/projectcharts'
     | '/project/resources'
     | '/project/settings'
     | '/project/summarytable'
@@ -149,6 +159,7 @@ export interface FileRouteTypes {
     | '/project/listprojects'
     | '/project/phases'
     | '/project/pricing'
+    | '/project/projectcharts'
     | '/project/resources'
     | '/project/settings'
     | '/project/summarytable'
@@ -163,6 +174,7 @@ export interface FileRouteTypes {
     | '/project/listprojects'
     | '/project/phases'
     | '/project/pricing'
+    | '/project/projectcharts'
     | '/project/resources'
     | '/project/settings'
     | '/project/summarytable'
@@ -178,6 +190,7 @@ export interface RootRouteChildren {
   ProjectListprojectsRoute: typeof ProjectListprojectsRoute
   ProjectPhasesRoute: typeof ProjectPhasesRoute
   ProjectPricingRoute: typeof ProjectPricingRoute
+  ProjectProjectchartsRoute: typeof ProjectProjectchartsRoute
   ProjectResourcesRoute: typeof ProjectResourcesRoute
   ProjectSettingsRoute: typeof ProjectSettingsRoute
   ProjectSummarytableRoute: typeof ProjectSummarytableRoute
@@ -237,6 +250,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectResourcesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/project/projectcharts': {
+      id: '/project/projectcharts'
+      path: '/project/projectcharts'
+      fullPath: '/project/projectcharts'
+      preLoaderRoute: typeof ProjectProjectchartsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/project/pricing': {
       id: '/project/pricing'
       path: '/project/pricing'
@@ -282,6 +302,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProjectListprojectsRoute: ProjectListprojectsRoute,
   ProjectPhasesRoute: ProjectPhasesRoute,
   ProjectPricingRoute: ProjectPricingRoute,
+  ProjectProjectchartsRoute: ProjectProjectchartsRoute,
   ProjectResourcesRoute: ProjectResourcesRoute,
   ProjectSettingsRoute: ProjectSettingsRoute,
   ProjectSummarytableRoute: ProjectSummarytableRoute,

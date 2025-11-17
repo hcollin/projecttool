@@ -7,6 +7,7 @@ import { useSnapshot } from "valtio";
 import activeProjectStore from "../../stores/activeproject/activeProjectStore";
 import { IProject, ROLESENIORITY, utilCalculatePhaseDuration } from "@frosttroll/projecttoolmodels";
 import { useState } from "react";
+import { formatCurrency, formatHours } from "../../utils/formatingUtils";
 
 export const Route = createFileRoute("/project/summarytable")({
     component: SummaryTableComponent,
@@ -187,12 +188,4 @@ function calculateProjectCosts(project: IProject, type: "hours" | "cost" | "both
         head: Array.from(headers),
         body: data,
     };
-}
-
-function formatCurrency(value: number, currency: string): string {
-    return `${value.toLocaleString(`fi-FI`, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}`;
-}
-
-function formatHours(value: number): string {
-    return `${value.toFixed(2)} h`;
 }

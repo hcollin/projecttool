@@ -12,6 +12,7 @@
         "@frosttroll/projecttooldata": "*",
         "@frosttroll/projecttoolmodels": "*",
         "@frosttroll/projecttoolutils": "*",
+        "@mantine/charts": "^8.3.8",
         "@mantine/core": "^8.3.6",
         "@mantine/dates": "^8.3.8",
         "@mantine/hooks": "^8.3.6",
@@ -22,6 +23,7 @@
         "luxon": "^3.7.2",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
+        "recharts": "^3.4.1",
         "rndlib": "^0.9.3",
         "valtio": "^2.2.0"
     },

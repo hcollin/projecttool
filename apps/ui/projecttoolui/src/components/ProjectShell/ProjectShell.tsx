@@ -19,6 +19,7 @@ import { actionCreateNewProject, actionStoreProjectToLocalStorage } from "../../
 // IMPORT: Icons
 import {
 	IconCalendarMonth,
+	IconChartLine,
 	IconClockDollar,
 	IconDashboard,
 	IconDeviceFloppy,
@@ -103,6 +104,7 @@ const ProjectShell = (props: { children: React.ReactNode }) => {
 
 				<Divider label="Summaries" labelPosition="center" my="sm" />
 				<NavLink label="Summary Tables" component={Link} to="/project/summarytable" disabled={!aps.project} leftSection={<IconTable />} />
+				<NavLink label="Project Charts" component={Link} to="/project/projectcharts" disabled={!aps.project} leftSection={<IconChartLine />} />
 
 			</AppShell.Navbar>
 

@@ -1,5 +1,5 @@
-import { IProject, utilCalculatePhaseDuration } from "@frosttroll/projecttoolmodels";
-import { uRoleName } from "./roleFormatters";
+import { IProject, utilCalculatePhaseDuration, utilCalculatePhasePrice } from "@frosttroll/projecttoolmodels";
+import { uRoleName } from "./formatingUtils";
 
 interface IProjectRoleSummary {
     role: string;
@@ -17,11 +17,10 @@ interface IProjectRoleSummary {
     totalCost: number;
 }
 
-
 /**
  * Calculate project summary data per role
- * @param project 
- * @returns 
+ * @param project
+ * @returns
  */
 export function uCalculateProjectSummary(project: IProject): IProjectRoleSummary[] {
     // const phaseTotalHours: number[] = [];
@@ -81,4 +80,54 @@ export function uCalculateProjectSummary(project: IProject): IProjectRoleSummary
     }, [] as IProjectRoleSummary[]);
 
     return data;
+}
+
+interface IProjectBudgetSummary {
+    key: string;
+    order: number;
+
+    cost: number;
+    cumulativeCost: number;
+
+    hours: number;
+    cumulativeHours: number;
+}
+
+export function uCalculateProjectBudgetSummary(
+    project: IProject,
+    group: "phase" | "month" | "week"
+): IProjectBudgetSummary[] {
+    const budgetSummary: IProjectBudgetSummary[] = [];
+
+    let cumulativeCost = 0;
+    let cumulativeHours = 0;
+
+    if (group === "phase") {
+        project.phases.forEach((phase, index) => {
+            const budgetItem: IProjectBudgetSummary = {
+                key: phase.name,
+                order: index + 1,
+                cost: 0,
+                cumulativeCost: 0,
+                hours: 0,
+                cumulativeHours: 0,
+            };
+
+            const phaseCost = utilCalculatePhasePrice(phase, project);
+            budgetItem.cost = phaseCost;
+            cumulativeCost += phaseCost;
+            budgetItem.cumulativeCost = cumulativeCost;
+
+            const phaseDurationDays = utilCalculatePhaseDuration(phase, project, true);
+            const phaseHours = phaseDurationDays * 7.5;
+            budgetItem.hours = phaseHours;
+            cumulativeHours += phaseHours;
+            budgetItem.cumulativeHours = cumulativeHours;
+
+            budgetSummary.push(budgetItem);
+        });
+
+        return budgetSummary;
+    }
+    return budgetSummary;
 }

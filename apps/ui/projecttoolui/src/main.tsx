@@ -9,6 +9,7 @@ import "dayjs/locale/fi";
 // core styles are required for all packages
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
+import '@mantine/charts/styles.css';
 
 // IMPORT: Themes
 import maintheme from "./themes/maintheme";
