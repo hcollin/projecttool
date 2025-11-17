@@ -14,6 +14,9 @@ const ProjectFooter = () => {
     const aps = useSnapshot(activeProjectStore);
 
     const totalPrice = useMemo(() => {
+        if(!aps.project) {
+            return 0;
+        }
         return utilCalculateProjectPrice(aps.project as IProject);
     }, [aps.project]);
     const prj = aps.project;

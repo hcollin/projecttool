@@ -1,6 +1,6 @@
-var r = /* @__PURE__ */ ((t) => (t.INTERN = "Intern", t.JUNIOR = "Junior", t.MIDLEVEL = "Mid-level", t.SENIOR = "Senior", t.LEAD = "Lead", t.PRINCIPAL = "Principal", t))(r || {}), C = { exports: {} }, ce = C.exports, j;
+var r = /* @__PURE__ */ ((t) => (t.INTERN = "Intern", t.JUNIOR = "Junior", t.MIDLEVEL = "Mid-level", t.SENIOR = "Senior", t.LEAD = "Lead", t.PRINCIPAL = "Principal", t))(r || {}), C = { exports: {} }, ce = C.exports, B;
 function de() {
-  return j || (j = 1, (function(t, e) {
+  return B || (B = 1, (function(t, e) {
     (function(n, s) {
       s(e);
     })(ce, (function(n) {
@@ -14,12 +14,12 @@ function de() {
         return i[Math.floor(Math.random() * i.length)];
       }
       function m(i, a, o, u, d) {
-        function g(z) {
-          return !(typeof u == "number" && z < u || typeof d == "number" && z > d);
+        function g(k) {
+          return !(typeof u == "number" && k < u || typeof d == "number" && k > d);
         }
-        for (var h = i, I = o * 2, P = 0; P < a; P++) {
-          var V = s(0, I) - o;
-          g(h + V) && (h += V);
+        for (var h = i, I = o * 2, V = 0; V < a; V++) {
+          var x = s(0, I) - o;
+          g(h + x) && (h += x);
         }
         return h;
       }
@@ -67,19 +67,19 @@ function de() {
         }, 0);
       }
       function R(i) {
-        var a = /(\d*)d(\d+)([\+\-]*)(\d*)/im, o = i.replace(" ", "").match(a), u = Number(o[1] || 1), d = Number(o[2]), g = Number(o[4] || 0), h = o[3] === "-" ? g * -1 : g * 1, I = f(d, u), P = b(I) + h, V = {
-          sum: P,
+        var a = /(\d*)d(\d+)([\+\-]*)(\d*)/im, o = i.replace(" ", "").match(a), u = Number(o[1] || 1), d = Number(o[2]), g = Number(o[4] || 0), h = o[3] === "-" ? g * -1 : g * 1, I = f(d, u), V = b(I) + h, x = {
+          sum: V,
           rolls: I,
           dieType: d
         };
-        return V;
+        return x;
       }
       function f(i, a) {
         for (var o = a === void 0 ? 1 : a, u = [], d = 0; d < o; d++)
           u.push(s(1, i));
         return u;
       }
-      function X(i) {
+      function K(i) {
         return f(4, i);
       }
       function ee(i) {
@@ -119,7 +119,7 @@ function de() {
         return u;
       }
       var ue = {
-        d4: X,
+        d4: K,
         d6: ee,
         d8: re,
         d10: te,
@@ -140,7 +140,7 @@ class v extends le {
     super("Zone is an abstract class");
   }
 }
-class B {
+class j {
   /**
    * The type of zone
    * @abstract
@@ -261,7 +261,7 @@ function ge(t, e) {
   return s;
 }
 const J = /* @__PURE__ */ new Map();
-class $ extends B {
+class $ extends j {
   /**
    * @param {string} name - Zone name
    * @return {IANAZone}
@@ -401,7 +401,7 @@ class $ extends B {
   }
 }
 let Z = null;
-class D extends B {
+class D extends j {
   /**
    * Get a singleton instance of UTC
    * @return {FixedOffsetZone}
@@ -429,7 +429,7 @@ class D extends B {
     if (e) {
       const n = e.match(/^utc(?:([+-]\d{1,2})(?::(\d{2}))?)?$/i);
       if (n)
-        return new D(G(n[1], n[2]));
+        return new D(Q(n[1], n[2]));
     }
     return null;
   }
@@ -523,7 +523,7 @@ class D extends B {
 function U(t) {
   return typeof t > "u";
 }
-function x(t, e = 2) {
+function P(t, e = 2) {
   const n = t < 0;
   let s;
   return n ? s = "-" + ("" + -t).padStart(e, "0") : s = ("" + t).padStart(e, "0"), s;
@@ -563,7 +563,7 @@ function Ie(t, e, n, s = null) {
   const p = { timeZoneName: e, ...m }, l = new Intl.DateTimeFormat(n, p).formatToParts(c).find((E) => E.type.toLowerCase() === "timezonename");
   return l ? l.value : null;
 }
-function G(t, e) {
+function Q(t, e) {
   let n = parseInt(t, 10);
   Number.isNaN(n) && (n = 0);
   const s = parseInt(e, 10) || 0, c = n < 0 || Object.is(n, -0) ? -s : s;
@@ -573,21 +573,21 @@ function T(t, e) {
   const n = Math.trunc(Math.abs(t / 60)), s = Math.trunc(Math.abs(t % 60)), c = t >= 0 ? "+" : "-";
   switch (e) {
     case "short":
-      return `${c}${x(n, 2)}:${x(s, 2)}`;
+      return `${c}${P(n, 2)}:${P(s, 2)}`;
     case "narrow":
       return `${c}${n}${s > 0 ? `:${s}` : ""}`;
     case "techie":
-      return `${c}${x(n, 2)}${x(s, 2)}`;
+      return `${c}${P(n, 2)}${P(s, 2)}`;
     default:
       throw new RangeError(`Value format ${e} is out of range for property format`);
   }
 }
-const Q = /[A-Za-z_+-]{1,256}(?::?\/[A-Za-z0-9_+-]{1,256}(?:\/[A-Za-z0-9_+-]{1,256})?)?/;
+const G = /[A-Za-z_+-]{1,256}(?::?\/[A-Za-z0-9_+-]{1,256}(?:\/[A-Za-z0-9_+-]{1,256})?)?/;
 function N(...t) {
   const e = t.reduce((n, s) => n + s.source, "");
   return RegExp(`^${e}$`);
 }
-function w(...t) {
+function A(...t) {
   return (e) => t.reduce(
     ([n, s, c], m) => {
       const [p, l, E] = m(e, c);
@@ -605,9 +605,9 @@ function W(...t) {
     return [s, null, n + c];
   };
 }
-const _ = /(?:([Zz])|([+-]\d\d)(?::?(\d\d))?)/, ve = `(?:${_.source}?(?:\\[(${Q.source})\\])?)?`, H = /(\d\d)(?::?(\d\d)(?::?(\d\d)(?:[.,](\d{1,30}))?)?)?/, Y = RegExp(`${H.source}${ve}`), k = RegExp(`(?:[Tt]${Y.source})?`), De = /([+-]\d{6}|\d{4})(?:-?(\d\d)(?:-?(\d\d))?)?/, Le = /(\d{4})-?W(\d\d)(?:-?(\d))?/, Ne = /(\d{4})-?(\d{3})/, we = W("weekYear", "weekNumber", "weekDay"), Ae = W("year", "ordinal"), ye = /(\d{4})-(\d\d)-(\d\d)/, K = RegExp(
-  `${H.source} ?(?:${_.source}|(${Q.source}))?`
-), Me = RegExp(`(?: ${K.source})?`);
+const _ = /(?:([Zz])|([+-]\d\d)(?::?(\d\d))?)/, ve = `(?:${_.source}?(?:\\[(${G.source})\\])?)?`, X = /(\d\d)(?::?(\d\d)(?::?(\d\d)(?:[.,](\d{1,30}))?)?)?/, Y = RegExp(`${X.source}${ve}`), z = RegExp(`(?:[Tt]${Y.source})?`), De = /([+-]\d{6}|\d{4})(?:-?(\d\d)(?:-?(\d\d))?)?/, Le = /(\d{4})-?W(\d\d)(?:-?(\d))?/, Ne = /(\d{4})-?(\d{3})/, Ae = W("weekYear", "weekNumber", "weekDay"), we = W("year", "ordinal"), ye = /(\d{4})-(\d\d)-(\d\d)/, H = RegExp(
+  `${X.source} ?(?:${_.source}|(${G.source}))?`
+), Me = RegExp(`(?: ${H.source})?`);
 function L(t, e, n) {
   const s = t[e];
   return U(s) ? n : F(s);
@@ -619,7 +619,7 @@ function Re(t, e) {
     day: L(t, e + 2, 1)
   }, null, e + 3];
 }
-function A(t, e) {
+function w(t, e) {
   return [{
     hours: L(t, e, 0),
     minutes: L(t, e + 1, 0),
@@ -627,50 +627,50 @@ function A(t, e) {
     milliseconds: he(t[e + 3])
   }, null, e + 4];
 }
-function O(t, e) {
-  const n = !t[e] && !t[e + 1], s = G(t[e + 1], t[e + 2]), c = n ? null : D.instance(s);
+function S(t, e) {
+  const n = !t[e] && !t[e + 1], s = Q(t[e + 1], t[e + 2]), c = n ? null : D.instance(s);
   return [{}, c, e + 3];
 }
-function S(t, e) {
+function O(t, e) {
   const n = t[e] ? $.create(t[e]) : null;
   return [{}, n, e + 1];
 }
-N(De, k);
-N(Le, k);
-N(Ne, k);
+N(De, z);
+N(Le, z);
+N(Ne, z);
 N(Y);
-w(
+A(
   Re,
-  A,
-  O,
-  S
+  w,
+  S,
+  O
 );
-w(
-  we,
-  A,
-  O,
-  S
-);
-w(
+A(
   Ae,
-  A,
-  O,
-  S
+  w,
+  S,
+  O
 );
-w(
-  A,
-  O,
-  S
+A(
+  we,
+  w,
+  S,
+  O
 );
-w(A);
+A(
+  w,
+  S,
+  O
+);
+A(w);
 N(ye, Me);
-N(K);
-w(
-  A,
-  O,
-  S
+N(H);
+A(
+  w,
+  S,
+  O
 );
-const Oe = [
+const Se = [
   // Management
   {
     id: "role-manager-project",
@@ -880,5 +880,5 @@ const Oe = [
   }
 ];
 export {
-  Oe as DATA_PROJECT_ROLES
+  Se as DATA_PROJECT_ROLES
 };

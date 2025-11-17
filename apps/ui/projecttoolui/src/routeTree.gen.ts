@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectIndexRouteImport } from './routes/project/index'
 import { Route as DataIndexRouteImport } from './routes/data/index'
 import { Route as ProjectTechnologyRouteImport } from './routes/project/technology'
+import { Route as ProjectSummarytableRouteImport } from './routes/project/summarytable'
 import { Route as ProjectSettingsRouteImport } from './routes/project/settings'
 import { Route as ProjectResourcesRouteImport } from './routes/project/resources'
 import { Route as ProjectPricingRouteImport } from './routes/project/pricing'
@@ -39,6 +40,11 @@ const DataIndexRoute = DataIndexRouteImport.update({
 const ProjectTechnologyRoute = ProjectTechnologyRouteImport.update({
   id: '/project/technology',
   path: '/project/technology',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectSummarytableRoute = ProjectSummarytableRouteImport.update({
+  id: '/project/summarytable',
+  path: '/project/summarytable',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectSettingsRoute = ProjectSettingsRouteImport.update({
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/project/pricing': typeof ProjectPricingRoute
   '/project/resources': typeof ProjectResourcesRoute
   '/project/settings': typeof ProjectSettingsRoute
+  '/project/summarytable': typeof ProjectSummarytableRoute
   '/project/technology': typeof ProjectTechnologyRoute
   '/data': typeof DataIndexRoute
   '/project': typeof ProjectIndexRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByTo {
   '/project/pricing': typeof ProjectPricingRoute
   '/project/resources': typeof ProjectResourcesRoute
   '/project/settings': typeof ProjectSettingsRoute
+  '/project/summarytable': typeof ProjectSummarytableRoute
   '/project/technology': typeof ProjectTechnologyRoute
   '/data': typeof DataIndexRoute
   '/project': typeof ProjectIndexRoute
@@ -113,6 +121,7 @@ export interface FileRoutesById {
   '/project/pricing': typeof ProjectPricingRoute
   '/project/resources': typeof ProjectResourcesRoute
   '/project/settings': typeof ProjectSettingsRoute
+  '/project/summarytable': typeof ProjectSummarytableRoute
   '/project/technology': typeof ProjectTechnologyRoute
   '/data/': typeof DataIndexRoute
   '/project/': typeof ProjectIndexRoute
@@ -128,6 +137,7 @@ export interface FileRouteTypes {
     | '/project/pricing'
     | '/project/resources'
     | '/project/settings'
+    | '/project/summarytable'
     | '/project/technology'
     | '/data'
     | '/project'
@@ -141,6 +151,7 @@ export interface FileRouteTypes {
     | '/project/pricing'
     | '/project/resources'
     | '/project/settings'
+    | '/project/summarytable'
     | '/project/technology'
     | '/data'
     | '/project'
@@ -154,6 +165,7 @@ export interface FileRouteTypes {
     | '/project/pricing'
     | '/project/resources'
     | '/project/settings'
+    | '/project/summarytable'
     | '/project/technology'
     | '/data/'
     | '/project/'
@@ -168,6 +180,7 @@ export interface RootRouteChildren {
   ProjectPricingRoute: typeof ProjectPricingRoute
   ProjectResourcesRoute: typeof ProjectResourcesRoute
   ProjectSettingsRoute: typeof ProjectSettingsRoute
+  ProjectSummarytableRoute: typeof ProjectSummarytableRoute
   ProjectTechnologyRoute: typeof ProjectTechnologyRoute
   DataIndexRoute: typeof DataIndexRoute
   ProjectIndexRoute: typeof ProjectIndexRoute
@@ -201,6 +214,13 @@ declare module '@tanstack/react-router' {
       path: '/project/technology'
       fullPath: '/project/technology'
       preLoaderRoute: typeof ProjectTechnologyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/project/summarytable': {
+      id: '/project/summarytable'
+      path: '/project/summarytable'
+      fullPath: '/project/summarytable'
+      preLoaderRoute: typeof ProjectSummarytableRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/project/settings': {
@@ -264,6 +284,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProjectPricingRoute: ProjectPricingRoute,
   ProjectResourcesRoute: ProjectResourcesRoute,
   ProjectSettingsRoute: ProjectSettingsRoute,
+  ProjectSummarytableRoute: ProjectSummarytableRoute,
   ProjectTechnologyRoute: ProjectTechnologyRoute,
   DataIndexRoute: DataIndexRoute,
   ProjectIndexRoute: ProjectIndexRoute,

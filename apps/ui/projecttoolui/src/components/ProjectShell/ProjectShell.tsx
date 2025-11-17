@@ -25,6 +25,7 @@ import {
 	IconFolderOpen,
 	IconOctagonPlus,
 	IconSettings,
+	IconTable,
 	IconUsersGroup,
 } from "@tabler/icons-react";
 
@@ -99,6 +100,10 @@ const ProjectShell = (props: { children: React.ReactNode }) => {
 
 				<Divider label="Solution" labelPosition="center" my="sm" />
 				<NavLink label="Technologies" component={Link} to="/project/technology" disabled={!aps.project} />
+
+				<Divider label="Summaries" labelPosition="center" my="sm" />
+				<NavLink label="Summary Tables" component={Link} to="/project/summarytable" disabled={!aps.project} leftSection={<IconTable />} />
+
 			</AppShell.Navbar>
 
 			<AppShell.Main className="main-content">{props.children}</AppShell.Main>
