@@ -1,4 +1,4 @@
-import { IFixedPrice } from "../..";
+import { CURRENCY, IFixedPrice } from "../..";
 import { IRole } from "../people/iRole";
 import { IHourlyPriceGroup } from "../pricing/iHourlyPriceGroup";
 import { IPhase } from "./iPhase";
@@ -14,4 +14,7 @@ export interface IProject extends IProjectBase {
         fixedprices: IFixedPrice[];
     };
     phases: IPhase[];
+    targetBudget?: number;
+    currency: CURRENCY;
+
 }

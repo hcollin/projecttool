@@ -13,7 +13,7 @@ export interface IHourlyPriceGroup extends IRootObject {
     /**
      * Currency for the price group.
      */
-    currency: CURRENCY;
+    currency?: CURRENCY;
 
     /**
      * Indicates if the price group is permanent and it cannot be deleted unless the whole project it is associated with is deleted.

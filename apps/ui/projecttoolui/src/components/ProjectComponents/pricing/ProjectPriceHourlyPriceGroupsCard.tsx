@@ -2,14 +2,14 @@ import { useSnapshot } from "valtio/react";
 import ProjectCard from "../ProjectCard";
 import ProjectCardHeader from "../ProjectCardHeader";
 import activeProjectStore from "../../../stores/activeproject/activeProjectStore";
-import { Box, Button, Flex, Select, Slider, SliderProps, Stack, Text, Title } from "@mantine/core";
+import { Box, Button, Flex, Slider, SliderProps, Stack, Text, Title } from "@mantine/core";
 import {
 	actionAddNewEmptyPriceGroupToActiveProject,
 	actionRemovePriceGroupFromActiveProject,
 	actionUpdatePriceGroupInActiveProject,
 } from "../../../stores/activeproject/activeProjectActions";
 import { useState } from "react";
-import { CURRENCY } from "@frosttroll/projecttoolmodels";
+import { utilCurrencyToSymbol } from "@frosttroll/projecttoolmodels";
 import { IconTrash } from "@tabler/icons-react";
 import TextInputEdit from "../../TextInputEdit/TextInputEdit";
 
@@ -38,13 +38,13 @@ const ProjectPriceHourlyPriceGroupsCard = () => {
 		actionUpdatePriceGroupInActiveProject({ ...prg, price: value ?? 0 });
 	}
 
-	function handleCurrencyChange(prgGuid: string, currency: CURRENCY | null) {
-		const prg = apr.project?.prices.hourlypricegroups.find((pg) => pg.guid === prgGuid);
-		if (!prg) {
-			return;
-		}
-		actionUpdatePriceGroupInActiveProject({ ...prg, currency: currency ?? CURRENCY.EUR });
-	}
+	// function handleCurrencyChange(prgGuid: string, currency: CURRENCY | null) {
+	// 	const prg = apr.project?.prices.hourlypricegroups.find((pg) => pg.guid === prgGuid);
+	// 	if (!prg) {
+	// 		return;
+	// 	}
+	// 	actionUpdatePriceGroupInActiveProject({ ...prg, currency: currency ?? CURRENCY.EUR });
+	// }
 
 	const project = apr.project;
 	if (!project) {
@@ -151,17 +151,17 @@ const ProjectPriceHourlyPriceGroupsCard = () => {
 										>
 											{prg.price}
 										</span>{" "}
-										{prg.currency}/h
+										{utilCurrencyToSymbol(project.currency)}/h
 									</Text>
 								</Flex>
 
-								<Box style={{ flex: "0 0 auto", width: "15%" }}>
+								{/* <Box style={{ flex: "0 0 auto", width: "15%" }}>
 									<Select
 										value={prg.currency}
 										data={enumToSelectData(CURRENCY)}
 										onChange={(value) => handleCurrencyChange(prg.guid, value as CURRENCY)}
 									/>
-								</Box>
+								</Box> */}
 
 								<Box style={{ flex: "0 0 auto", width: "5%" }}>
 									{!prg.permanent && (
@@ -192,9 +192,9 @@ const PriceSlider = (props: PriceSliderProps) => {
 	return <Slider {...sliderProps} value={value} onChange={(val) => setValue(val)} onChangeEnd={(val) => onDone(val)} />;
 };
 
-function enumToSelectData<E extends Record<string, string>>(en: E): { value: string; label: string }[] {
-	return Object.keys(en).map((key) => ({
-		value: en[key],
-		label: en[key],
-	}));
-}
+// function enumToSelectData<E extends Record<string, string>>(en: E): { value: string; label: string }[] {
+// 	return Object.keys(en).map((key) => ({
+// 		value: en[key],
+// 		label: en[key],
+// 	}));
+// }

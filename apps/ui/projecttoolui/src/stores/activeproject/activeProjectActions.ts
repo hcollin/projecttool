@@ -1,5 +1,4 @@
 import {
-    CURRENCY,
     IHourlyPriceGroup,
     IProject,
     IRole,
@@ -145,14 +144,13 @@ export function actionAddNewEmptyPriceGroupToActiveProject(): void {
         if (!defaultPriceGroup) {
             console.warn("No existing default price group to base the new price group on.");
         }
-        const targetCurrency = defaultPriceGroup ? defaultPriceGroup.currency : CURRENCY.EUR;
+
         const targetPrice = defaultPriceGroup ? defaultPriceGroup.price : 100;
         const newPrg: IHourlyPriceGroup = {
             guid: `pricegroup-${Date.now()}`,
             organizationId: activeProjectStore.project.organizationId,
             name: `New Price Group`,
             price: targetPrice,
-            currency: targetCurrency,
             permanent: false,
         };
         if (!activeProjectStore.project.prices.hourlypricegroups) {

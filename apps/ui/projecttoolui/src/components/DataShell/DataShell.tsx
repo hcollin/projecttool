@@ -1,13 +1,13 @@
 // IMPORT: General Libraries
 import { AppShell, Divider, NavLink, Title } from "@mantine/core";
 import { Link } from "@tanstack/react-router";
-import { useSnapshot } from "valtio";
+// import { useSnapshot } from "valtio";
 
 // IMPORT: Custom Components
 import MainHeader from "../MainHeader/MainHeader";
 
 // IMPORT: Stores & Actions
-import activeProjectStore from "../../stores/activeproject/activeProjectStore";
+// import activeProjectStore from "../../stores/activeproject/activeProjectStore";
 
 // IMPORT: Icons
 
@@ -16,7 +16,7 @@ import "./data-shell.css";
 import AnchorLink from "../AnchorLink/AnchorLink";
 
 const DataShell = (props: { children: React.ReactNode }) => {
-	const aps = useSnapshot(activeProjectStore);
+	// const aps = useSnapshot(activeProjectStore);
 
 	return (
 		<AppShell

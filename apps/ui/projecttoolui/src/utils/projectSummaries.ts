@@ -1,10 +1,20 @@
-import { IProject, utilCalculatePhaseDuration, utilCalculatePhasePrice } from "@frosttroll/projecttoolmodels";
+import {
+    CURRENCY,
+    IProject,
+    utilCalculatePhaseDuration,
+    utilCalculatePhasePrice,
+    utilCalculatePhaseSingleDay,
+    utilCalculateWorkdaysBetweenTimes,
+    utilGetPhaseEndTs,
+    utilGetPhaseStartTs,
+} from "@frosttroll/projecttoolmodels";
 import { uRoleName } from "./formatingUtils";
+import { DateTime } from "luxon";
 
 interface IProjectRoleSummary {
     role: string;
     hourlyRate: number;
-    currency: string;
+    currency: CURRENCY;
     phases: {
         [phaseName: string]: {
             hours: number;
@@ -30,7 +40,7 @@ export function uCalculateProjectSummary(project: IProject): IProjectRoleSummary
         const summary: IProjectRoleSummary = {
             role: uRoleName(role),
             hourlyRate: 0,
-            currency: "",
+            currency: project.currency,
             phases: {},
             totalHours: 0,
             totalCost: 0,
@@ -40,7 +50,6 @@ export function uCalculateProjectSummary(project: IProject): IProjectRoleSummary
 
         if (priceGroup) {
             summary.hourlyRate = priceGroup.price;
-            summary.currency = priceGroup.currency;
         }
         // Next columns are per phase
         let roleTotalHours = 0;
@@ -82,7 +91,7 @@ export function uCalculateProjectSummary(project: IProject): IProjectRoleSummary
     return data;
 }
 
-interface IProjectBudgetSummary {
+export interface IProjectBudgetSummary {
     key: string;
     order: number;
 
@@ -91,43 +100,110 @@ interface IProjectBudgetSummary {
 
     hours: number;
     cumulativeHours: number;
+
+    partsCost?: Record<string, number>;
+    partsHours?: Record<string, number>;
 }
 
-export function uCalculateProjectBudgetSummary(
-    project: IProject,
-    group: "phase" | "month" | "week"
-): IProjectBudgetSummary[] {
+/**
+ * Calculate project budget summary grouped by phase
+ * @param project
+ * @returns
+ */
+export function uCalculateProjectBudgetSummaryGroupByPhase(project: IProject): IProjectBudgetSummary[] {
     const budgetSummary: IProjectBudgetSummary[] = [];
 
     let cumulativeCost = 0;
     let cumulativeHours = 0;
 
-    if (group === "phase") {
-        project.phases.forEach((phase, index) => {
-            const budgetItem: IProjectBudgetSummary = {
-                key: phase.name,
-                order: index + 1,
-                cost: 0,
-                cumulativeCost: 0,
-                hours: 0,
-                cumulativeHours: 0,
-            };
+    project.phases.forEach((phase, index) => {
+        const budgetItem: IProjectBudgetSummary = {
+            key: phase.name,
+            order: index + 1,
+            cost: 0,
+            cumulativeCost: 0,
+            hours: 0,
+            cumulativeHours: 0,
+        };
 
-            const phaseCost = utilCalculatePhasePrice(phase, project);
-            budgetItem.cost = phaseCost;
-            cumulativeCost += phaseCost;
-            budgetItem.cumulativeCost = cumulativeCost;
+        const phaseCost = utilCalculatePhasePrice(phase, project);
+        budgetItem.cost = phaseCost;
+        cumulativeCost += phaseCost;
+        budgetItem.cumulativeCost = cumulativeCost;
 
-            const phaseDurationDays = utilCalculatePhaseDuration(phase, project, true);
-            const phaseHours = phaseDurationDays * 7.5;
-            budgetItem.hours = phaseHours;
-            cumulativeHours += phaseHours;
-            budgetItem.cumulativeHours = cumulativeHours;
+        const phaseDurationDays = utilCalculatePhaseDuration(phase, project, true);
+        const phaseHours = phaseDurationDays * 7.5;
+        budgetItem.hours = phaseHours;
+        cumulativeHours += phaseHours;
+        budgetItem.cumulativeHours = cumulativeHours;
 
-            budgetSummary.push(budgetItem);
+        budgetSummary.push(budgetItem);
+    });
+
+    return budgetSummary;
+}
+
+export function uCalculateProjectBudgetSummaryGroupByMonth(project: IProject): IProjectBudgetSummary[] {
+    const budgetSummary: IProjectBudgetSummary[] = [];
+
+    let cumulativeCost = 0;
+    let cumulativeHours = 0;
+
+    let curMonth = DateTime.fromMillis(project.start).startOf("month").startOf("day");
+    const endMonth = DateTime.fromMillis(project.end).endOf("month").endOf("day");
+
+    while (curMonth.toMillis() <= endMonth.toMillis()) {
+        const monthKey = curMonth.toFormat("yyyy / MM");
+
+        const mnthStart = curMonth.toMillis();
+        const mnthEnd = DateTime.fromMillis(curMonth.toMillis()).endOf("month").endOf("day").toMillis();
+
+        const budgetItem: IProjectBudgetSummary = {
+            key: monthKey,
+            order: budgetSummary.length + 1,
+            cost: 0,
+            cumulativeCost: 0,
+            hours: 0,
+            cumulativeHours: 0,
+            partsCost: {},
+            partsHours: {},
+        };
+
+        project.phases.forEach((phase) => {
+            const phaseStart = utilGetPhaseStartTs(phase, project);
+            const phaseEnd = utilGetPhaseEndTs(phase, project);
+
+            // Check if the phase is active during the month
+            if (phaseEnd >= mnthStart && phaseStart <= mnthEnd) {
+                // Calculate overlap period
+                const overlapStart = Math.max(phaseStart, mnthStart);
+                const overlapEnd = Math.min(phaseEnd, mnthEnd);
+
+                const days = utilCalculateWorkdaysBetweenTimes(overlapStart, overlapEnd, true);
+
+                const dayOfPhase = utilCalculatePhaseSingleDay(phase, project);
+
+                const costForPeriod = dayOfPhase.price * days;
+                const hoursForPeriod = dayOfPhase.hours * days;
+
+                budgetItem.cost += costForPeriod;
+                budgetItem.hours += hoursForPeriod;
+
+                budgetItem.partsCost![phase.name] = costForPeriod;
+                budgetItem.partsHours![phase.name] = hoursForPeriod;
+            }
         });
 
-        return budgetSummary;
+        cumulativeCost += budgetItem.cost;
+        budgetItem.cumulativeCost = cumulativeCost;
+
+        cumulativeHours += budgetItem.hours;
+        budgetItem.cumulativeHours = cumulativeHours;
+
+        budgetSummary.push(budgetItem);
+
+        curMonth = curMonth.plus({ months: 1 }).startOf("month").startOf("day");
     }
+
     return budgetSummary;
 }

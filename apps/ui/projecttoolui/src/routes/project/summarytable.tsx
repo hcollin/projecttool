@@ -92,7 +92,7 @@ function calculateProjectCosts(project: IProject, type: "hours" | "cost" | "both
             if (priceGroup) {
                 row.push(`${priceGroup.price} ${priceGroup.currency}`);
                 hourlyrate = priceGroup.price;
-                currency = priceGroup.currency;
+                currency = project.currency;
             } else {
                 row.push("N/A");
             }

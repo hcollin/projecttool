@@ -37,6 +37,8 @@ export function actionCreateNewProject() {
             fixedprices: [],
         },
         phases: [],
+        currency: CURRENCY.EUR,
+        targetBudget: 0,
     };
 
     const phase1: IPhase = {

@@ -22,3 +22,4 @@ export * from "./utils/time/phasetimeutils";
 export * from "./utils/project/projectutils"
 export * from "./utils/project/phaseUtils";
 export * from "./utils/time/timeUtils";
+export * from "./utils/pricing/currencyUtils";

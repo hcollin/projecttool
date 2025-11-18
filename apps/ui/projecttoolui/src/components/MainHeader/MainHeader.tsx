@@ -1,4 +1,4 @@
-import { Flex, Title, Box, Button } from "@mantine/core";
+import { Flex, Box, Button } from "@mantine/core";
 import AnchorLink from "../AnchorLink/AnchorLink";
 
 

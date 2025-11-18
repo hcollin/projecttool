@@ -126,3 +126,43 @@ export function utilCalculatePhasePrice(phase: IPhase, project: IProject): numbe
 
     return price;
 }
+
+/**
+ * Calculate hours and price for a single day of the given phase
+ * @param phase 
+ * @param project 
+ * @returns 
+ */
+export function utilCalculatePhaseSingleDay(
+    phase: IPhase,
+    project: IProject
+): { hours: number; price: number; currency: string } {
+    const response = {
+        hours: 0,
+        price: 0,
+        currency: "",
+    };
+
+    phase.allocations.forEach((alloc) => {
+        const role = project.roles.find((r) => r.guid === alloc.roleGuid);
+        if (role) {
+            // Calculate hours for one day
+            const hours = 7.5 * (alloc.allocation / 100);
+            response.hours += hours;
+
+            // Calculate price for one day
+            const hourlyGroup = project.prices.hourlypricegroups.find((hg) => hg.guid === role.priceGroupId);
+            if (hourlyGroup) {
+                const price = hourlyGroup.price * hours;
+
+                response.price += price;
+                response.currency = project.currency;
+            } else {
+                console.warn(`No hourly price group found for role ${role.name} in project ${project.codename}`);
+            }
+        } else {
+            console.warn(`No role found for allocation with roleGuid ${alloc.roleGuid} in project ${project.codename}`);
+        }
+    });
+    return response;
+}
