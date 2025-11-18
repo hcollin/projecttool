@@ -37,7 +37,11 @@ function ProjectTechStackComponent() {
                     appLayers={[ETECHAPPLICATIONLAYER.INFRA, ETECHAPPLICATIONLAYER.NETWORK]}
                     target="platform"
                 />
-                <ProjectTechCard title="Tools" appLayers={[ETECHAPPLICATIONLAYER.OTHER, ETECHAPPLICATIONLAYER.NONE]} target="tools" />
+                <ProjectTechCard
+                    title="Tools"
+                    appLayers={[ETECHAPPLICATIONLAYER.OTHER, ETECHAPPLICATIONLAYER.NONE]}
+                    target="tools"
+                />
             </Container>
         </ProjectShell>
     );

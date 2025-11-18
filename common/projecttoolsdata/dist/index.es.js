@@ -1,8 +1,8 @@
-var t = /* @__PURE__ */ ((e) => (e.INTERN = "Intern", e.JUNIOR = "Junior", e.MIDLEVEL = "Mid-level", e.SENIOR = "Senior", e.LEAD = "Lead", e.PRINCIPAL = "Principal", e))(t || {}), n = /* @__PURE__ */ ((e) => (e.LANGUAGE = "Programming Language", e.FRAMEWORK = "Framework", e.SERVICE = "Service", e.LIBRARY = "Library", e.DATABASE = "Database", e.TOOL = "Tool", e.PLATFORM = "Platform", e.OTHER = "Other", e))(n || {}), a = /* @__PURE__ */ ((e) => (e.FRONTEND = "Frontend", e.BACKEND = "Backend", e.DATABASE = "Database", e.INFRA = "Infrastructure", e.NETWORK = "Network", e.SECURITY = "Security", e.NONE = "None", e.OTHER = "Other", e))(a || {}), V = { exports: {} }, pe = V.exports, W;
+var e = /* @__PURE__ */ ((r) => (r.INTERN = "Intern", r.JUNIOR = "Junior", r.MIDLEVEL = "Mid-level", r.SENIOR = "Senior", r.LEAD = "Lead", r.PRINCIPAL = "Principal", r))(e || {}), n = /* @__PURE__ */ ((r) => (r.LANGUAGE = "Programming Language", r.FRAMEWORK = "Framework", r.SERVICE = "Service", r.LIBRARY = "Library", r.DATABASE = "Database", r.TOOL = "Tool", r.PLATFORM = "Platform", r.OTHER = "Other", r))(n || {}), t = /* @__PURE__ */ ((r) => (r.FRONTEND = "Frontend", r.BACKEND = "Backend", r.DATABASE = "Database", r.INFRA = "Infrastructure", r.NETWORK = "Network", r.SECURITY = "Security", r.NONE = "None", r.OTHER = "Other", r))(t || {}), B = { exports: {} }, pe = B.exports, $;
 function le() {
-  return W || (W = 1, (function(e, r) {
+  return $ || ($ = 1, (function(r, a) {
     (function(i, s) {
-      s(r);
+      s(a);
     })(pe, (function(i) {
       function s(o, c) {
         var d = c !== void 0 ? o : 0, u = c !== void 0 ? c : o;
@@ -14,16 +14,16 @@ function le() {
         return o[Math.floor(Math.random() * o.length)];
       }
       function m(o, c, d, u, l) {
-        function h($) {
-          return !(typeof u == "number" && $ < u || typeof l == "number" && $ > l);
+        function f(z) {
+          return !(typeof u == "number" && z < u || typeof l == "number" && z > l);
         }
-        for (var y = o, L = d * 2, P = 0; P < c; P++) {
-          var B = s(0, L) - d;
-          h(y + B) && (y += B);
+        for (var h = o, L = d * 2, P = 0; P < c; P++) {
+          var V = s(0, L) - d;
+          f(h + V) && (h += V);
         }
-        return y;
+        return h;
       }
-      function f(o, c, d) {
+      function A(o, c, d) {
         if (o > c)
           throw new Error("Invalid value: Minimum cannot be higher than max value. " + o + " - " + c);
         var u = d !== void 0 ? d : 5;
@@ -31,17 +31,17 @@ function le() {
           throw new Error("Invalid ramp value " + u + ": Must be between 0 and 10");
         if (u === 0)
           return s(o, c);
-        var l = Math.round(o + (c - o) / 2), h = 11 - u, y = 1 - u / 10, L = Math.round(l * y / 2);
-        return m(l, h, L, o, c);
+        var l = Math.round(o + (c - o) / 2), f = 11 - u, h = 1 - u / 10, L = Math.round(l * h / 2);
+        return m(l, f, L, o, c);
       }
       function g() {
         for (var o = 0, c = 0, d = arguments.length; c < d; c++) o += arguments[c].length;
         for (var u = Array(o), l = 0, c = 0; c < d; c++)
-          for (var h = arguments[c], y = 0, L = h.length; y < L; y++, l++)
-            u[l] = h[y];
+          for (var f = arguments[c], h = 0, L = f.length; h < L; h++, l++)
+            u[l] = f[h];
         return u;
       }
-      function E(o) {
+      function y(o) {
         for (var c = g(o), d = []; c.length > 0; ) {
           var u = s(0, c.length - 1);
           d.push(c.splice(u, 1)[0]);
@@ -67,38 +67,38 @@ function le() {
         }, 0);
       }
       function T(o) {
-        var c = /(\d*)d(\d+)([\+\-]*)(\d*)/im, d = o.replace(" ", "").match(c), u = Number(d[1] || 1), l = Number(d[2]), h = Number(d[4] || 0), y = d[3] === "-" ? h * -1 : h * 1, L = A(l, u), P = C(L) + y, B = {
+        var c = /(\d*)d(\d+)([\+\-]*)(\d*)/im, d = o.replace(" ", "").match(c), u = Number(d[1] || 1), l = Number(d[2]), f = Number(d[4] || 0), h = d[3] === "-" ? f * -1 : f * 1, L = E(l, u), P = C(L) + h, V = {
           sum: P,
           rolls: L,
           dieType: l
         };
-        return B;
+        return V;
       }
-      function A(o, c) {
+      function E(o, c) {
         for (var d = c === void 0 ? 1 : c, u = [], l = 0; l < d; l++)
           u.push(s(1, o));
         return u;
       }
       function re(o) {
-        return A(4, o);
-      }
-      function te(o) {
-        return A(6, o);
-      }
-      function ne(o) {
-        return A(8, o);
+        return E(4, o);
       }
       function ae(o) {
-        return A(10, o);
+        return E(6, o);
+      }
+      function ne(o) {
+        return E(8, o);
+      }
+      function te(o) {
+        return E(10, o);
       }
       function ie(o) {
-        return A(12, o);
+        return E(12, o);
       }
       function oe(o) {
-        return A(20, o);
+        return E(20, o);
       }
       function se(o) {
-        return A(100, o);
+        return E(100, o);
       }
       function ce(o, c) {
         var d = s(o, c), u = c !== void 0 ? c.toString().length : o.toString().length, l = d.toString();
@@ -114,40 +114,40 @@ function le() {
             u.includes(l) || u.push(l);
           }
         else
-          for (var h = 0; h < c; h++)
+          for (var f = 0; f < c; f++)
             d || u.push(p(o));
         return u;
       }
       var ue = {
         d4: re,
-        d6: te,
+        d6: ae,
         d8: ne,
-        d10: ae,
+        d10: te,
         d12: ie,
         d20: oe,
         d100: se,
         roll: T
       };
-      i.Dice = ue, i.arnd = p, i.arnds = de, i.chance = b, i.nrnd = f, i.padrnd = ce, i.rnd = s, i.shuffle = E, i.successPool = S, i.sumPool = C, Object.defineProperty(i, "__esModule", { value: !0 });
+      i.Dice = ue, i.arnd = p, i.arnds = de, i.chance = b, i.nrnd = A, i.padrnd = ce, i.rnd = s, i.shuffle = y, i.successPool = S, i.sumPool = C, Object.defineProperty(i, "__esModule", { value: !0 });
     }));
-  })(V, V.exports)), V.exports;
+  })(B, B.exports)), B.exports;
 }
 le();
 class ge extends Error {
 }
-class v extends ge {
+class I extends ge {
   constructor() {
     super("Zone is an abstract class");
   }
 }
-class z {
+class W {
   /**
    * The type of zone
    * @abstract
    * @type {string}
    */
   get type() {
-    throw new v();
+    throw new I();
   }
   /**
    * The name of this zone.
@@ -155,7 +155,7 @@ class z {
    * @type {string}
    */
   get name() {
-    throw new v();
+    throw new I();
   }
   /**
    * The IANA name of this zone.
@@ -172,7 +172,7 @@ class z {
    * @type {boolean}
    */
   get isUniversal() {
-    throw new v();
+    throw new I();
   }
   /**
    * Returns the offset's common name (such as EST) at the specified timestamp
@@ -183,8 +183,8 @@ class z {
    * @param {string} opts.locale - What locale to return the offset name in.
    * @return {string}
    */
-  offsetName(r, i) {
-    throw new v();
+  offsetName(a, i) {
+    throw new I();
   }
   /**
    * Returns the offset's value as a string
@@ -194,8 +194,8 @@ class z {
    *                          Accepts 'narrow', 'short', or 'techie'. Returning '+6', '+06:00', or '+0600' respectively
    * @return {string}
    */
-  formatOffset(r, i) {
-    throw new v();
+  formatOffset(a, i) {
+    throw new I();
   }
   /**
    * Return the offset in minutes for this zone at the specified timestamp.
@@ -203,8 +203,8 @@ class z {
    * @param {number} ts - Epoch milliseconds for which to compute the offset
    * @return {number}
    */
-  offset(r) {
-    throw new v();
+  offset(a) {
+    throw new I();
   }
   /**
    * Return whether this Zone is equal to another zone
@@ -212,8 +212,8 @@ class z {
    * @param {Zone} otherZone - the zone to compare
    * @return {boolean}
    */
-  equals(r) {
-    throw new v();
+  equals(a) {
+    throw new I();
   }
   /**
    * Return whether this Zone is valid.
@@ -221,15 +221,15 @@ class z {
    * @type {boolean}
    */
   get isValid() {
-    throw new v();
+    throw new I();
   }
 }
 const G = /* @__PURE__ */ new Map();
-function me(e) {
-  let r = G.get(e);
-  return r === void 0 && (r = new Intl.DateTimeFormat("en-US", {
+function me(r) {
+  let a = G.get(r);
+  return a === void 0 && (a = new Intl.DateTimeFormat("en-US", {
     hour12: !1,
-    timeZone: e,
+    timeZone: r,
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
@@ -237,9 +237,9 @@ function me(e) {
     minute: "2-digit",
     second: "2-digit",
     era: "short"
-  }), G.set(e, r)), r;
+  }), G.set(r, a)), a;
 }
-const fe = {
+const Ae = {
   year: 0,
   month: 1,
   day: 2,
@@ -248,27 +248,27 @@ const fe = {
   minute: 5,
   second: 6
 };
-function Ae(e, r) {
-  const i = e.format(r).replace(/\u200E/g, ""), s = /(\d+)\/(\d+)\/(\d+) (AD|BC),? (\d+):(\d+):(\d+)/.exec(i), [, p, m, f, g, E, b, S] = s;
-  return [f, p, m, g, E, b, S];
+function Ee(r, a) {
+  const i = r.format(a).replace(/\u200E/g, ""), s = /(\d+)\/(\d+)\/(\d+) (AD|BC),? (\d+):(\d+):(\d+)/.exec(i), [, p, m, A, g, y, b, S] = s;
+  return [A, p, m, g, y, b, S];
 }
-function he(e, r) {
-  const i = e.formatToParts(r), s = [];
+function fe(r, a) {
+  const i = r.formatToParts(a), s = [];
   for (let p = 0; p < i.length; p++) {
-    const { type: m, value: f } = i[p], g = fe[m];
-    m === "era" ? s[g] = f : U(g) || (s[g] = parseInt(f, 10));
+    const { type: m, value: A } = i[p], g = Ae[m];
+    m === "era" ? s[g] = A : U(g) || (s[g] = parseInt(A, 10));
   }
   return s;
 }
 const K = /* @__PURE__ */ new Map();
-class x extends z {
+class x extends W {
   /**
    * @param {string} name - Zone name
    * @return {IANAZone}
    */
-  static create(r) {
-    let i = K.get(r);
-    return i === void 0 && K.set(r, i = new x(r)), i;
+  static create(a) {
+    let i = K.get(a);
+    return i === void 0 && K.set(a, i = new x(a)), i;
   }
   /**
    * Reset local caches. Should only be necessary in testing scenarios.
@@ -285,8 +285,8 @@ class x extends z {
    * @deprecated For backward compatibility, this forwards to isValidZone, better use `isValidZone()` directly instead.
    * @return {boolean}
    */
-  static isValidSpecifier(r) {
-    return this.isValidZone(r);
+  static isValidSpecifier(a) {
+    return this.isValidZone(a);
   }
   /**
    * Returns whether the provided string identifies a real zone
@@ -296,17 +296,17 @@ class x extends z {
    * @example IANAZone.isValidZone("Sport~~blorp") //=> false
    * @return {boolean}
    */
-  static isValidZone(r) {
-    if (!r)
+  static isValidZone(a) {
+    if (!a)
       return !1;
     try {
-      return new Intl.DateTimeFormat("en-US", { timeZone: r }).format(), !0;
+      return new Intl.DateTimeFormat("en-US", { timeZone: a }).format(), !0;
     } catch {
       return !1;
     }
   }
-  constructor(r) {
-    super(), this.zoneName = r, this.valid = x.isValidZone(r);
+  constructor(a) {
+    super(), this.zoneName = a, this.valid = x.isValidZone(a);
   }
   /**
    * The type of zone. `iana` for all instances of `IANAZone`.
@@ -342,8 +342,8 @@ class x extends z {
    * @param {string} opts.locale - What locale to return the offset name in.
    * @return {string}
    */
-  offsetName(r, { format: i, locale: s }) {
-    return Le(r, i, s, this.name);
+  offsetName(a, { format: i, locale: s }) {
+    return Le(a, i, s, this.name);
   }
   /**
    * Returns the offset's value as a string
@@ -353,8 +353,8 @@ class x extends z {
    *                          Accepts 'narrow', 'short', or 'techie'. Returning '+6', '+06:00', or '+0600' respectively
    * @return {string}
    */
-  formatOffset(r, i) {
-    return k(this.offset(r), i);
+  formatOffset(a, i) {
+    return k(this.offset(a), i);
   }
   /**
    * Return the offset in minutes for this zone at the specified timestamp.
@@ -362,25 +362,25 @@ class x extends z {
    * @param {number} ts - Epoch milliseconds for which to compute the offset
    * @return {number}
    */
-  offset(r) {
+  offset(a) {
     if (!this.valid) return NaN;
-    const i = new Date(r);
+    const i = new Date(a);
     if (isNaN(i)) return NaN;
     const s = me(this.name);
-    let [p, m, f, g, E, b, S] = s.formatToParts ? he(s, i) : Ae(s, i);
+    let [p, m, A, g, y, b, S] = s.formatToParts ? fe(s, i) : Ee(s, i);
     g === "BC" && (p = -Math.abs(p) + 1);
-    const C = Ee({
+    const C = ye({
       year: p,
       month: m,
-      day: f,
-      hour: E === 24 ? 0 : E,
+      day: A,
+      hour: y === 24 ? 0 : y,
       minute: b,
       second: S,
       millisecond: 0
     });
     let T = +i;
-    const A = T % 1e3;
-    return T -= A >= 0 ? A : 1e3 + A, (C - T) / (60 * 1e3);
+    const E = T % 1e3;
+    return T -= E >= 0 ? E : 1e3 + E, (C - T) / (60 * 1e3);
   }
   /**
    * Return whether this Zone is equal to another zone
@@ -388,8 +388,8 @@ class x extends z {
    * @param {Zone} otherZone - the zone to compare
    * @return {boolean}
    */
-  equals(r) {
-    return r.type === "iana" && r.name === this.name;
+  equals(a) {
+    return a.type === "iana" && a.name === this.name;
   }
   /**
    * Return whether this Zone is valid.
@@ -401,21 +401,21 @@ class x extends z {
   }
 }
 let J = null;
-class N extends z {
+class v extends W {
   /**
    * Get a singleton instance of UTC
    * @return {FixedOffsetZone}
    */
   static get utcInstance() {
-    return J === null && (J = new N(0)), J;
+    return J === null && (J = new v(0)), J;
   }
   /**
    * Get an instance with a specified offset
    * @param {number} offset - The offset in minutes
    * @return {FixedOffsetZone}
    */
-  static instance(r) {
-    return r === 0 ? N.utcInstance : new N(r);
+  static instance(a) {
+    return a === 0 ? v.utcInstance : new v(a);
   }
   /**
    * Get an instance of FixedOffsetZone from a UTC offset string, like "UTC+6"
@@ -425,16 +425,16 @@ class N extends z {
    * @example FixedOffsetZone.parseSpecifier("UTC-6:00")
    * @return {FixedOffsetZone}
    */
-  static parseSpecifier(r) {
-    if (r) {
-      const i = r.match(/^utc(?:([+-]\d{1,2})(?::(\d{2}))?)?$/i);
+  static parseSpecifier(a) {
+    if (a) {
+      const i = a.match(/^utc(?:([+-]\d{1,2})(?::(\d{2}))?)?$/i);
       if (i)
-        return new N(q(i[1], i[2]));
+        return new v(q(i[1], i[2]));
     }
     return null;
   }
-  constructor(r) {
-    super(), this.fixed = r;
+  constructor(a) {
+    super(), this.fixed = a;
   }
   /**
    * The type of zone. `fixed` for all instances of `FixedOffsetZone`.
@@ -479,7 +479,7 @@ class N extends z {
    *                          Accepts 'narrow', 'short', or 'techie'. Returning '+6', '+06:00', or '+0600' respectively
    * @return {string}
    */
-  formatOffset(r, i) {
+  formatOffset(a, i) {
     return k(this.fixed, i);
   }
   /**
@@ -507,8 +507,8 @@ class N extends z {
    * @param {Zone} otherZone - the zone to compare
    * @return {boolean}
    */
-  equals(r) {
-    return r.type === "fixed" && r.fixed === this.fixed;
+  equals(a) {
+    return a.type === "fixed" && a.fixed === this.fixed;
   }
   /**
    * Return whether this Zone is valid:
@@ -520,38 +520,38 @@ class N extends z {
     return !0;
   }
 }
-function U(e) {
-  return typeof e > "u";
+function U(r) {
+  return typeof r > "u";
 }
-function F(e, r = 2) {
-  const i = e < 0;
+function F(r, a = 2) {
+  const i = r < 0;
   let s;
-  return i ? s = "-" + ("" + -e).padStart(r, "0") : s = ("" + e).padStart(r, "0"), s;
+  return i ? s = "-" + ("" + -r).padStart(a, "0") : s = ("" + r).padStart(a, "0"), s;
 }
-function Y(e) {
-  if (!(U(e) || e === null || e === ""))
-    return parseInt(e, 10);
+function Y(r) {
+  if (!(U(r) || r === null || r === ""))
+    return parseInt(r, 10);
 }
-function ye(e) {
-  if (!(U(e) || e === null || e === "")) {
-    const r = parseFloat("0." + e) * 1e3;
-    return Math.floor(r);
+function he(r) {
+  if (!(U(r) || r === null || r === "")) {
+    const a = parseFloat("0." + r) * 1e3;
+    return Math.floor(a);
   }
 }
-function Ee(e) {
-  let r = Date.UTC(
-    e.year,
-    e.month - 1,
-    e.day,
-    e.hour,
-    e.minute,
-    e.second,
-    e.millisecond
+function ye(r) {
+  let a = Date.UTC(
+    r.year,
+    r.month - 1,
+    r.day,
+    r.hour,
+    r.minute,
+    r.second,
+    r.millisecond
   );
-  return e.year < 100 && e.year >= 0 && (r = new Date(r), r.setUTCFullYear(e.year, e.month - 1, e.day)), +r;
+  return r.year < 100 && r.year >= 0 && (a = new Date(a), a.setUTCFullYear(r.year, r.month - 1, r.day)), +a;
 }
-function Le(e, r, i, s = null) {
-  const p = new Date(e), m = {
+function Le(r, a, i, s = null) {
+  const p = new Date(r), m = {
     hourCycle: "h23",
     year: "numeric",
     month: "2-digit",
@@ -560,18 +560,18 @@ function Le(e, r, i, s = null) {
     minute: "2-digit"
   };
   s && (m.timeZone = s);
-  const f = { timeZoneName: r, ...m }, g = new Intl.DateTimeFormat(i, f).formatToParts(p).find((E) => E.type.toLowerCase() === "timezonename");
+  const A = { timeZoneName: a, ...m }, g = new Intl.DateTimeFormat(i, A).formatToParts(p).find((y) => y.type.toLowerCase() === "timezonename");
   return g ? g.value : null;
 }
-function q(e, r) {
-  let i = parseInt(e, 10);
+function q(r, a) {
+  let i = parseInt(r, 10);
   Number.isNaN(i) && (i = 0);
-  const s = parseInt(r, 10) || 0, p = i < 0 || Object.is(i, -0) ? -s : s;
+  const s = parseInt(a, 10) || 0, p = i < 0 || Object.is(i, -0) ? -s : s;
   return i * 60 + p;
 }
-function k(e, r) {
-  const i = Math.trunc(Math.abs(e / 60)), s = Math.trunc(Math.abs(e % 60)), p = e >= 0 ? "+" : "-";
-  switch (r) {
+function k(r, a) {
+  const i = Math.trunc(Math.abs(r / 60)), s = Math.trunc(Math.abs(r % 60)), p = r >= 0 ? "+" : "-";
+  switch (a) {
     case "short":
       return `${p}${F(i, 2)}:${F(s, 2)}`;
     case "narrow":
@@ -579,133 +579,155 @@ function k(e, r) {
     case "techie":
       return `${p}${F(i, 2)}${F(s, 2)}`;
     default:
-      throw new RangeError(`Value format ${r} is out of range for property format`);
+      throw new RangeError(`Value format ${a} is out of range for property format`);
   }
 }
-const Z = /[A-Za-z_+-]{1,256}(?::?\/[A-Za-z0-9_+-]{1,256}(?:\/[A-Za-z0-9_+-]{1,256})?)?/;
-function I(...e) {
-  const r = e.reduce((i, s) => i + s.source, "");
-  return RegExp(`^${r}$`);
+const Q = /[A-Za-z_+-]{1,256}(?::?\/[A-Za-z0-9_+-]{1,256}(?:\/[A-Za-z0-9_+-]{1,256})?)?/;
+function R(...r) {
+  const a = r.reduce((i, s) => i + s.source, "");
+  return RegExp(`^${a}$`);
 }
-function D(...e) {
-  return (r) => e.reduce(
+function D(...r) {
+  return (a) => r.reduce(
     ([i, s, p], m) => {
-      const [f, g, E] = m(r, p);
-      return [{ ...i, ...f }, g || s, E];
+      const [A, g, y] = m(a, p);
+      return [{ ...i, ...A }, g || s, y];
     },
     [{}, null, 1]
   ).slice(0, 2);
 }
-function Q(...e) {
-  return (r, i) => {
+function Z(...r) {
+  return (a, i) => {
     const s = {};
     let p;
-    for (p = 0; p < e.length; p++)
-      s[e[p]] = Y(r[i + p]);
+    for (p = 0; p < r.length; p++)
+      s[r[p]] = Y(a[i + p]);
     return [s, null, i + p];
   };
 }
-const H = /(?:([Zz])|([+-]\d\d)(?::?(\d\d))?)/, ve = `(?:${H.source}?(?:\\[(${Z.source})\\])?)?`, _ = /(\d\d)(?::?(\d\d)(?::?(\d\d)(?:[.,](\d{1,30}))?)?)?/, X = RegExp(`${_.source}${ve}`), j = RegExp(`(?:[Tt]${X.source})?`), Ne = /([+-]\d{6}|\d{4})(?:-?(\d\d)(?:-?(\d\d))?)?/, Re = /(\d{4})-?W(\d\d)(?:-?(\d))?/, Ie = /(\d{4})-?(\d{3})/, De = Q("weekYear", "weekNumber", "weekDay"), Oe = Q("year", "ordinal"), be = /(\d{4})-(\d\d)-(\d\d)/, ee = RegExp(
-  `${_.source} ?(?:${H.source}|(${Z.source}))?`
+const H = /(?:([Zz])|([+-]\d\d)(?::?(\d\d))?)/, Ie = `(?:${H.source}?(?:\\[(${Q.source})\\])?)?`, _ = /(\d\d)(?::?(\d\d)(?::?(\d\d)(?:[.,](\d{1,30}))?)?)?/, X = RegExp(`${_.source}${Ie}`), j = RegExp(`(?:[Tt]${X.source})?`), ve = /([+-]\d{6}|\d{4})(?:-?(\d\d)(?:-?(\d\d))?)?/, Ne = /(\d{4})-?W(\d\d)(?:-?(\d))?/, Re = /(\d{4})-?(\d{3})/, De = Z("weekYear", "weekNumber", "weekDay"), Oe = Z("year", "ordinal"), be = /(\d{4})-(\d\d)-(\d\d)/, ee = RegExp(
+  `${_.source} ?(?:${H.source}|(${Q.source}))?`
 ), Se = RegExp(`(?: ${ee.source})?`);
-function R(e, r, i) {
-  const s = e[r];
+function N(r, a, i) {
+  const s = r[a];
   return U(s) ? i : Y(s);
 }
-function Te(e, r) {
+function Te(r, a) {
   return [{
-    year: R(e, r),
-    month: R(e, r + 1, 1),
-    day: R(e, r + 2, 1)
-  }, null, r + 3];
+    year: N(r, a),
+    month: N(r, a + 1, 1),
+    day: N(r, a + 2, 1)
+  }, null, a + 3];
 }
-function O(e, r) {
+function O(r, a) {
   return [{
-    hours: R(e, r, 0),
-    minutes: R(e, r + 1, 0),
-    seconds: R(e, r + 2, 0),
-    milliseconds: ye(e[r + 3])
-  }, null, r + 4];
+    hours: N(r, a, 0),
+    minutes: N(r, a + 1, 0),
+    seconds: N(r, a + 2, 0),
+    milliseconds: he(r[a + 3])
+  }, null, a + 4];
 }
-function w(e, r) {
-  const i = !e[r] && !e[r + 1], s = q(e[r + 1], e[r + 2]), p = i ? null : N.instance(s);
-  return [{}, p, r + 3];
+function M(r, a) {
+  const i = !r[a] && !r[a + 1], s = q(r[a + 1], r[a + 2]), p = i ? null : v.instance(s);
+  return [{}, p, a + 3];
 }
-function M(e, r) {
-  const i = e[r] ? x.create(e[r]) : null;
-  return [{}, i, r + 1];
+function w(r, a) {
+  const i = r[a] ? x.create(r[a]) : null;
+  return [{}, i, a + 1];
 }
-I(Ne, j);
-I(Re, j);
-I(Ie, j);
-I(X);
+R(ve, j);
+R(Ne, j);
+R(Re, j);
+R(X);
 D(
   Te,
   O,
-  w,
-  M
+  M,
+  w
 );
 D(
   De,
   O,
-  w,
-  M
+  M,
+  w
 );
 D(
   Oe,
   O,
-  w,
-  M
+  M,
+  w
 );
 D(
   O,
-  w,
-  M
+  M,
+  w
 );
 D(O);
-I(be, Se);
-I(ee);
+R(be, Se);
+R(ee);
 D(
   O,
-  w,
-  M
+  M,
+  w
 );
-const we = [
+const Me = [
   // Management
   {
     id: "role-manager-project",
     name: "Project Manager",
     groups: ["Management"],
-    seniorities: [t.MIDLEVEL, t.SENIOR, t.LEAD],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD],
     description: "Oversees project planning, execution, and delivery, ensuring goals are met on time and within budget."
   },
   {
     id: "role-manager-product",
     name: "Product Manager",
     groups: ["Management"],
-    seniorities: [t.MIDLEVEL, t.SENIOR, t.LEAD],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD],
     description: "Defines product vision, strategy, and roadmap, and coordinates cross-functional teams to deliver product success."
-  },
-  {
-    id: "role-manager-scrum",
-    name: "Scrum Master",
-    groups: ["Management"],
-    seniorities: [t.JUNIOR, t.MIDLEVEL, t.SENIOR],
-    description: "Facilitates Agile processes, removes impediments, and supports the Scrum team in delivering value."
   },
   {
     id: "role-services-manager",
     name: "Services Manager",
     groups: ["Management"],
-    seniorities: [t.MIDLEVEL, t.SENIOR],
+    seniorities: [e.MIDLEVEL, e.SENIOR],
     description: "Manages service delivery, client relationships, and ensures high-quality support and operations."
   },
+  // Agile
   {
-    id: "role-release-manager",
-    name: "Release Manager",
-    groups: ["Management"],
-    seniorities: [t.MIDLEVEL, t.SENIOR],
-    description: "Coordinates software releases, deployment schedules, and ensures smooth delivery to production."
+    id: "role-manager-productowner",
+    name: "Product Owner",
+    groups: ["Agile"],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD, e.PRINCIPAL],
+    description: "Represents stakeholders, manages the product backlog, and ensures the development team delivers value to the business."
+  },
+  {
+    id: "role-manager-scrum",
+    name: "Scrum Master",
+    groups: ["Agile"],
+    seniorities: [e.JUNIOR, e.MIDLEVEL, e.SENIOR],
+    description: "Facilitates Agile processes, removes impediments, and supports the Scrum team in delivering value."
+  },
+  {
+    id: "role-agile-coach",
+    name: "Agile Coach",
+    groups: ["Agile"],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD, e.PRINCIPAL],
+    description: "Guides teams and organizations in Agile practices, fostering a culture of continuous improvement and collaboration."
+  },
+  {
+    id: "role-agile-safe-rte",
+    name: "SAFe Release Train Engineer",
+    groups: ["Agile"],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD, e.PRINCIPAL],
+    description: "Serves as the Release Train Engineer (RTE) in SAFe, facilitating program-level processes and execution for Agile Release Trains."
+  },
+  {
+    id: "role-agile-safe-spm",
+    name: "SAFe Product Manager",
+    groups: ["Agile"],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD, e.PRINCIPAL],
+    description: "Acts as the SAFe Product Manager, defining and prioritizing program backlogs to align with business objectives."
   },
   // Developers
   {
@@ -713,11 +735,11 @@ const we = [
     name: "Frontend Developer",
     groups: ["Developers"],
     seniorities: [
-      t.JUNIOR,
-      t.MIDLEVEL,
-      t.SENIOR,
-      t.LEAD,
-      t.PRINCIPAL
+      e.JUNIOR,
+      e.MIDLEVEL,
+      e.SENIOR,
+      e.LEAD,
+      e.PRINCIPAL
     ],
     description: "Builds and maintains user interfaces and client-side logic for web and mobile applications."
   },
@@ -726,11 +748,11 @@ const we = [
     name: "Backend Developer",
     groups: ["Developers"],
     seniorities: [
-      t.JUNIOR,
-      t.MIDLEVEL,
-      t.SENIOR,
-      t.LEAD,
-      t.PRINCIPAL
+      e.JUNIOR,
+      e.MIDLEVEL,
+      e.SENIOR,
+      e.LEAD,
+      e.PRINCIPAL
     ],
     description: "Develops server-side logic, APIs, and database interactions to support application functionality."
   },
@@ -739,27 +761,41 @@ const we = [
     name: "Fullstack Developer",
     groups: ["Developers"],
     seniorities: [
-      t.JUNIOR,
-      t.MIDLEVEL,
-      t.SENIOR,
-      t.LEAD,
-      t.PRINCIPAL
+      e.JUNIOR,
+      e.MIDLEVEL,
+      e.SENIOR,
+      e.LEAD,
+      e.PRINCIPAL
     ],
     description: "Works across both frontend and backend, delivering end-to-end solutions for applications."
   },
+  {
+    id: "role-dev-intern",
+    name: "Development Intern",
+    groups: ["Developers"],
+    seniorities: [e.INTERN],
+    description: "Assists development teams with basic tasks and learns software development practices."
+  },
   // QA
+  {
+    id: "role-qa-manager",
+    name: "Test Manager",
+    groups: ["QA"],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD],
+    description: "Oversees testing strategies, coordinates QA teams, and ensures product quality standards are met."
+  },
   {
     id: "role-qa-tester",
     name: "QA Tester",
     groups: ["QA"],
-    seniorities: [t.JUNIOR, t.MIDLEVEL, t.SENIOR],
+    seniorities: [e.JUNIOR, e.MIDLEVEL, e.SENIOR],
     description: "Tests software to identify bugs, ensure quality, and verify requirements are met."
   },
   {
     id: "role-qa-automation",
     name: "QA Automation Engineer",
     groups: ["QA"],
-    seniorities: [t.MIDLEVEL, t.SENIOR, t.LEAD],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD],
     description: "Designs, develops, and maintains automated test scripts and frameworks."
   },
   // Design
@@ -767,188 +803,238 @@ const we = [
     id: "role-design-ux",
     name: "UX Designer",
     groups: ["Design"],
-    seniorities: [t.JUNIOR, t.MIDLEVEL, t.SENIOR],
+    seniorities: [e.JUNIOR, e.MIDLEVEL, e.SENIOR],
     description: "Researches and designs user experiences to ensure products are intuitive and user-friendly."
   },
   {
     id: "role-design-ui",
     name: "UI Designer",
     groups: ["Design"],
-    seniorities: [t.JUNIOR, t.MIDLEVEL, t.SENIOR],
+    seniorities: [e.JUNIOR, e.MIDLEVEL, e.SENIOR],
     description: "Creates visually appealing and effective user interfaces for digital products."
   },
   {
     id: "role-design-graphic",
     name: "Graphic Designer",
     groups: ["Design"],
-    seniorities: [t.JUNIOR, t.MIDLEVEL, t.SENIOR],
+    seniorities: [e.JUNIOR, e.MIDLEVEL, e.SENIOR],
     description: "Designs graphics, illustrations, and visual assets for branding and communication."
   },
   {
     id: "role-services-designer",
     name: "Services Designer",
     groups: ["Design"],
-    seniorities: [t.MIDLEVEL, t.SENIOR],
+    seniorities: [e.MIDLEVEL, e.SENIOR],
     description: "Designs and optimizes service processes and customer journeys for better experiences."
   },
   // DevOps
   {
+    id: "role-release-manager",
+    name: "Release Manager",
+    groups: ["DevOps"],
+    seniorities: [e.MIDLEVEL, e.SENIOR],
+    description: "Coordinates software releases, deployment schedules, and ensures smooth delivery to production."
+  },
+  {
     id: "role-devops-engineer",
     name: "DevOps Engineer",
     groups: ["DevOps"],
-    seniorities: [t.MIDLEVEL, t.SENIOR, t.LEAD],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD],
     description: "Implements CI/CD pipelines, manages infrastructure, and ensures reliable deployments."
   },
   {
     id: "role-devops-security",
     name: "Security Engineer",
     groups: ["DevOps"],
-    seniorities: [t.SENIOR, t.LEAD, t.PRINCIPAL],
+    seniorities: [e.SENIOR, e.LEAD, e.PRINCIPAL],
     description: "Secures systems, applications, and infrastructure against threats and vulnerabilities."
+  },
+  {
+    id: "role-devops-sre",
+    name: "Site Reliability Engineer",
+    groups: ["DevOps"],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD],
+    description: "Ensures reliability, scalability, and performance of systems through automation and monitoring."
+  },
+  {
+    id: "role-devops-platform",
+    name: "Platform Engineer",
+    groups: ["DevOps"],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD],
+    description: "Builds and maintains internal platforms and tools to support development and operations teams."
+  },
+  // Data
+  {
+    id: "role-data-scientist",
+    name: "Data Scientist",
+    groups: ["Data"],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD],
+    description: "Analyzes complex data, builds predictive models, and extracts insights to support business decisions."
+  },
+  {
+    id: "role-arch-data",
+    name: "Data Architect",
+    groups: ["Data"],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD, e.PRINCIPAL],
+    description: "Designs data models, databases, and data flows for effective data management."
+  },
+  {
+    id: "role-data-mlengineer",
+    name: "Machine Learning Engineer",
+    groups: ["Data"],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD],
+    description: "Designs, builds, and deploys machine learning models and data pipelines."
+  },
+  {
+    id: "role-data-analyst",
+    name: "Data Analyst",
+    groups: ["Data"],
+    seniorities: [e.JUNIOR, e.MIDLEVEL, e.SENIOR],
+    description: "Collects, processes, and analyzes data to generate actionable insights and reports."
+  },
+  {
+    id: "role-devops-databaseadmin",
+    name: "Database Administrator",
+    groups: ["Data"],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD],
+    description: "Manages and maintains database systems, ensuring performance, security, and availability."
   },
   // Architecture
   {
     id: "role-arch-software",
     name: "Software Architect",
     groups: ["Architecture"],
-    seniorities: [t.MIDLEVEL, t.SENIOR, t.LEAD, t.PRINCIPAL],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD, e.PRINCIPAL],
     description: "Designs software systems, sets technical direction, and ensures architectural integrity."
   },
   {
-    id: "role-arch-systems",
-    name: "Systems Architect",
+    id: "role-arch-solution",
+    name: "Solution Architect",
     groups: ["Architecture"],
-    seniorities: [t.MIDLEVEL, t.SENIOR, t.LEAD, t.PRINCIPAL],
-    description: "Designs and integrates complex IT systems and infrastructure."
-  },
-  {
-    id: "role-arch-cloud",
-    name: "Cloud Architect",
-    groups: ["Architecture"],
-    seniorities: [t.MIDLEVEL, t.SENIOR, t.LEAD, t.PRINCIPAL],
-    description: "Architects cloud solutions, manages cloud infrastructure, and ensures scalability and security."
-  },
-  {
-    id: "role-arch-data",
-    name: "Data Architect",
-    groups: ["Architecture"],
-    seniorities: [t.MIDLEVEL, t.SENIOR, t.LEAD, t.PRINCIPAL],
-    description: "Designs data models, databases, and data flows for effective data management."
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD, e.PRINCIPAL],
+    description: "Designs end-to-end solutions, integrating systems and technologies to meet business needs."
   },
   {
     id: "role-arch-enterprise",
     name: "Enterprise Architect",
     groups: ["Architecture"],
-    seniorities: [t.MIDLEVEL, t.SENIOR, t.LEAD, t.PRINCIPAL],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD, e.PRINCIPAL],
     description: "Aligns IT strategy with business goals, overseeing enterprise-wide architecture."
   },
   {
     id: "role-arch-security",
     name: "Security Architect",
     groups: ["Architecture"],
-    seniorities: [t.MIDLEVEL, t.SENIOR, t.LEAD, t.PRINCIPAL],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD, e.PRINCIPAL],
     description: "Designs security architecture and policies to protect systems and data."
   },
   {
-    id: "role-arch-solution",
-    name: "Solution Architect",
+    id: "role-arch-systems",
+    name: "Systems Architect",
     groups: ["Architecture"],
-    seniorities: [t.MIDLEVEL, t.SENIOR, t.LEAD, t.PRINCIPAL],
-    description: "Designs end-to-end solutions, integrating systems and technologies to meet business needs."
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD, e.PRINCIPAL],
+    description: "Designs and integrates complex IT systems and infrastructure."
+  },
+  {
+    id: "role-arch-cloud",
+    name: "Cloud Architect",
+    groups: ["Architecture"],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD, e.PRINCIPAL],
+    description: "Architects cloud solutions, manages cloud infrastructure, and ensures scalability and security."
   },
   // Other
   {
     id: "role-business-analyst",
     name: "Business Analyst",
-    groups: [],
-    seniorities: [t.MIDLEVEL, t.SENIOR],
+    groups: ["Consulting"],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD, e.PRINCIPAL],
     description: "Analyzes business processes, gathers requirements, and bridges the gap between stakeholders and development teams."
   },
   {
-    id: "role-dev-intern",
-    name: "Development Intern",
-    groups: [],
-    seniorities: [t.INTERN],
-    description: "Assists development teams with basic tasks and learns software development practices."
+    id: "role-consultant-it",
+    name: "IT Consultant",
+    groups: ["Consulting"],
+    seniorities: [e.MIDLEVEL, e.SENIOR, e.LEAD, e.PRINCIPAL],
+    description: "Provides expert advice on IT strategies, solutions, and implementations to improve business performance."
   },
   {
     id: "role-technical-writer",
     name: "Technical Writer",
     groups: [],
-    seniorities: [t.JUNIOR, t.MIDLEVEL, t.SENIOR],
+    seniorities: [e.JUNIOR, e.MIDLEVEL, e.SENIOR],
     description: "Creates and maintains technical documentation, manuals, and guides for products and systems."
   }
-], Me = [
+], we = [
   // FRONTEND
   {
     guid: "tech-react",
     name: "React",
     description: "A JavaScript library for building user interfaces",
     category: [n.LIBRARY],
-    appLayer: [a.FRONTEND]
+    appLayer: [t.FRONTEND]
   },
   {
     guid: "tech-angular",
     name: "Angular",
     description: "A TypeScript-based open-source web application framework.",
     category: [n.FRAMEWORK],
-    appLayer: [a.FRONTEND]
+    appLayer: [t.FRONTEND]
   },
   {
     guid: "tech-vue",
     name: "Vue",
     description: "A progressive JavaScript framework for building user interfaces.",
     category: [n.FRAMEWORK],
-    appLayer: [a.FRONTEND]
+    appLayer: [t.FRONTEND]
   },
   {
     guid: "tech-svelte",
     name: "Svelte",
     description: "A compiler that generates minimal and highly optimized JavaScript for building UIs.",
     category: [n.FRAMEWORK],
-    appLayer: [a.FRONTEND]
+    appLayer: [t.FRONTEND]
   },
   {
     guid: "tech-material-design",
     name: "Material Design",
     description: "A design system developed by Google for building visually appealing UIs.",
     category: [n.LIBRARY],
-    appLayer: [a.FRONTEND]
+    appLayer: [t.FRONTEND]
   },
   {
     guid: "tech-mantine",
     name: "Mantine",
     description: "A modern React component library for building UIs.",
     category: [n.LIBRARY],
-    appLayer: [a.FRONTEND]
+    appLayer: [t.FRONTEND]
   },
   {
     guid: "tech-redux",
     name: "Redux",
     description: "A predictable state container for JavaScript apps.",
     category: [n.LIBRARY],
-    appLayer: [a.FRONTEND]
+    appLayer: [t.FRONTEND]
   },
   {
     guid: "tech-jotai",
     name: "Jotai",
     description: "A primitive and flexible state management library for React.",
     category: [n.LIBRARY],
-    appLayer: [a.FRONTEND]
+    appLayer: [t.FRONTEND]
   },
   {
     guid: "tech-zustand",
     name: "Zustand",
     description: "A small, fast, and scalable state-management solution for React.",
     category: [n.LIBRARY],
-    appLayer: [a.FRONTEND]
+    appLayer: [t.FRONTEND]
   },
   {
     guid: "tech-valtio",
     name: "Valtio",
     description: "A proxy-state library for React state management.",
     category: [n.LIBRARY],
-    appLayer: [a.FRONTEND]
+    appLayer: [t.FRONTEND]
   },
   // FRONTEND & BACKEND
   {
@@ -956,21 +1042,21 @@ const we = [
     name: "Vite",
     description: "A fast build tool and development server for modern web projects.",
     category: [n.TOOL],
-    appLayer: [a.FRONTEND, a.BACKEND]
+    appLayer: [t.FRONTEND, t.BACKEND]
   },
   {
     guid: "tech-typescript",
     name: "TypeScript",
     description: "A strongly typed programming language that builds on JavaScript.",
     category: [n.LANGUAGE],
-    appLayer: [a.FRONTEND, a.BACKEND]
+    appLayer: [t.FRONTEND, t.BACKEND]
   },
   {
     guid: "tech-javascript",
     name: "JavaScript",
     description: "A high-level, interpreted programming language for web development.",
     category: [n.LANGUAGE],
-    appLayer: [a.FRONTEND, a.BACKEND]
+    appLayer: [t.FRONTEND, t.BACKEND]
   },
   // BACKEND
   {
@@ -978,112 +1064,112 @@ const we = [
     name: "Java",
     description: "A high-level, class-based, object-oriented programming language.",
     category: [n.LANGUAGE],
-    appLayer: [a.BACKEND]
+    appLayer: [t.BACKEND]
   },
   {
     guid: "tech-nodejs",
     name: "Node.js",
     description: "JavaScript runtime built on Chrome's V8 JavaScript engine",
     category: [n.PLATFORM],
-    appLayer: [a.BACKEND]
+    appLayer: [t.BACKEND]
   },
   {
     guid: "tech-spring-boot",
     name: "Spring Boot",
     description: "A framework for building stand-alone, production-grade Spring-based applications.",
     category: [n.FRAMEWORK],
-    appLayer: [a.BACKEND]
+    appLayer: [t.BACKEND]
   },
   {
     guid: "tech-webflux",
     name: "WebFlux",
     description: "A reactive-stack web framework, part of Spring Framework.",
     category: [n.FRAMEWORK],
-    appLayer: [a.BACKEND]
+    appLayer: [t.BACKEND]
   },
   {
     guid: "tech-python",
     name: "Python",
     description: "A high-level, interpreted programming language known for its readability and versatility.",
     category: [n.LANGUAGE],
-    appLayer: [a.BACKEND]
+    appLayer: [t.BACKEND]
   },
   {
     guid: "tech-django",
     name: "Django",
     description: "A high-level Python web framework that encourages rapid development and clean, pragmatic design.",
     category: [n.FRAMEWORK],
-    appLayer: [a.BACKEND]
+    appLayer: [t.BACKEND]
   },
   {
     guid: "tech-expressjs",
     name: "Express.js",
     description: "A minimal and flexible Node.js web application framework.",
     category: [n.FRAMEWORK],
-    appLayer: [a.BACKEND]
+    appLayer: [t.BACKEND]
   },
   {
     guid: "tech-nestjs",
     name: "NestJS",
     description: "A progressive Node.js framework for building efficient, reliable and scalable server-side applications.",
     category: [n.FRAMEWORK],
-    appLayer: [a.BACKEND]
+    appLayer: [t.BACKEND]
   },
   {
     guid: "tech-csharp",
     name: "C#",
     description: "A modern, object-oriented programming language developed by Microsoft for building a wide range of applications.",
     category: [n.LANGUAGE],
-    appLayer: [a.BACKEND]
+    appLayer: [t.BACKEND]
   },
   {
     guid: "tech-go",
     name: "Go",
     description: "An open source programming language designed for simplicity, reliability, and efficiency.",
     category: [n.LANGUAGE],
-    appLayer: [a.BACKEND]
+    appLayer: [t.BACKEND]
   },
   {
     guid: "tech-cpp",
     name: "C++",
     description: "A general-purpose programming language created as an extension of the C programming language.",
     category: [n.LANGUAGE],
-    appLayer: [a.BACKEND]
+    appLayer: [t.BACKEND]
   },
   {
     guid: "tech-scala",
     name: "Scala",
     description: "A strong static type, functional and object-oriented programming language for the JVM.",
     category: [n.LANGUAGE],
-    appLayer: [a.BACKEND]
+    appLayer: [t.BACKEND]
   },
   {
     guid: "tech-kotlin",
     name: "Kotlin",
     description: "A modern programming language that makes developers happier. Used for JVM, Android, and backend development.",
     category: [n.LANGUAGE],
-    appLayer: [a.BACKEND]
+    appLayer: [t.BACKEND]
   },
   {
     guid: "tech-rust",
     name: "Rust",
     description: "A language empowering everyone to build reliable and efficient software.",
     category: [n.LANGUAGE],
-    appLayer: [a.BACKEND]
+    appLayer: [t.BACKEND]
   },
   {
     guid: "tech-php",
     name: "PHP",
     description: "A popular general-purpose scripting language that is especially suited to web development.",
     category: [n.LANGUAGE],
-    appLayer: [a.BACKEND]
+    appLayer: [t.BACKEND]
   },
   {
     guid: "tech-rabbitmq",
     name: "RabbitMQ",
     description: "An open-source message-broker software that implements the Advanced Message Queuing Protocol.",
     category: [n.TOOL],
-    appLayer: [a.BACKEND]
+    appLayer: [t.BACKEND]
   },
   // BACKEND AND DATABASE
   {
@@ -1091,14 +1177,14 @@ const we = [
     name: "Kafka",
     description: "A distributed event streaming platform for high-performance data pipelines.",
     category: [n.TOOL],
-    appLayer: [a.BACKEND, a.DATABASE]
+    appLayer: [t.BACKEND, t.DATABASE]
   },
   {
     guid: "tech-hibernate",
     name: "Hibernate",
     description: "An object-relational mapping tool for the Java programming language.",
     category: [n.LIBRARY],
-    appLayer: [a.BACKEND, a.DATABASE]
+    appLayer: [t.BACKEND, t.DATABASE]
   },
   // DATABASE
   {
@@ -1106,42 +1192,42 @@ const we = [
     name: "MongoDB",
     description: "A NoSQL database program that uses JSON-like documents",
     category: [n.DATABASE],
-    appLayer: [a.DATABASE]
+    appLayer: [t.DATABASE]
   },
   {
     guid: "tech-postgresql",
     name: "PostgreSQL",
     description: "A powerful, open source object-relational database system.",
     category: [n.DATABASE],
-    appLayer: [a.DATABASE]
+    appLayer: [t.DATABASE]
   },
   {
     guid: "tech-oracle",
     name: "Oracle",
     description: "A multi-model database management system produced and marketed by Oracle Corporation.",
     category: [n.DATABASE],
-    appLayer: [a.DATABASE]
+    appLayer: [t.DATABASE]
   },
   {
     guid: "tech-sql-server",
     name: "SQL Server",
     description: "A relational database management system developed by Microsoft.",
     category: [n.DATABASE],
-    appLayer: [a.DATABASE]
+    appLayer: [t.DATABASE]
   },
   {
     guid: "tech-mysql",
     name: "MySQL",
     description: "An open-source relational database management system.",
     category: [n.DATABASE],
-    appLayer: [a.DATABASE]
+    appLayer: [t.DATABASE]
   },
   {
     guid: "tech-redis",
     name: "Redis",
     description: "An in-memory data structure store, used as a database, cache, and message broker.",
     category: [n.DATABASE],
-    appLayer: [a.DATABASE]
+    appLayer: [t.DATABASE]
   },
   // INFRA
   {
@@ -1149,84 +1235,84 @@ const we = [
     name: "AWS",
     description: "Amazon Web Services - Cloud computing services",
     category: [n.PLATFORM, n.SERVICE],
-    appLayer: [a.INFRA]
+    appLayer: [t.INFRA]
   },
   {
     guid: "tech-docker",
     name: "Docker",
     description: "Platform for developing, shipping, and running applications in containers",
     category: [n.TOOL],
-    appLayer: [a.INFRA]
+    appLayer: [t.INFRA]
   },
   {
     guid: "tech-kubernetes",
     name: "Kubernetes",
     description: "An open-source system for automating deployment, scaling, and management of containerized applications.",
     category: [n.TOOL],
-    appLayer: [a.INFRA]
+    appLayer: [t.INFRA]
   },
   {
     guid: "tech-docker-compose",
     name: "Docker Compose",
     description: "A tool for defining and running multi-container Docker applications.",
     category: [n.TOOL],
-    appLayer: [a.INFRA]
+    appLayer: [t.INFRA]
   },
   {
     guid: "tech-terraform",
     name: "Terraform",
     description: "An open-source infrastructure as code software tool for building, changing, and versioning infrastructure.",
     category: [n.TOOL],
-    appLayer: [a.INFRA]
+    appLayer: [t.INFRA]
   },
   {
     guid: "tech-pulumi",
     name: "Pulumi",
     description: "An infrastructure as code tool for creating, deploying, and managing cloud infrastructure.",
     category: [n.TOOL],
-    appLayer: [a.INFRA]
+    appLayer: [t.INFRA]
   },
   {
     guid: "tech-ansible",
     name: "Ansible",
     description: "An open-source software provisioning, configuration management, and application-deployment tool.",
     category: [n.TOOL],
-    appLayer: [a.INFRA]
+    appLayer: [t.INFRA]
   },
   {
     guid: "tech-azure",
     name: "Azure",
     description: "Microsoft Azure - Cloud computing services.",
     category: [n.PLATFORM, n.SERVICE],
-    appLayer: [a.INFRA]
+    appLayer: [t.INFRA]
   },
   {
     guid: "tech-google-cloud",
     name: "Google Cloud",
     description: "Google Cloud Platform - Cloud computing services.",
     category: [n.PLATFORM, n.SERVICE],
-    appLayer: [a.INFRA]
+    appLayer: [t.INFRA]
   },
   {
     guid: "tech-vmware",
     name: "VMWare",
     description: "A provider of cloud computing and virtualization technology.",
     category: [n.PLATFORM],
-    appLayer: [a.INFRA]
+    appLayer: [t.INFRA]
   },
   {
     guid: "tech-linux",
     name: "Linux",
     description: "An open-source family of Unix-like operating systems.",
     category: [n.PLATFORM],
-    appLayer: [a.INFRA]
+    appLayer: [t.INFRA]
   },
   {
     guid: "tech-windows-server",
     name: "Windows Server",
     description: "A group of server operating systems released by Microsoft.",
     category: [n.PLATFORM],
-    appLayer: [a.INFRA]
+    appLayer: [t.INFRA]
   },
   // SECURITY
   {
@@ -1234,49 +1320,49 @@ const we = [
     name: "OAuth2",
     description: "An open standard for access delegation commonly used for token-based authentication and authorization.",
     category: [n.SERVICE, n.TOOL],
-    appLayer: [a.SECURITY]
+    appLayer: [t.SECURITY]
   },
   {
     guid: "tech-keycloak",
     name: "Keycloak",
     description: "An open-source identity and access management solution.",
     category: [n.SERVICE, n.TOOL],
-    appLayer: [a.SECURITY]
+    appLayer: [t.SECURITY]
   },
   {
     guid: "tech-okta",
     name: "Okta",
     description: "A cloud-based identity and access management service.",
     category: [n.SERVICE],
-    appLayer: [a.SECURITY]
+    appLayer: [t.SECURITY]
   },
   {
     guid: "tech-kerberos",
     name: "Kerberos",
     description: "A network authentication protocol designed to provide strong authentication for client/server applications.",
     category: [n.TOOL],
-    appLayer: [a.SECURITY]
+    appLayer: [t.SECURITY]
   },
   {
     guid: "tech-entra-id",
     name: "EntraID",
     description: "Microsoft Entra ID (formerly Azure Active Directory) is a cloud-based identity and access management service.",
     category: [n.SERVICE],
-    appLayer: [a.SECURITY]
+    appLayer: [t.SECURITY]
   },
   {
     guid: "tech-auth0",
     name: "Auth0",
     description: "A flexible, drop-in solution to add authentication and authorization services to applications.",
     category: [n.SERVICE],
-    appLayer: [a.SECURITY]
+    appLayer: [t.SECURITY]
   },
   {
     guid: "tech-snyk",
     name: "Snyk",
     description: "A developer security platform for finding, prioritizing, and fixing vulnerabilities in code, dependencies, containers, and IaC.",
     category: [n.TOOL],
-    appLayer: [a.SECURITY]
+    appLayer: [t.SECURITY]
   },
   // NETWORK
   {
@@ -1284,35 +1370,35 @@ const we = [
     name: "NGINX",
     description: "A high-performance HTTP server, reverse proxy, and load balancer.",
     category: [n.TOOL, n.PLATFORM],
-    appLayer: [a.NETWORK]
+    appLayer: [t.NETWORK]
   },
   {
     guid: "tech-cloudflare",
     name: "Cloudflare",
     description: "A global network designed to make everything you connect to the Internet secure, private, fast, and reliable.",
     category: [n.SERVICE],
-    appLayer: [a.NETWORK]
+    appLayer: [t.NETWORK]
   },
   {
     guid: "tech-tomcat",
     name: "Tomcat",
     description: "An open-source implementation of the Java Servlet, JavaServer Pages, and Java Expression Language technologies.",
     category: [n.PLATFORM],
-    appLayer: [a.NETWORK]
+    appLayer: [t.NETWORK]
   },
   {
     guid: "tech-jetty",
     name: "Jetty",
     description: "A Java-based HTTP (Web) server and Java Servlet container.",
     category: [n.PLATFORM],
-    appLayer: [a.NETWORK]
+    appLayer: [t.NETWORK]
   },
   {
     guid: "tech-iis",
     name: "IIS",
     description: "Internet Information Services (IIS) is an extensible web server created by Microsoft for use with Windows NT family.",
     category: [n.PLATFORM],
-    appLayer: [a.NETWORK]
+    appLayer: [t.NETWORK]
   },
   // NONE (Tools/Services not tied to a specific layer)
   {
@@ -1320,39 +1406,39 @@ const we = [
     name: "Vitest",
     description: "A blazing fast unit test framework powered by Vite.",
     category: [n.TOOL],
-    appLayer: [a.NONE]
+    appLayer: [t.NONE]
   },
   {
     guid: "tech-git",
     name: "Git",
     description: "A distributed version-control system for tracking changes in source code.",
     category: [n.TOOL],
-    appLayer: [a.NONE]
+    appLayer: [t.NONE]
   },
   {
     guid: "tech-gitlab",
     name: "GitLab",
     description: "A web-based DevOps lifecycle tool that provides a Git repository manager.",
     category: [n.SERVICE, n.TOOL],
-    appLayer: [a.NONE]
+    appLayer: [t.NONE]
   },
   {
     guid: "tech-github",
     name: "GitHub",
     description: "A code hosting platform for version control and collaboration.",
     category: [n.SERVICE, n.TOOL],
-    appLayer: [a.NONE]
+    appLayer: [t.NONE]
   },
   {
     guid: "tech-jenkins",
     name: "Jenkins",
     description: "An open-source automation server for building, testing, and deploying software.",
     category: [n.TOOL],
-    appLayer: [a.NONE]
+    appLayer: [t.NONE]
   }
   // BACKEND/INFRA (Multiple layers)
 ];
 export {
-  we as DATA_PROJECT_ROLES,
-  Me as DATA_TECHNOLOGIES
+  Me as DATA_PROJECT_ROLES,
+  we as DATA_TECHNOLOGIES
 };

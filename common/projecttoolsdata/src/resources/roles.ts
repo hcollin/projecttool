@@ -18,14 +18,7 @@ export const DATA_PROJECT_ROLES: IRoleTemplate[] = [
         description:
             "Defines product vision, strategy, and roadmap, and coordinates cross-functional teams to deliver product success.",
     },
-    {
-        id: "role-manager-scrum",
-        name: "Scrum Master",
-        groups: ["Management"],
-        seniorities: [ROLESENIORITY.JUNIOR, ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR],
-        description:
-            "Facilitates Agile processes, removes impediments, and supports the Scrum team in delivering value.",
-    },
+
     {
         id: "role-services-manager",
         name: "Services Manager",
@@ -33,13 +26,50 @@ export const DATA_PROJECT_ROLES: IRoleTemplate[] = [
         seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR],
         description: "Manages service delivery, client relationships, and ensures high-quality support and operations.",
     },
+   
+
+    // Agile
     {
-        id: "role-release-manager",
-        name: "Release Manager",
-        groups: ["Management"],
-        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR],
-        description: "Coordinates software releases, deployment schedules, and ensures smooth delivery to production.",
+        id: "role-manager-productowner",
+        name: "Product Owner",
+        groups: ["Agile"],
+        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD, ROLESENIORITY.PRINCIPAL],
+        description:
+            "Represents stakeholders, manages the product backlog, and ensures the development team delivers value to the business.",
     },
+    {
+        id: "role-manager-scrum",
+        name: "Scrum Master",
+        groups: ["Agile"],
+        seniorities: [ROLESENIORITY.JUNIOR, ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR],
+        description:
+            "Facilitates Agile processes, removes impediments, and supports the Scrum team in delivering value.",
+    },
+    {
+        id: "role-agile-coach",
+        name: "Agile Coach",
+        groups: ["Agile"],
+        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD, ROLESENIORITY.PRINCIPAL],
+        description:
+            "Guides teams and organizations in Agile practices, fostering a culture of continuous improvement and collaboration.",
+    },
+    {
+        id: "role-agile-safe-rte",
+        name: "SAFe Release Train Engineer",
+        groups: ["Agile"],
+        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD, ROLESENIORITY.PRINCIPAL],
+        description:
+            "Serves as the Release Train Engineer (RTE) in SAFe, facilitating program-level processes and execution for Agile Release Trains.",
+    },
+    {
+        id: "role-agile-safe-spm",
+        name: "SAFe Product Manager",
+        groups: ["Agile"],
+        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD, ROLESENIORITY.PRINCIPAL],
+        description:
+            "Acts as the SAFe Product Manager, defining and prioritizing program backlogs to align with business objectives.",
+    },
+
     // Developers
     {
         id: "role-dev-frontend",
@@ -81,7 +111,22 @@ export const DATA_PROJECT_ROLES: IRoleTemplate[] = [
         ],
         description: "Works across both frontend and backend, delivering end-to-end solutions for applications.",
     },
+    {
+        id: "role-dev-intern",
+        name: "Development Intern",
+        groups: ["Developers"],
+        seniorities: [ROLESENIORITY.INTERN],
+        description: "Assists development teams with basic tasks and learns software development practices.",
+    },
     // QA
+    {
+        id: "role-qa-manager",
+        name: "Test Manager",
+        groups: ["QA"],
+        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD],
+        description:
+            "Oversees testing strategies, coordinates QA teams, and ensures product quality standards are met.",
+    },
     {
         id: "role-qa-tester",
         name: "QA Tester",
@@ -129,6 +174,13 @@ export const DATA_PROJECT_ROLES: IRoleTemplate[] = [
 
     // DevOps
     {
+        id: "role-release-manager",
+        name: "Release Manager",
+        groups: ["DevOps"],
+        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR],
+        description: "Coordinates software releases, deployment schedules, and ensures smooth delivery to production.",
+    },
+    {
         id: "role-devops-engineer",
         name: "DevOps Engineer",
         groups: ["DevOps"],
@@ -142,6 +194,59 @@ export const DATA_PROJECT_ROLES: IRoleTemplate[] = [
         seniorities: [ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD, ROLESENIORITY.PRINCIPAL],
         description: "Secures systems, applications, and infrastructure against threats and vulnerabilities.",
     },
+    {
+        id: "role-devops-sre",
+        name: "Site Reliability Engineer",
+        groups: ["DevOps"],
+        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD],
+        description: "Ensures reliability, scalability, and performance of systems through automation and monitoring.",
+    },
+    {
+        id: "role-devops-platform",
+        name: "Platform Engineer",
+        groups: ["DevOps"],
+        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD],
+        description: "Builds and maintains internal platforms and tools to support development and operations teams.",
+    },
+    
+
+    // Data
+    {
+        id: "role-data-scientist",
+        name: "Data Scientist",
+        groups: ["Data"],
+        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD],
+        description:
+            "Analyzes complex data, builds predictive models, and extracts insights to support business decisions.",
+    },
+    {
+        id: "role-arch-data",
+        name: "Data Architect",
+        groups: ["Data"],
+        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD, ROLESENIORITY.PRINCIPAL],
+        description: "Designs data models, databases, and data flows for effective data management.",
+    },
+    {
+        id: "role-data-mlengineer",
+        name: "Machine Learning Engineer",
+        groups: ["Data"],
+        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD],
+        description: "Designs, builds, and deploys machine learning models and data pipelines.",
+    },
+    {
+        id: "role-data-analyst",
+        name: "Data Analyst",
+        groups: ["Data"],
+        seniorities: [ROLESENIORITY.JUNIOR, ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR],
+        description: "Collects, processes, and analyzes data to generate actionable insights and reports.",
+    },
+    {
+        id: "role-devops-databaseadmin",
+        name: "Database Administrator",
+        groups: ["Data"],
+        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD],
+        description: "Manages and maintains database systems, ensuring performance, security, and availability.",
+    },
 
     // Architecture
     {
@@ -152,25 +257,11 @@ export const DATA_PROJECT_ROLES: IRoleTemplate[] = [
         description: "Designs software systems, sets technical direction, and ensures architectural integrity.",
     },
     {
-        id: "role-arch-systems",
-        name: "Systems Architect",
+        id: "role-arch-solution",
+        name: "Solution Architect",
         groups: ["Architecture"],
         seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD, ROLESENIORITY.PRINCIPAL],
-        description: "Designs and integrates complex IT systems and infrastructure.",
-    },
-    {
-        id: "role-arch-cloud",
-        name: "Cloud Architect",
-        groups: ["Architecture"],
-        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD, ROLESENIORITY.PRINCIPAL],
-        description: "Architects cloud solutions, manages cloud infrastructure, and ensures scalability and security.",
-    },
-    {
-        id: "role-arch-data",
-        name: "Data Architect",
-        groups: ["Architecture"],
-        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD, ROLESENIORITY.PRINCIPAL],
-        description: "Designs data models, databases, and data flows for effective data management.",
+        description: "Designs end-to-end solutions, integrating systems and technologies to meet business needs.",
     },
     {
         id: "role-arch-enterprise",
@@ -187,29 +278,38 @@ export const DATA_PROJECT_ROLES: IRoleTemplate[] = [
         description: "Designs security architecture and policies to protect systems and data.",
     },
     {
-        id: "role-arch-solution",
-        name: "Solution Architect",
+        id: "role-arch-systems",
+        name: "Systems Architect",
         groups: ["Architecture"],
         seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD, ROLESENIORITY.PRINCIPAL],
-        description: "Designs end-to-end solutions, integrating systems and technologies to meet business needs.",
+        description: "Designs and integrates complex IT systems and infrastructure.",
+    },
+    {
+        id: "role-arch-cloud",
+        name: "Cloud Architect",
+        groups: ["Architecture"],
+        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD, ROLESENIORITY.PRINCIPAL],
+        description: "Architects cloud solutions, manages cloud infrastructure, and ensures scalability and security.",
     },
 
     // Other
     {
         id: "role-business-analyst",
         name: "Business Analyst",
-        groups: [],
-        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR],
+        groups: ["Consulting"],
+        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD, ROLESENIORITY.PRINCIPAL],
         description:
             "Analyzes business processes, gathers requirements, and bridges the gap between stakeholders and development teams.",
     },
     {
-        id: "role-dev-intern",
-        name: "Development Intern",
-        groups: [],
-        seniorities: [ROLESENIORITY.INTERN],
-        description: "Assists development teams with basic tasks and learns software development practices.",
+        id: "role-consultant-it",
+        name: "IT Consultant",
+        groups: ["Consulting"],
+        seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD, ROLESENIORITY.PRINCIPAL],
+        description:
+            "Provides expert advice on IT strategies, solutions, and implementations to improve business performance.",
     },
+
     {
         id: "role-technical-writer",
         name: "Technical Writer",

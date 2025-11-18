@@ -1,4 +1,4 @@
-import { convertRoleTemplateToRole, IRole, IRoleTemplate, ROLESENIORITY } from "@frosttroll/projecttoolmodels";
+import { convertRoleTemplateToRole, IRole, IRoleTemplate, ROLESENIORITY, utilCurrencyToSymbol } from "@frosttroll/projecttoolmodels";
 
 import { EIconSet } from "../../Icons/IconSet";
 import ProjectCard from "../ProjectCard";
@@ -13,7 +13,7 @@ import {
     actionUpdateRoleInActiveProject,
 } from "../../../stores/activeproject/activeProjectActions";
 import activeProjectStore from "../../../stores/activeproject/activeProjectStore";
-import { Box, Button, Flex, Modal, Select, Stack, Title } from "@mantine/core";
+import { Box, Button, Flex, Modal, Select, Stack, Title, Tooltip } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 
 const ProjectResourceRoleCard = () => {
@@ -103,9 +103,10 @@ const ProjectResourceRoleCard = () => {
                                 <Box style={{ flex: "0 0 auto", width: "15%", paddingRight: "1rem" }}>
                                     <Select
                                         placeholder="No pricegroup"
+                                        allowDeselect={false}
                                         data={project.prices.hourlypricegroups.map((pg) => ({
                                             value: pg.guid,
-                                            label: `${pg.name} (${pg.price} ${pg.currency})`,
+                                            label: `${pg.name} (${pg.price} ${utilCurrencyToSymbol(project.currency)})`,
                                         }))}
                                         value={role.priceGroupId}
                                         onChange={(value) => {
@@ -145,34 +146,47 @@ const RolePickerModal = (props: RolePickerModalProps) => {
     const { drs, handleAddNewRole } = props;
 
     return (
-        <Flex gap="md" wrap="wrap">
+        <Flex gap="0" wrap="wrap">
             {drs.roles.map((rolet, i) => {
                 const newGroup = i === 0 || rolet.groups.join(", ") !== (drs.roles[i - 1]?.groups.join(", ") || "");
 
                 return (
                     <>
                         {newGroup && (
-                            <Box style={{ flex: `1 1 auto`, width: "100%" }}>
-                                <Title order={4}>{rolet.groups.join(", ") || "Others"}</Title>
+                            <Box style={{ flex: `1 1 auto`, width: "100%", borderTop: "ridge 2px #AAA2" }} mt="3px">
+                                <Title order={4} c="gray.6">
+                                    {rolet.groups.join(", ") || "Others"}
+                                </Title>
                             </Box>
                         )}
-
-                        <Button
-                            variant="filled"
-                            size="lg"
-                            style={{
-                                whiteSpace: "normal",
-                                textAlign: "center",
-                                height: "3rem",
-                                width: "19%",
-                                marginBottom: "0.5rem",
-                                flex: "0 0 auto",
-                            }}
-                            key={rolet.id}
-                            onClick={() => handleAddNewRole(rolet as IRoleTemplate)}
+                        <Tooltip
+                            label={rolet.description}
+                            withArrow
+                            position="top"
+                            arrowSize={7}
+                            multiline
+                            openDelay={300}
+                            w={300}
                         >
-                            {rolet.name}
-                        </Button>
+                            <Button
+                                variant="filled"
+                                size="lg"
+                                mr="md"
+                                mb="sm"
+                                style={{
+                                    whiteSpace: "normal",
+                                    textAlign: "center",
+                                    height: "3rem",
+                                    width: "18%",
+                                    fontSize: "1rem",
+                                    flex: "0 0 auto",
+                                }}
+                                key={rolet.id}
+                                onClick={() => handleAddNewRole(rolet as IRoleTemplate)}
+                            >
+                                {rolet.name}
+                            </Button>
+                        </Tooltip>
                     </>
                 );
             })}
