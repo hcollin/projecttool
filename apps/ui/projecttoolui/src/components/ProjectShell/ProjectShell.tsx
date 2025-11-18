@@ -25,6 +25,7 @@ import {
 	IconDeviceFloppy,
 	IconFolderOpen,
 	IconOctagonPlus,
+	IconPackages,
 	IconSettings,
 	IconTable,
 	IconUsersGroup,
@@ -100,7 +101,7 @@ const ProjectShell = (props: { children: React.ReactNode }) => {
 				<NavLink label="Resources" component={Link} to="/project/resources" disabled={!aps.project} leftSection={<IconUsersGroup />} />
 
 				<Divider label="Solution" labelPosition="center" my="sm" />
-				<NavLink label="Technologies" component={Link} to="/project/technology" disabled={!aps.project} />
+				<NavLink label="Technologies" component={Link} to="/project/technology" disabled={!aps.project} leftSection={<IconPackages />} />
 
 				<Divider label="Summaries" labelPosition="center" my="sm" />
 				<NavLink label="Summary Tables" component={Link} to="/project/summarytable" disabled={!aps.project} leftSection={<IconTable />} />

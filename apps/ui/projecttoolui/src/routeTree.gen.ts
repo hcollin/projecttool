@@ -21,6 +21,7 @@ import { Route as ProjectPricingRouteImport } from './routes/project/pricing'
 import { Route as ProjectPhasesRouteImport } from './routes/project/phases'
 import { Route as ProjectListprojectsRouteImport } from './routes/project/listprojects'
 import { Route as ProjectDashboardRouteImport } from './routes/project/dashboard'
+import { Route as DataTechnologiesRouteImport } from './routes/data/technologies'
 import { Route as DataRolesRouteImport } from './routes/data/roles'
 
 const IndexRoute = IndexRouteImport.update({
@@ -83,6 +84,11 @@ const ProjectDashboardRoute = ProjectDashboardRouteImport.update({
   path: '/project/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DataTechnologiesRoute = DataTechnologiesRouteImport.update({
+  id: '/data/technologies',
+  path: '/data/technologies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DataRolesRoute = DataRolesRouteImport.update({
   id: '/data/roles',
   path: '/data/roles',
@@ -92,6 +98,7 @@ const DataRolesRoute = DataRolesRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/data/roles': typeof DataRolesRoute
+  '/data/technologies': typeof DataTechnologiesRoute
   '/project/dashboard': typeof ProjectDashboardRoute
   '/project/listprojects': typeof ProjectListprojectsRoute
   '/project/phases': typeof ProjectPhasesRoute
@@ -107,6 +114,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/data/roles': typeof DataRolesRoute
+  '/data/technologies': typeof DataTechnologiesRoute
   '/project/dashboard': typeof ProjectDashboardRoute
   '/project/listprojects': typeof ProjectListprojectsRoute
   '/project/phases': typeof ProjectPhasesRoute
@@ -123,6 +131,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/data/roles': typeof DataRolesRoute
+  '/data/technologies': typeof DataTechnologiesRoute
   '/project/dashboard': typeof ProjectDashboardRoute
   '/project/listprojects': typeof ProjectListprojectsRoute
   '/project/phases': typeof ProjectPhasesRoute
@@ -140,6 +149,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/data/roles'
+    | '/data/technologies'
     | '/project/dashboard'
     | '/project/listprojects'
     | '/project/phases'
@@ -155,6 +165,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/data/roles'
+    | '/data/technologies'
     | '/project/dashboard'
     | '/project/listprojects'
     | '/project/phases'
@@ -170,6 +181,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/data/roles'
+    | '/data/technologies'
     | '/project/dashboard'
     | '/project/listprojects'
     | '/project/phases'
@@ -186,6 +198,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DataRolesRoute: typeof DataRolesRoute
+  DataTechnologiesRoute: typeof DataTechnologiesRoute
   ProjectDashboardRoute: typeof ProjectDashboardRoute
   ProjectListprojectsRoute: typeof ProjectListprojectsRoute
   ProjectPhasesRoute: typeof ProjectPhasesRoute
@@ -285,6 +298,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/data/technologies': {
+      id: '/data/technologies'
+      path: '/data/technologies'
+      fullPath: '/data/technologies'
+      preLoaderRoute: typeof DataTechnologiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/data/roles': {
       id: '/data/roles'
       path: '/data/roles'
@@ -298,6 +318,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DataRolesRoute: DataRolesRoute,
+  DataTechnologiesRoute: DataTechnologiesRoute,
   ProjectDashboardRoute: ProjectDashboardRoute,
   ProjectListprojectsRoute: ProjectListprojectsRoute,
   ProjectPhasesRoute: ProjectPhasesRoute,

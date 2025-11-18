@@ -1,4 +1,5 @@
 import { actionInitializeDataRoleTemplatesStore } from "./roles/dataRolesActions";
+import { actionInitializeDataTechologiesStore } from "./tech/dateTechStoreActions";
 
 /**
  * Initializes all data stores by loading their respective data.
@@ -8,4 +9,5 @@ import { actionInitializeDataRoleTemplatesStore } from "./roles/dataRolesActions
  */
 export async function actionInitializeDataStores() {
 	await actionInitializeDataRoleTemplatesStore();
+	await actionInitializeDataTechologiesStore();
 }

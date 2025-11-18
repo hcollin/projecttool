@@ -15,6 +15,10 @@ export * from "./models/people/iPerson";
 export * from "./models/people/iRole";
 export * from "./models/people/iTeam";
 
+// Tech models
+export * from "./models/tech/eTechType";
+export * from "./models/tech/iTechnology";
+
 // Utils
 export * from "./utils/people/roleutils";
 export * from "./utils/time/phasetimeutils";
