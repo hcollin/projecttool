@@ -179,7 +179,7 @@ export function uCalculateProjectBudgetSummaryGroupByMonth(project: IProject): I
                 const overlapStart = Math.max(phaseStart, mnthStart);
                 const overlapEnd = Math.min(phaseEnd, mnthEnd);
 
-                const days = utilCalculateWorkdaysBetweenTimes(overlapStart, overlapEnd, true);
+                const days = utilCalculateWorkdaysBetweenTimes(overlapStart, overlapEnd, true, project.holidays || []);
 
                 const dayOfPhase = utilCalculatePhaseSingleDay(phase, project);
 

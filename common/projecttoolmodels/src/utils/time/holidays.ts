@@ -1,10 +1,15 @@
 import { DateTime } from "luxon";
 
 /**
+ * Type representing a holiday as [day, month, year?]
+ */
+export type HOLIDAY_TUPLE = [number, number, number?];
+
+/**
  * Finnish public holidays for time calculations.
  * Each holiday is represented as [day, month].
  */
-export const YEARLY_FIXED_HOLIDAYS: [number, number][] = [
+export const YEARLY_FIXED_HOLIDAYS: HOLIDAY_TUPLE[] = [
     [1, 1], // New Year's Day
 
     [6, 1], // Epiphany
@@ -23,7 +28,7 @@ export const YEARLY_FIXED_HOLIDAYS: [number, number][] = [
  * @param targetYear The year for which to get the holidays. Defaults to the current year if not provided.
  * @returns An array of tuples representing the holidays as [day, month].
  */
-export function getFinnishPublicHolidaysForYear(targetYear?: number): [number, number][] {
+export function getFinnishPublicHolidaysForYear(targetYear?: number): HOLIDAY_TUPLE[] {
     const holidays = [...YEARLY_FIXED_HOLIDAYS];
 
     const year = targetYear ?? DateTime.now().year;

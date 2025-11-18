@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { getFinnishPublicHolidaysForYear } from "./holidays";
+import { getFinnishPublicHolidaysForYear, HOLIDAY_TUPLE } from "./holidays";
 
 /**
  * Calculate the number of workdays (excluding weekends and Finnish public holidays) between two timestamps
@@ -7,7 +7,12 @@ import { getFinnishPublicHolidaysForYear } from "./holidays";
  * @param end
  * @returns
  */
-export function utilCalculateWorkdaysBetweenTimes(start: number, end: number, includeFinalDay?: boolean): number {
+export function utilCalculateWorkdaysBetweenTimes(
+    start: number,
+    end: number,
+    includeFinalDay: boolean,
+    additionalHolidays: HOLIDAY_TUPLE[]
+): number {
     let workdays = 0;
 
     let curDate = DateTime.fromMillis(start).startOf("day");
@@ -27,7 +32,9 @@ export function utilCalculateWorkdaysBetweenTimes(start: number, end: number, in
             // Not a holiday
             if (curDate.weekday !== 6 && curDate.weekday !== 7) {
                 // Not a weekend
-                workdays++;
+                if (!isAdditionalHoliday(curDate, additionalHolidays)) {
+                    workdays++;
+                }
             }
         }
         curDate = curDate.plus({ days: 1 });
@@ -38,9 +45,15 @@ export function utilCalculateWorkdaysBetweenTimes(start: number, end: number, in
 
 const WORKDAYCACHE = new Map<string, number>();
 
-export function utilCalculatePlusWorkingDaysFromTs(start: number, workdaysToAdd: number): number {
-    if (WORKDAYCACHE.has(`${start}-${workdaysToAdd}`)) {
-        return WORKDAYCACHE.get(`${start}-${workdaysToAdd}`)!;
+export function utilCalculatePlusWorkingDaysFromTs(
+    start: number,
+    workdaysToAdd: number,
+    additionalHolidays?: HOLIDAY_TUPLE[]
+): number {
+    const addLen = additionalHolidays ? `${additionalHolidays.length}` : "noadds";
+    const cacheKey = `${start}-${workdaysToAdd}-${addLen}`;
+    if (WORKDAYCACHE.has(cacheKey)) {
+        return WORKDAYCACHE.get(cacheKey)!;
     }
 
     let curDate = DateTime.fromMillis(start).startOf("day");
@@ -62,8 +75,9 @@ export function utilCalculatePlusWorkingDaysFromTs(start: number, workdaysToAdd:
         if (holidays.findIndex((h) => h[0] === nd[0] && h[1] === nd[1]) === -1) {
             // Not a holiday
             if (curDate.weekday !== 6 && curDate.weekday !== 7) {
-                // Not a weekend
-                addedWorkdays++;
+                if (!isAdditionalHoliday(curDate, additionalHolidays)) {
+                    addedWorkdays++;
+                }
             } else {
                 // console.log("It's a weekend!");
             }
@@ -79,6 +93,26 @@ export function utilCalculatePlusWorkingDaysFromTs(start: number, workdaysToAdd:
     }
 
     // console.log("Final date after adding workdays:", curDate.toISODate());
-    WORKDAYCACHE.set(`${start}-${workdaysToAdd}`, curDate.toMillis());
+    WORKDAYCACHE.set(cacheKey, curDate.toMillis());
     return curDate.toMillis();
+}
+
+
+
+/**
+ * Internal helper to check if a date is in the additional holidays list
+ * @param date 
+ * @param additionalHolidays 
+ * @returns 
+ */
+function isAdditionalHoliday(date: DateTime, additionalHolidays?: HOLIDAY_TUPLE[]): boolean {
+    if (!additionalHolidays) {
+        return false;
+    }
+    const nd: [number, number] = [date.day, date.month];
+    if (additionalHolidays.findIndex((h) => h[0] === nd[0] && h[1] === nd[1] && (h[2] === undefined || h[2] === date.year)) !== -1) {
+
+        return true;
+    }
+    return false;
 }

@@ -3,14 +3,20 @@ import { useState } from "react";
 import { useSnapshot } from "valtio";
 import dayjs from "dayjs";
 import { createFileRoute } from "@tanstack/react-router";
-import { ActionIcon, Box, Button, Container, Flex, NumberInput, Select, TextInput, Title } from "@mantine/core";
+import { ActionIcon, Box, Button, Container, Flex, NumberInput, Select, Switch, TextInput, Title } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 
 // IMPORT: Icons
 import { IconDice6Filled } from "@tabler/icons-react";
 
 // IMPORT: Common Models and Utils
-import { CURRENCY, IProject, utilCurrencyToSymbol } from "@frosttroll/projecttoolmodels";
+import {
+    CURRENCY,
+    IProject,
+    utilCurrencyToSymbol,
+    utilGetProjectYears,
+    HOLIDAY_TUPLE,
+} from "@frosttroll/projecttoolmodels";
 import { generateRandomProjectName } from "@frosttroll/projecttoolutils";
 
 // IMPORT: Custom Components
@@ -42,6 +48,13 @@ function ProjectSettingsComponent() {
 
     const [budget, setBudget] = useState<number>(aps.project?.targetBudget || 0);
 
+    const [summerHolidays, setSummerHolidays] = useState<boolean>(
+        aps.project?.flags?.includes("summerholiday") || false
+    );
+    const [winterHolidays, setWinterHolidays] = useState<boolean>(
+        aps.project?.flags?.includes("winterholiday") || false
+    );
+
     const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.EUR);
 
     const handleSaveChanges = () => {
@@ -68,7 +81,102 @@ function ProjectSettingsComponent() {
             np.targetBudget = budget;
         }
 
-		np.currency = currency;
+        // CALCULATE ADDITIONAL HOLIDAYS
+        const holidays: HOLIDAY_TUPLE[] = [];
+
+        const flags = aps.project.flags ? [...aps.project.flags] : [];
+
+        if (summerHolidays) {
+            // Find the the first monday of July in all project years
+            const years = utilGetProjectYears(aps.project as IProject);
+            const psts = aps.project.start;
+
+            for (const y of years) {
+                // If last of July is before project start, skip
+                const lastOfJuly = dayjs().year(y).month(6).date(31);
+                if (lastOfJuly.isBefore(dayjs(psts))) {
+                    continue;
+                }
+
+                let firstJuly = dayjs().year(y).month(6).date(1); // July is month 6 (0-based)
+                while (firstJuly.day() !== 1) {
+                    firstJuly = firstJuly.add(1, "day");
+                }
+
+                const sh: HOLIDAY_TUPLE[] = [];
+                let i = 0;
+                // Add 4 weeks of holidays starting from firstMonday
+                while (sh.length < 20) {
+                    const hd = firstJuly.add(i, "day");
+
+                    // If in the past skip
+                    if (hd.isBefore(dayjs(psts))) {
+                        i++;
+                        continue;
+                    }
+
+                    // Skip weekends
+                    if (hd.day() !== 6 && hd.day() !== 0) {
+                        sh.push([hd.date(), hd.month() + 1, y]);
+                    }
+                    i++;
+                }
+                holidays.push(...sh);
+            }
+
+            // Add summerholiday flag
+            if (flags.indexOf("summerholiday") === -1) {
+                flags.push("summerholiday");
+            }
+        } else {
+            // Remove summerholiday flag
+            const shIndex = flags.indexOf("summerholiday");
+            if (shIndex !== -1) {
+                flags.splice(shIndex, 1);
+            }
+        }
+
+        if (winterHolidays) {
+            // Find the the first monday of February in all project years
+            const years = utilGetProjectYears(aps.project as IProject);
+
+            for (const y of years) {
+                let firstFebruary = dayjs().year(y).month(1).date(1); // February is month 1 (0-based)
+                while (firstFebruary.day() !== 1) {
+                    firstFebruary = firstFebruary.add(1, "day");
+                }
+                // Add 1 week of holidays starting from firstMonday
+                for (let i = 0; i < 5; i++) {
+                    const hd = firstFebruary.add(i, "day");
+
+                    // If in the past skip
+                    if (hd.isBefore(dayjs())) {
+                        continue;
+                    }
+
+                    if (hd.day() !== 6 && hd.day() !== 0) {
+                        // Skip weekends
+                        holidays.push([hd.date(), hd.month() + 1, y]);
+                    }
+                }
+            }
+
+            // Add winterholiday flag
+            if (flags.indexOf("winterholiday") === -1) {
+                flags.push("winterholiday");
+            }
+        } else {
+            // Remove winterholiday flag
+            const whIndex = flags.indexOf("winterholiday");
+            if (whIndex !== -1) {
+                flags.splice(whIndex, 1);
+            }
+        }
+
+        np.flags = flags;
+
+        np.currency = currency;
+        np.holidays = holidays;
 
         np.roles = [...(aps.project.roles as IProject["roles"])];
         np.phases = [...(aps.project.phases as IProject["phases"])];
@@ -167,6 +275,24 @@ function ProjectSettingsComponent() {
                                 locale="fi"
                                 value={endDate}
                                 onChange={(date) => setEndDate(date ? dayjs(date).format("YYYY-MM-DD") : null)}
+                            />
+                        </Box>
+
+                        <Box>
+                            <Switch
+                                size="lg"
+                                label="Summer holidays"
+                                description="Add 4 weeks of summer holidays to July."
+                                checked={summerHolidays}
+                                onChange={(event) => setSummerHolidays(event.currentTarget.checked)}
+                                mb="md"
+                            />
+                            <Switch
+                                size="lg"
+                                label="Winter holidays"
+                                description="Add 1 week of winter holidays to February."
+                                checked={winterHolidays}
+                                onChange={(event) => setWinterHolidays(event.currentTarget.checked)}
                             />
                         </Box>
                     </Flex>

@@ -14,7 +14,7 @@ const ProjectFooter = () => {
     const aps = useSnapshot(activeProjectStore);
 
     const totalPrice = useMemo(() => {
-        if(!aps.project) {
+        if (!aps.project) {
             return 0;
         }
         return utilCalculateProjectPrice(aps.project as IProject);
@@ -28,6 +28,8 @@ const ProjectFooter = () => {
             </Flex>
         );
     }
+
+    const budgetLeft = prj.targetBudget ? prj.targetBudget - totalPrice : null;
 
     return (
         <Flex direction="row" align="center" justify="flex-start" px="md" style={{ height: "100%" }} gap="lg">
@@ -58,6 +60,18 @@ const ProjectFooter = () => {
                         suffix={" " + prj.prices.hourlypricegroups[0].currency}
                     />
                 </Title>
+                {budgetLeft !== null && (
+                    <Text size="sm" c={budgetLeft < 0 ? "red.7" : "green.7"}>
+                        Budget:{" "}
+                        <NumberFormatter
+                            value={budgetLeft}
+                            decimalScale={2}
+                            decimalSeparator="."
+                            thousandSeparator=" "
+                            suffix={" " + prj.prices.hourlypricegroups[0].currency}
+                        />
+                    </Text>
+                )}
             </Box>
         </Flex>
     );

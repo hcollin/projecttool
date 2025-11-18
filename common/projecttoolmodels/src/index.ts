@@ -16,10 +16,10 @@ export * from "./models/people/iRole";
 export * from "./models/people/iTeam";
 
 // Utils
-
 export * from "./utils/people/roleutils";
 export * from "./utils/time/phasetimeutils";
 export * from "./utils/project/projectutils"
 export * from "./utils/project/phaseUtils";
 export * from "./utils/time/timeUtils";
 export * from "./utils/pricing/currencyUtils";
+export * from "./utils/time/holidays";

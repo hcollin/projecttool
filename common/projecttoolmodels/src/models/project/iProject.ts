@@ -1,3 +1,4 @@
+import { HOLIDAY_TUPLE } from "../../utils/time/holidays";
 import { CURRENCY, IFixedPrice } from "../..";
 import { IRole } from "../people/iRole";
 import { IHourlyPriceGroup } from "../pricing/iHourlyPriceGroup";
@@ -9,6 +10,8 @@ export interface IProject extends IProjectBase {
     roles: IRole[];
     start: number; // timestamp
     end: number; // timestamp
+    flags: string[]; // list of project flags/labels
+    holidays?: HOLIDAY_TUPLE[]; // list of [day, month] tuples that are considered holidays in addition to weekends and public holidays
     prices: {
         hourlypricegroups: IHourlyPriceGroup[];
         fixedprices: IFixedPrice[];

@@ -39,6 +39,8 @@ export function actionCreateNewProject() {
         phases: [],
         currency: CURRENCY.EUR,
         targetBudget: 0,
+        flags: [],
+        holidays: [],
     };
 
     const phase1: IPhase = {

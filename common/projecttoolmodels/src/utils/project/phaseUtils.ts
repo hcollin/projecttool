@@ -14,7 +14,7 @@ export function utilCalculatePhaseDuration(phase: IPhase, project: IProject, inW
 
     if (end > start) {
         if (inWorkDays) {
-            const workdays = utilCalculateWorkdaysBetweenTimes(start, end, true);
+            const workdays = utilCalculateWorkdaysBetweenTimes(start, end, true, project.holidays || []);
             // console.log(
             //     `Calculated workday duration for phase ${phase.name} in ${project.codename} from`,
             //     DateTime.fromMillis(start).toISODate(),
@@ -72,7 +72,7 @@ export function utilGetPhaseEndTs(phase: IPhase, project: IProject): number {
 
     if (phase.end.lengthInWorkingDays) {
         const startTs = utilGetPhaseStartTs(phase, project);
-        return utilCalculatePlusWorkingDaysFromTs(startTs, phase.end.lengthInWorkingDays || 0);
+        return utilCalculatePlusWorkingDaysFromTs(startTs, phase.end.lengthInWorkingDays || 0, project.holidays || []);
     }
 
     if (phase.end.atProjectEnd) {
@@ -129,9 +129,9 @@ export function utilCalculatePhasePrice(phase: IPhase, project: IProject): numbe
 
 /**
  * Calculate hours and price for a single day of the given phase
- * @param phase 
- * @param project 
- * @returns 
+ * @param phase
+ * @param project
+ * @returns
  */
 export function utilCalculatePhaseSingleDay(
     phase: IPhase,

@@ -1,6 +1,6 @@
 import { IProject } from "@frosttroll/models/models/project/iProject";
 import { utilCalculatePhasePrice } from "./phaseUtils";
-import { Duration } from "luxon";
+import { DateTime, Duration } from "luxon";
 import { utilCalculateWorkdaysBetweenTimes } from "../time/timeUtils";
 
 export function utilCalculateProjectPrice(project: IProject): number {
@@ -27,5 +27,17 @@ export function utilCalculateProjectDurationInWorkDays(project: IProject): numbe
         return 0;
     }
 
-    return utilCalculateWorkdaysBetweenTimes(project.start, project.end);
+    return utilCalculateWorkdaysBetweenTimes(project.start, project.end, false, project.holidays || []);
+}
+
+export function utilGetProjectYears(project: IProject): number[] {
+    const start = DateTime.fromMillis(project.start);
+    const end = DateTime.fromMillis(project.end);
+
+    const years: number[] = [];
+    for (let y = start.year; y <= end.year; y++) {
+        years.push(y);
+    }
+
+    return years;
 }
