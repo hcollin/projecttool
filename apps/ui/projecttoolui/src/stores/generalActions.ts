@@ -41,6 +41,13 @@ export function actionCreateNewProject() {
         targetBudget: 0,
         flags: [],
         holidays: [],
+        techStack: {
+            frontend: [],
+            backend: [],
+            data: [],
+            platform: [],
+            tools: [],  
+        }
     };
 
     const phase1: IPhase = {

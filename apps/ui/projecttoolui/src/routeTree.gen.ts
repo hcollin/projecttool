@@ -12,7 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectIndexRouteImport } from './routes/project/index'
 import { Route as DataIndexRouteImport } from './routes/data/index'
-import { Route as ProjectTechnologyRouteImport } from './routes/project/technology'
+import { Route as ProjectTechstackRouteImport } from './routes/project/techstack'
 import { Route as ProjectSummarytableRouteImport } from './routes/project/summarytable'
 import { Route as ProjectSettingsRouteImport } from './routes/project/settings'
 import { Route as ProjectResourcesRouteImport } from './routes/project/resources'
@@ -39,9 +39,9 @@ const DataIndexRoute = DataIndexRouteImport.update({
   path: '/data/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProjectTechnologyRoute = ProjectTechnologyRouteImport.update({
-  id: '/project/technology',
-  path: '/project/technology',
+const ProjectTechstackRoute = ProjectTechstackRouteImport.update({
+  id: '/project/techstack',
+  path: '/project/techstack',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectSummarytableRoute = ProjectSummarytableRouteImport.update({
@@ -107,7 +107,7 @@ export interface FileRoutesByFullPath {
   '/project/resources': typeof ProjectResourcesRoute
   '/project/settings': typeof ProjectSettingsRoute
   '/project/summarytable': typeof ProjectSummarytableRoute
-  '/project/technology': typeof ProjectTechnologyRoute
+  '/project/techstack': typeof ProjectTechstackRoute
   '/data': typeof DataIndexRoute
   '/project': typeof ProjectIndexRoute
 }
@@ -123,7 +123,7 @@ export interface FileRoutesByTo {
   '/project/resources': typeof ProjectResourcesRoute
   '/project/settings': typeof ProjectSettingsRoute
   '/project/summarytable': typeof ProjectSummarytableRoute
-  '/project/technology': typeof ProjectTechnologyRoute
+  '/project/techstack': typeof ProjectTechstackRoute
   '/data': typeof DataIndexRoute
   '/project': typeof ProjectIndexRoute
 }
@@ -140,7 +140,7 @@ export interface FileRoutesById {
   '/project/resources': typeof ProjectResourcesRoute
   '/project/settings': typeof ProjectSettingsRoute
   '/project/summarytable': typeof ProjectSummarytableRoute
-  '/project/technology': typeof ProjectTechnologyRoute
+  '/project/techstack': typeof ProjectTechstackRoute
   '/data/': typeof DataIndexRoute
   '/project/': typeof ProjectIndexRoute
 }
@@ -158,7 +158,7 @@ export interface FileRouteTypes {
     | '/project/resources'
     | '/project/settings'
     | '/project/summarytable'
-    | '/project/technology'
+    | '/project/techstack'
     | '/data'
     | '/project'
   fileRoutesByTo: FileRoutesByTo
@@ -174,7 +174,7 @@ export interface FileRouteTypes {
     | '/project/resources'
     | '/project/settings'
     | '/project/summarytable'
-    | '/project/technology'
+    | '/project/techstack'
     | '/data'
     | '/project'
   id:
@@ -190,7 +190,7 @@ export interface FileRouteTypes {
     | '/project/resources'
     | '/project/settings'
     | '/project/summarytable'
-    | '/project/technology'
+    | '/project/techstack'
     | '/data/'
     | '/project/'
   fileRoutesById: FileRoutesById
@@ -207,7 +207,7 @@ export interface RootRouteChildren {
   ProjectResourcesRoute: typeof ProjectResourcesRoute
   ProjectSettingsRoute: typeof ProjectSettingsRoute
   ProjectSummarytableRoute: typeof ProjectSummarytableRoute
-  ProjectTechnologyRoute: typeof ProjectTechnologyRoute
+  ProjectTechstackRoute: typeof ProjectTechstackRoute
   DataIndexRoute: typeof DataIndexRoute
   ProjectIndexRoute: typeof ProjectIndexRoute
 }
@@ -235,11 +235,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DataIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/project/technology': {
-      id: '/project/technology'
-      path: '/project/technology'
-      fullPath: '/project/technology'
-      preLoaderRoute: typeof ProjectTechnologyRouteImport
+    '/project/techstack': {
+      id: '/project/techstack'
+      path: '/project/techstack'
+      fullPath: '/project/techstack'
+      preLoaderRoute: typeof ProjectTechstackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/project/summarytable': {
@@ -327,7 +327,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProjectResourcesRoute: ProjectResourcesRoute,
   ProjectSettingsRoute: ProjectSettingsRoute,
   ProjectSummarytableRoute: ProjectSummarytableRoute,
-  ProjectTechnologyRoute: ProjectTechnologyRoute,
+  ProjectTechstackRoute: ProjectTechstackRoute,
   DataIndexRoute: DataIndexRoute,
   ProjectIndexRoute: ProjectIndexRoute,
 }

@@ -6,6 +6,7 @@ import {
     ROLESENIORITY,
     IPhaseAllocation,
     utilGetPhaseStartTs,
+    ITechnology,
 } from "@frosttroll/projecttoolmodels";
 
 import activeProjectStore from "./activeProjectStore";
@@ -240,6 +241,12 @@ export function actionRemovePhaseFromActiveProject(phaseGuid: string): void {
     }
 }
 
+/**
+ * Add or update a role allocation in a phase in the active project.
+ * @param phaseGuid 
+ * @param roleGuid 
+ * @param allocation 
+ */
 export function actionAddRoleAllocationToPhaseInActiveProject(
     phaseGuid: string,
     roleGuid: string,
@@ -270,6 +277,9 @@ export function actionAddRoleAllocationToPhaseInActiveProject(
     }
 }
 
+/**
+ * Sort the phases in the active project by their start time.
+ */
 export function actionSortPhasesInActiveProjectByStartTime(): void {
     if (activeProjectStore.project) {
         const phases = [...activeProjectStore.project.phases];
@@ -279,6 +289,20 @@ export function actionSortPhasesInActiveProjectByStartTime(): void {
             return aStartTs - bStartTs;
         });
         activeProjectStore.project.phases = phases;
+        activeProjectStore.unsavedChanges = true;
+    }
+}
+
+
+/**
+ * Update the technology stack of the project. Only guids are stored in the project.
+ * @param techs 
+ * @param target 
+ */
+export function actionUpdateProjectTechStack(techs: ITechnology[], target: "frontend" | "backend" | "data" | "platform" | "tools"): void {
+    if (activeProjectStore.project) {
+        const techGuids = techs.map((t) => t.guid);
+        activeProjectStore.project.techStack[target] = techGuids;
         activeProjectStore.unsavedChanges = true;
     }
 }

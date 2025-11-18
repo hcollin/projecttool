@@ -19,5 +19,11 @@ export interface IProject extends IProjectBase {
     phases: IPhase[];
     targetBudget?: number;
     currency: CURRENCY;
-
+    techStack: {
+        frontend: string[];
+        backend: string[];
+        data: string[];
+        platform: string[];
+        tools: string[];
+    };
 }
