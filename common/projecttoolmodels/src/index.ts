@@ -23,6 +23,7 @@ export * from "./models/tech/iTechnology";
 export * from "./models/files/iDocFile";
 export * from "./models/files/eDocType";
 export * from "./models/files/eDocLang";
+export * from "./models/files/iDocItem";
 
 // Utils
 export * from "./utils/people/roleutils";

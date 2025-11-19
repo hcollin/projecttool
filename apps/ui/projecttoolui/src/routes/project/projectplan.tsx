@@ -5,7 +5,6 @@ import ProjectPageMainTitle from "../../components/ProjectComponents/ProjectPage
 import DocFile from "../../components/Docs/DocFile";
 import { EDOCLANG, EDOCTYPE } from "@frosttroll/projecttoolmodels";
 
-
 export const Route = createFileRoute("/project/projectplan")({
     component: ProjectPlanComponent,
 });

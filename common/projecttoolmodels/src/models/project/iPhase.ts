@@ -1,23 +1,25 @@
+import { IDocItem } from "../files/iDocItem";
 import { IRootObject } from "../IRootObject";
 
 export interface IPhase extends IRootObject {
-	name: string;
-	description?: string;
-	start: IPhaseStart;
-	end: IPhaseEnd;
-	allocations: IPhaseAllocation[];
+    name: string;
+    description?: string;
+	docItem?: IDocItem;
+    start: IPhaseStart;
+    end: IPhaseEnd;
+    allocations: IPhaseAllocation[];
 }
 
 export interface IPhaseTime {
-	ts?: number;
-	lengthInDays?: number;
-	lengthInWorkingDays?: number;
-	targetPhase?: {
-		guid: string;
-		type: "start" | "end";
-	};
-	atProjectStart?: boolean;
-	atProjectEnd?: boolean;
+    ts?: number;
+    lengthInDays?: number;
+    lengthInWorkingDays?: number;
+    targetPhase?: {
+        guid: string;
+        type: "start" | "end";
+    };
+    atProjectStart?: boolean;
+    atProjectEnd?: boolean;
 }
 
 export interface IPhaseStart {
@@ -33,11 +35,10 @@ export interface IPhaseEnd {
     lengthInWorkingDays?: number;
     whenPhaseGuidStarts?: string;
     whenPhaseGuidEnds?: string;
-	offsetInDays?: number;
+    offsetInDays?: number;
 }
 
-
 export interface IPhaseAllocation {
-	roleGuid: string;
-	allocation: number; // percentage allocation (0-100)
+    roleGuid: string;
+    allocation: number; // percentage allocation (0-100)
 }
