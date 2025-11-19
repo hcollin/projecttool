@@ -5,6 +5,7 @@ import {
     utilCalculatePhaseDuration,
     utilGetPhaseStartTs,
     utilGetPhaseEndTs,
+    utilCurrencyToSymbol,
 } from "@frosttroll/projecttoolmodels";
 import { Flex, Box, Text, Title, NumberFormatter } from "@mantine/core";
 import { DateTime } from "luxon";
@@ -38,25 +39,26 @@ const ProjectPhaseInfoRow = (props: ProjectPhaseInfoRowProps) => {
 
     return (
         <Flex direction="row" justify="space-between" align="center">
-            <Box>
+            <Box style={{flex: "0 0 auto", width: "40%"}}>
                 <Title order={3}>{props.phase.name}</Title>
             </Box>
-            <Box>
-                <Text>{phaseDur} work days</Text>
+            <Box style={{flex: "0 0 auto", width: "15%"}}>
+                <Text ta="center">{phaseDur} work days</Text>
             </Box>
-
-            <Box>
-                <Text>
+        
+            <Box style={{flex: "0 0 auto", width: "20%"}}>
+                <Text ta="center">
                     {phaseStart} - {phaseEnd}
                 </Text>
             </Box>
-            <Box>
-                <Text>
+            <Box style={{flex: "1 1 auto", textAlign: "right"}}>
+                <Text fw="bold" size="lg">
                     <NumberFormatter
                         value={phasePrice}
-                        suffix={" " + props.project.prices.hourlypricegroups[0].currency}
+                        suffix={" " + utilCurrencyToSymbol(props.project.currency)}
                         thousandSeparator=" "
                         decimalScale={2}
+                        fixedDecimalScale={true}
                         decimalSeparator="."
                     />
                 </Text>
