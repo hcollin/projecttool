@@ -1,6 +1,6 @@
 export * from "./models/IRootObject";
 
-// Projec models
+// Project models
 export * from "./models/project/iProjectBase";
 export * from "./models/project/iProject";
 export * from "./models/project/iPhase";
@@ -18,6 +18,11 @@ export * from "./models/people/iTeam";
 // Tech models
 export * from "./models/tech/eTechType";
 export * from "./models/tech/iTechnology";
+
+// File models
+export * from "./models/files/iDocFile";
+export * from "./models/files/eDocType";
+export * from "./models/files/eDocLang";
 
 // Utils
 export * from "./utils/people/roleutils";

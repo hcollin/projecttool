@@ -5,7 +5,13 @@ import ProjectPageMainTitle from "../../components/ProjectComponents/ProjectPage
 import ProjectCard from "../../components/ProjectComponents/ProjectCard";
 import { useSnapshot } from "valtio";
 import activeProjectStore from "../../stores/activeproject/activeProjectStore";
-import { IProject, ROLESENIORITY, utilCalculatePhaseDuration } from "@frosttroll/projecttoolmodels";
+import {
+    CURRENCY,
+    IProject,
+    ROLESENIORITY,
+    utilCalculatePhaseDuration,
+    utilCurrencyToSymbol,
+} from "@frosttroll/projecttoolmodels";
 import { useState } from "react";
 import { formatCurrency, formatHours } from "../../utils/formatingUtils";
 
@@ -76,7 +82,7 @@ function calculateProjectCosts(project: IProject, type: "hours" | "cost" | "both
 
     const phaseTotalHours: number[] = [];
     const phaseTotalCosts: number[] = [];
-    let currency = "";
+    let currency: CURRENCY = CURRENCY.EUR;
     const data = project.roles.reduce(
         (rows, role) => {
             const row: (string | number | boolean)[] = [];
@@ -90,7 +96,7 @@ function calculateProjectCosts(project: IProject, type: "hours" | "cost" | "both
             const priceGroup = project.prices.hourlypricegroups.find((hrpg) => hrpg.guid === role.priceGroupId);
             let hourlyrate = 0;
             if (priceGroup) {
-                row.push(`${priceGroup.price} ${priceGroup.currency}`);
+                row.push(`${priceGroup.price} ${utilCurrencyToSymbol(project.currency)}`);
                 hourlyrate = priceGroup.price;
                 currency = project.currency;
             } else {
@@ -112,7 +118,7 @@ function calculateProjectCosts(project: IProject, type: "hours" | "cost" | "both
                     phaseTotalCosts[pi] = (phaseTotalCosts[pi] || 0) + cost;
                     if (type !== "hours") {
                         headers.add(phase.name + " Cost");
-                        row.push(formatCurrency(cost, priceGroup?.currency || ""));
+                        row.push(formatCurrency(cost, project.currency || CURRENCY.EUR));
                     }
                     if (type !== "cost") {
                         headers.add(phase.name + " Hours");

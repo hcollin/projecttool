@@ -32,7 +32,18 @@ const ProjectPhaseBar = () => {
         return null;
     }
 
-    const colors = ["blue-9", "lime-9", "orange-9", "green-9", "red-9", "teal-9", "yellow-9", "pink-9", "grape-9", "cyan-9"];
+    const colors = [
+        "blue-9",
+        "lime-9",
+        "orange-9",
+        "green-9",
+        "red-9",
+        "teal-9",
+        "yellow-9",
+        "pink-9",
+        "grape-9",
+        "cyan-9",
+    ];
 
     return (
         <>
@@ -100,7 +111,11 @@ const usePhaseParts = (): [PhasePart[], number] => {
         let overlap = 0;
         if (index > 0) {
             const phStr = DateTime.fromMillis(startTs).toLocaleString(DateTime.DATE_SHORT);
-            const prevPhaseEndTs = utilGetPhaseEndTs(prj.phases[index - 1], prj);
+            const targetPhase = phase.start.afterPhaseGuid
+                ? prj.phases.find((p) => p.guid === phase.start.afterPhaseGuid)
+                : prj.phases[index - 1];
+
+            const prevPhaseEndTs = utilGetPhaseEndTs(targetPhase ? targetPhase : prj.phases[index - 1], prj);
             const prevPhStr = DateTime.fromMillis(prevPhaseEndTs).toLocaleString(DateTime.DATE_SHORT);
             if (phStr !== prevPhStr && startTs > prevPhaseEndTs) {
                 const gapDuration = startTs - prevPhaseEndTs;

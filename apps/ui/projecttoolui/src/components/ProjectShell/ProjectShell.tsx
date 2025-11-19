@@ -23,6 +23,7 @@ import {
 	IconClockDollar,
 	IconDashboard,
 	IconDeviceFloppy,
+	IconFileReport,
 	IconFolderOpen,
 	IconOctagonPlus,
 	IconPackages,
@@ -99,6 +100,7 @@ const ProjectShell = (props: { children: React.ReactNode }) => {
 				<NavLink label="Phases" component={Link} to="/project/phases" disabled={!aps.project} leftSection={<IconCalendarMonth />} />
 				<NavLink label="Pricing" component={Link} to="/project/pricing" disabled={!aps.project} leftSection={<IconClockDollar />} />
 				<NavLink label="Resources" component={Link} to="/project/resources" disabled={!aps.project} leftSection={<IconUsersGroup />} />
+				<NavLink label="Project Plan" component={Link} to="/project/projectplan" disabled={!aps.project} leftSection={<IconFileReport />} />
 
 				<Divider label="Solution" labelPosition="center" my="sm" />
 				<NavLink label="Technology Stack" component={Link} to="/project/techstack" disabled={!aps.project} leftSection={<IconPackages />} />

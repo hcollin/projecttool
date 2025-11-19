@@ -16,6 +16,7 @@ import { Route as ProjectTechstackRouteImport } from './routes/project/techstack
 import { Route as ProjectSummarytableRouteImport } from './routes/project/summarytable'
 import { Route as ProjectSettingsRouteImport } from './routes/project/settings'
 import { Route as ProjectResourcesRouteImport } from './routes/project/resources'
+import { Route as ProjectProjectplanRouteImport } from './routes/project/projectplan'
 import { Route as ProjectProjectchartsRouteImport } from './routes/project/projectcharts'
 import { Route as ProjectPricingRouteImport } from './routes/project/pricing'
 import { Route as ProjectPhasesRouteImport } from './routes/project/phases'
@@ -57,6 +58,11 @@ const ProjectSettingsRoute = ProjectSettingsRouteImport.update({
 const ProjectResourcesRoute = ProjectResourcesRouteImport.update({
   id: '/project/resources',
   path: '/project/resources',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectProjectplanRoute = ProjectProjectplanRouteImport.update({
+  id: '/project/projectplan',
+  path: '/project/projectplan',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectProjectchartsRoute = ProjectProjectchartsRouteImport.update({
@@ -104,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/project/phases': typeof ProjectPhasesRoute
   '/project/pricing': typeof ProjectPricingRoute
   '/project/projectcharts': typeof ProjectProjectchartsRoute
+  '/project/projectplan': typeof ProjectProjectplanRoute
   '/project/resources': typeof ProjectResourcesRoute
   '/project/settings': typeof ProjectSettingsRoute
   '/project/summarytable': typeof ProjectSummarytableRoute
@@ -120,6 +127,7 @@ export interface FileRoutesByTo {
   '/project/phases': typeof ProjectPhasesRoute
   '/project/pricing': typeof ProjectPricingRoute
   '/project/projectcharts': typeof ProjectProjectchartsRoute
+  '/project/projectplan': typeof ProjectProjectplanRoute
   '/project/resources': typeof ProjectResourcesRoute
   '/project/settings': typeof ProjectSettingsRoute
   '/project/summarytable': typeof ProjectSummarytableRoute
@@ -137,6 +145,7 @@ export interface FileRoutesById {
   '/project/phases': typeof ProjectPhasesRoute
   '/project/pricing': typeof ProjectPricingRoute
   '/project/projectcharts': typeof ProjectProjectchartsRoute
+  '/project/projectplan': typeof ProjectProjectplanRoute
   '/project/resources': typeof ProjectResourcesRoute
   '/project/settings': typeof ProjectSettingsRoute
   '/project/summarytable': typeof ProjectSummarytableRoute
@@ -155,6 +164,7 @@ export interface FileRouteTypes {
     | '/project/phases'
     | '/project/pricing'
     | '/project/projectcharts'
+    | '/project/projectplan'
     | '/project/resources'
     | '/project/settings'
     | '/project/summarytable'
@@ -171,6 +181,7 @@ export interface FileRouteTypes {
     | '/project/phases'
     | '/project/pricing'
     | '/project/projectcharts'
+    | '/project/projectplan'
     | '/project/resources'
     | '/project/settings'
     | '/project/summarytable'
@@ -187,6 +198,7 @@ export interface FileRouteTypes {
     | '/project/phases'
     | '/project/pricing'
     | '/project/projectcharts'
+    | '/project/projectplan'
     | '/project/resources'
     | '/project/settings'
     | '/project/summarytable'
@@ -204,6 +216,7 @@ export interface RootRouteChildren {
   ProjectPhasesRoute: typeof ProjectPhasesRoute
   ProjectPricingRoute: typeof ProjectPricingRoute
   ProjectProjectchartsRoute: typeof ProjectProjectchartsRoute
+  ProjectProjectplanRoute: typeof ProjectProjectplanRoute
   ProjectResourcesRoute: typeof ProjectResourcesRoute
   ProjectSettingsRoute: typeof ProjectSettingsRoute
   ProjectSummarytableRoute: typeof ProjectSummarytableRoute
@@ -261,6 +274,13 @@ declare module '@tanstack/react-router' {
       path: '/project/resources'
       fullPath: '/project/resources'
       preLoaderRoute: typeof ProjectResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/project/projectplan': {
+      id: '/project/projectplan'
+      path: '/project/projectplan'
+      fullPath: '/project/projectplan'
+      preLoaderRoute: typeof ProjectProjectplanRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/project/projectcharts': {
@@ -324,6 +344,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProjectPhasesRoute: ProjectPhasesRoute,
   ProjectPricingRoute: ProjectPricingRoute,
   ProjectProjectchartsRoute: ProjectProjectchartsRoute,
+  ProjectProjectplanRoute: ProjectProjectplanRoute,
   ProjectResourcesRoute: ProjectResourcesRoute,
   ProjectSettingsRoute: ProjectSettingsRoute,
   ProjectSummarytableRoute: ProjectSummarytableRoute,
