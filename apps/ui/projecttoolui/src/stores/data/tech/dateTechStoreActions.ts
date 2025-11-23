@@ -1,5 +1,7 @@
-import { DATA_TECHNOLOGIES } from "@frosttroll/projecttooldata";
+// import { DATA_TECHNOLOGIES } from "@frosttroll/projecttooldata";
 import techStore from "./dataTechStore";
+import { ITechnology } from "@frosttroll/projecttoolmodels";
+import { RestService } from "../../../api/RestService";
 
 export async function actionInitializeDataTechologiesStore() {
 	if (techStore.lastUpdated === -1 && techStore.technologies.length === 0) {
@@ -14,7 +16,10 @@ export async function actionInitializeDataTechologiesStore() {
  * Currently this function will load the technologies from the common/projecttoolsdata package.
  */
 export async function actionLoadDataTechnologies() {
-	techStore.technologies = [...DATA_TECHNOLOGIES];
+	const restService = RestService.getInstance();
+	const technologies = await restService.GET<ITechnology[]>("/technology");
+
+	techStore.technologies = [...technologies];
 	techStore.lastUpdated = Date.now();
 	return Promise.resolve();
 }
