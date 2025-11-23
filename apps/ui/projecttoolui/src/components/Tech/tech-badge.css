@@ -1,0 +1,30 @@
+div.tech-badge {
+    &.frontend {
+        background-color: var(--mantine-color-pink-8);
+    }
+
+    &.backend {
+        background-color: var(--mantine-color-green-9);
+    }
+
+    &.database {
+        background-color: var(--mantine-color-blue-6);
+    }
+
+    &.infrastructure {
+        background-color: var(--mantine-color-orange-7);
+    }
+
+    &.network {
+        background-color: var(--mantine-color-teal-7);
+    }
+
+    &.security {
+        background-color: var(--mantine-color-red-7);
+    }
+
+    &.none,
+    &.other {
+        background-color: var(--mantine-color-gray-7);
+    }
+}

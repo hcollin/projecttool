@@ -1,0 +1,85 @@
+div.tech-card {
+    position: relative;
+    height: 100%;
+    padding: 0;
+    min-height:  6rem;
+    height: 100%;
+
+    div.layer-border {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 4rem;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        & > * {
+            margin: 0.25rem 0;
+        }
+
+        &.frontend {
+            background-color: var(--mantine-color-green-8);
+        }
+
+        &.frontend-backend {
+            background: linear-gradient(-45deg, var(--mantine-color-cyan-8) 30%, var(--mantine-color-green-8) 70%);
+        }
+
+        &.backend {
+            background-color: var(--mantine-color-cyan-8);
+        }
+
+        &.backend-database {
+            background: linear-gradient(-45deg, var(--mantine-color-blue-8) 30%, var(--mantine-color-cyan-8) 70%);
+        }
+
+        &.database {
+            background-color: var(--mantine-color-blue-8);
+        }
+
+        &.database-infrastructure {
+            background: linear-gradient(-45deg, var(--mantine-color-orange-8) 30%, var(--mantine-color-blue-8) 70%);
+        }
+
+        &.infrastructure {
+            background-color: var(--mantine-color-orange-8);
+        }
+
+        &.infrastructure-security {
+            background: linear-gradient(-45deg, var(--mantine-color-red-8) 30%, var(--mantine-color-orange-8) 70%);
+        }
+
+        &.security {
+            background-color: var(--mantine-color-red-8);
+        }
+
+        &.security-network {
+            background: linear-gradient(-45deg, var(--mantine-color-yellow-8) 30%, var(--mantine-color-red-8) 70%);
+        }
+
+        &.network {
+            background-color: var(--mantine-color-yellow-8);
+        }
+
+        &.none {
+            background-color: var(--mantine-color-gray-8);
+        }
+
+        &.other {
+            background-color: var(--mantine-color-gray-5);
+        }
+    }
+
+    div.card-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-left: 4rem;
+        height: 100%;
+        padding: 0.5rem 1rem;
+    }
+}

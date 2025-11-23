@@ -1,0 +1,9 @@
+
+
+div.data-shell {
+
+    main {
+        margin-bottom: 5rem;
+        margin-top: var(--mantine-spacing-md)
+    }
+}

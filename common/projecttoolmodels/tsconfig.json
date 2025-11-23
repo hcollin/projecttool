@@ -1,0 +1,13 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "esnext",
+		"moduleResolution": "node10",
+		"outDir": "dist/tsc",
+		"declaration": true,
+		"declarationDir": "dist/types",
+		"composite": true
+	},
+	"include": ["src"]
+}

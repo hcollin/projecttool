@@ -1,0 +1,16 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "esnext",
+		"moduleResolution": "node10",
+		"outDir": "dist/src",
+		"declaration": true,
+		"declarationDir": "dist/src",
+		"composite": true
+	},
+	"include": ["src"],
+	"references": [
+		{ "path": "../projecttoolmodels" }
+	]
+}
