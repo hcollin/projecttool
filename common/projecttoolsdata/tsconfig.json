@@ -7,10 +7,11 @@
 		"outDir": "dist/src",
 		"declaration": true,
 		"declarationDir": "dist/src",
-		"composite": true
+		"composite": true,
+		"paths": {
+			"@frosttroll/projecttoolmodels": ["../../projecttoolmodels/src"]
+		}
 	},
 	"include": ["src"],
-	"references": [
-		{ "path": "../projecttoolmodels" }
-	]
+	"references": [{ "path": "../projecttoolmodels" }]
 }

@@ -1,4 +1,4 @@
-import { DATA_TECHNOLOGIES } from "@frosttroll/projecttoolsdata";
+import { DATA_TECHNOLOGIES } from "@frosttroll/projecttooldata";
 import techStore from "./dataTechStore";
 
 export async function actionInitializeDataTechologiesStore() {

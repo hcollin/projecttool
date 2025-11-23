@@ -3,14 +3,15 @@ import { Controller, Get } from "@nestjs/common";
 // IMPORT: Common Models
 import { ITechnology } from "@frosttroll/projecttoolmodels";
 
+// IMPORT: Default Technologies Data
+import { DEFAULT_TECHNOLOGIES } from "./default_technologies";
+
 @Controller("technologies")
 export class TechnologiesController {
-
-
-    @Get()
+  @Get()
   getAllTechnologies(): ITechnology[] {
     // Logic to retrieve all technologies
 
-    return [];
+    return DEFAULT_TECHNOLOGIES;
   }
 }

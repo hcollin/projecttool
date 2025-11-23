@@ -11,9 +11,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TechnologiesController = void 0;
 const common_1 = require("@nestjs/common");
+const default_technologies_1 = require("./default_technologies");
 let TechnologiesController = class TechnologiesController {
     getAllTechnologies() {
-        return [];
+        return default_technologies_1.DEFAULT_TECHNOLOGIES;
     }
 };
 exports.TechnologiesController = TechnologiesController;
