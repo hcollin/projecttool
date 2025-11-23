@@ -1,5 +1,4 @@
-import { IPhase } from "@frosttroll/models/models/project/iPhase";
-import { IProject } from "@frosttroll/models/models/project/iProject";
+import { IPhase, IProject } from "@frosttroll/projecttoolmodels";
 import { DateTime, Duration } from "luxon";
 import { utilCalculatePlusWorkingDaysFromTs, utilCalculateWorkdaysBetweenTimes } from "../time/timeUtils";
 

@@ -22,7 +22,9 @@
 
 		"baseUrl": ".",
 		"paths": {
-			"@frosttroll/models/*": ["common/projecttoolmodels/src/*"]
+			"@frosttroll/projecttoolmodels": ["common/projecttoolmodels/src/index.ts"],
+            "@frosttroll/projecttooldata": ["common/projecttooldata/src/index.ts"],
+            "@frosttroll/projecttoolutils": ["common/projecttoolutils/src/index.ts"]
 		}
 	},
 	"exclude": ["node_modules", "dist", "build", "**/*.test.ts", "**/*.spec.ts"]

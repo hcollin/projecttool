@@ -1,11 +1,11 @@
-import { DATA_TECHNOLOGIES } from "@frosttroll/projecttooldata";
+import { DATA_TECHNOLOGIES } from "@frosttroll/projecttoolsdata";
 import techStore from "./dataTechStore";
 
 export async function actionInitializeDataTechologiesStore() {
-    if (techStore.lastUpdated === -1 && techStore.technologies.length === 0) {
-        return await actionLoadDataTechnologies();
-    }
-    return Promise.resolve();
+	if (techStore.lastUpdated === -1 && techStore.technologies.length === 0) {
+		return await actionLoadDataTechnologies();
+	}
+	return Promise.resolve();
 }
 
 /**
@@ -14,9 +14,9 @@ export async function actionInitializeDataTechologiesStore() {
  * Currently this function will load the technologies from the common/projecttoolsdata package.
  */
 export async function actionLoadDataTechnologies() {
-    techStore.technologies = [...DATA_TECHNOLOGIES];
-    techStore.lastUpdated = Date.now();
-    return Promise.resolve();
+	techStore.technologies = [...DATA_TECHNOLOGIES];
+	techStore.lastUpdated = Date.now();
+	return Promise.resolve();
 }
 
 /**
@@ -25,5 +25,5 @@ export async function actionLoadDataTechnologies() {
  * @returns
  */
 export function actionGetDataTechnologyById(id: string) {
-    return techStore.technologies.find((r) => r.guid === id) || null;
+	return techStore.technologies.find((r) => r.guid === id) || null;
 }

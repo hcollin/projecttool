@@ -1,4 +1,4 @@
-import { IRole, IRoleTemplate, ROLESENIORITY } from "@frosttroll/models/models/people/iRole";
+import { IRole, IRoleTemplate, ROLESENIORITY } from "@frosttroll/projecttoolmodels";
 import { rnd } from "rndlib";
 
 /**

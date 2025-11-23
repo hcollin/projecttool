@@ -1,4 +1,4 @@
-import { IProject } from "@frosttroll/models/models/project/iProject";
+import { IProject } from "@frosttroll/projecttoolmodels";
 import { utilCalculatePhasePrice } from "./phaseUtils";
 import { DateTime, Duration } from "luxon";
 import { utilCalculateWorkdaysBetweenTimes } from "../time/timeUtils";

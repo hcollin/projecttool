@@ -4,16 +4,24 @@
     "type": "module",
     "main": "./dist/index.cjs.js",
     "module": "./dist/index.es.js",
-    "types": "dist/types/index.d.ts",
+    "types": "dist/src/index.d.ts",
     "files": [
         "dist"
     ],
+    "exports": {
+        "./": "./",
+        ".": {
+            "import": "./dist/index.es.js",
+            "require": "./dist/index.cjs.js"
+        }
+    },
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",
-        "clean": "rm -rf ./dist"
+        "clean": "Remove-Item -Recurse -Force ./dist"
     },
     "devDependencies": {
+        "@frosttroll/projecttoolmodels": "*",
         "@types/node": "^24.10.1",
         "typescript": "~5.9.3",
         "vite": "^7.2.2",

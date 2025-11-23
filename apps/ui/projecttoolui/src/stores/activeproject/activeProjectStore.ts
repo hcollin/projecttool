@@ -1,4 +1,4 @@
-import { IProject } from "common/projecttoolmodels/dist";
+import { IProject } from "@frosttroll/projecttoolmodels";
 import { proxy } from "valtio";
 
 interface IActiveProjectStore {

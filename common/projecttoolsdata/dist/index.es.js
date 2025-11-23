@@ -1,9 +1,37 @@
-var e = /* @__PURE__ */ ((r) => (r.INTERN = "Intern", r.JUNIOR = "Junior", r.MIDLEVEL = "Mid-level", r.SENIOR = "Senior", r.LEAD = "Lead", r.PRINCIPAL = "Principal", r))(e || {}), n = /* @__PURE__ */ ((r) => (r.LANGUAGE = "Programming Language", r.FRAMEWORK = "Framework", r.SERVICE = "Service", r.LIBRARY = "Library", r.DATABASE = "Database", r.TOOL = "Tool", r.PLATFORM = "Platform", r.OTHER = "Other", r))(n || {}), t = /* @__PURE__ */ ((r) => (r.FRONTEND = "Frontend", r.BACKEND = "Backend", r.DATABASE = "Database", r.INFRA = "Infrastructure", r.NETWORK = "Network", r.SECURITY = "Security", r.NONE = "None", r.OTHER = "Other", r))(t || {}), B = { exports: {} }, pe = B.exports, $;
-function le() {
-  return $ || ($ = 1, (function(r, a) {
+var W;
+(function(r) {
+  r.EUR = "EUR", r.USD = "USD", r.GBP = "GBP", r.JPY = "JPY", r.CNY = "CNY";
+})(W || (W = {}));
+var e;
+(function(r) {
+  r.INTERN = "Intern", r.JUNIOR = "Junior", r.MIDLEVEL = "Mid-level", r.SENIOR = "Senior", r.LEAD = "Lead", r.PRINCIPAL = "Principal";
+})(e || (e = {}));
+var n;
+(function(r) {
+  r.LANGUAGE = "Programming Language", r.FRAMEWORK = "Framework", r.SERVICE = "Service", r.LIBRARY = "Library", r.DATABASE = "Database", r.TOOL = "Tool", r.PLATFORM = "Platform", r.OTHER = "Other";
+})(n || (n = {}));
+var t;
+(function(r) {
+  r.FRONTEND = "Frontend", r.BACKEND = "Backend", r.DATABASE = "Database", r.INFRA = "Infrastructure", r.NETWORK = "Network", r.SECURITY = "Security", r.NONE = "None", r.OTHER = "Other";
+})(t || (t = {}));
+var Y;
+(function(r) {
+  r.PROJECTPLAN = "projectplan", r.SOLUTION = "solution", r.OFFER = "offer", r.OTHER = "other";
+})(Y || (Y = {}));
+var $;
+(function(r) {
+  r.EN = "en";
+})($ || ($ = {}));
+var q;
+(function(r) {
+  r.HEADER = "header", r.PARAGRAPH = "paragraph", r.KEYVALUE = "keyvalue", r.IMAGE = "image", r.LIST = "list", r.TABLE = "table";
+})(q || (q = {}));
+var B = { exports: {} }, Ae = B.exports, Z;
+function Ee() {
+  return Z || (Z = 1, (function(r, a) {
     (function(i, s) {
       s(a);
-    })(pe, (function(i) {
+    })(Ae, (function(i) {
       function s(o, c) {
         var d = c !== void 0 ? o : 0, u = c !== void 0 ? c : o;
         if (d > u)
@@ -79,32 +107,32 @@ function le() {
           u.push(s(1, o));
         return u;
       }
-      function re(o) {
+      function ie(o) {
         return E(4, o);
       }
-      function ae(o) {
+      function oe(o) {
         return E(6, o);
       }
-      function ne(o) {
+      function se(o) {
         return E(8, o);
       }
-      function te(o) {
+      function ce(o) {
         return E(10, o);
       }
-      function ie(o) {
+      function de(o) {
         return E(12, o);
       }
-      function oe(o) {
+      function ue(o) {
         return E(20, o);
       }
-      function se(o) {
+      function pe(o) {
         return E(100, o);
       }
-      function ce(o, c) {
+      function le(o, c) {
         var d = s(o, c), u = c !== void 0 ? c.toString().length : o.toString().length, l = d.toString();
         return l.padStart(u, "0");
       }
-      function de(o, c, d) {
+      function ge(o, c, d) {
         if (d === void 0 && (d = !1), d && o.length <= c)
           return g(o);
         var u = [];
@@ -118,36 +146,36 @@ function le() {
             d || u.push(p(o));
         return u;
       }
-      var ue = {
-        d4: re,
-        d6: ae,
-        d8: ne,
-        d10: te,
-        d12: ie,
-        d20: oe,
-        d100: se,
+      var me = {
+        d4: ie,
+        d6: oe,
+        d8: se,
+        d10: ce,
+        d12: de,
+        d20: ue,
+        d100: pe,
         roll: T
       };
-      i.Dice = ue, i.arnd = p, i.arnds = de, i.chance = b, i.nrnd = A, i.padrnd = ce, i.rnd = s, i.shuffle = y, i.successPool = S, i.sumPool = C, Object.defineProperty(i, "__esModule", { value: !0 });
+      i.Dice = me, i.arnd = p, i.arnds = ge, i.chance = b, i.nrnd = A, i.padrnd = le, i.rnd = s, i.shuffle = y, i.successPool = S, i.sumPool = C, Object.defineProperty(i, "__esModule", { value: !0 });
     }));
   })(B, B.exports)), B.exports;
 }
-le();
-class ge extends Error {
+Ee();
+class fe extends Error {
 }
-class I extends ge {
+class v extends fe {
   constructor() {
     super("Zone is an abstract class");
   }
 }
-class W {
+class Q {
   /**
    * The type of zone
    * @abstract
    * @type {string}
    */
   get type() {
-    throw new I();
+    throw new v();
   }
   /**
    * The name of this zone.
@@ -155,7 +183,7 @@ class W {
    * @type {string}
    */
   get name() {
-    throw new I();
+    throw new v();
   }
   /**
    * The IANA name of this zone.
@@ -172,7 +200,7 @@ class W {
    * @type {boolean}
    */
   get isUniversal() {
-    throw new I();
+    throw new v();
   }
   /**
    * Returns the offset's common name (such as EST) at the specified timestamp
@@ -184,7 +212,7 @@ class W {
    * @return {string}
    */
   offsetName(a, i) {
-    throw new I();
+    throw new v();
   }
   /**
    * Returns the offset's value as a string
@@ -195,7 +223,7 @@ class W {
    * @return {string}
    */
   formatOffset(a, i) {
-    throw new I();
+    throw new v();
   }
   /**
    * Return the offset in minutes for this zone at the specified timestamp.
@@ -204,7 +232,7 @@ class W {
    * @return {number}
    */
   offset(a) {
-    throw new I();
+    throw new v();
   }
   /**
    * Return whether this Zone is equal to another zone
@@ -213,7 +241,7 @@ class W {
    * @return {boolean}
    */
   equals(a) {
-    throw new I();
+    throw new v();
   }
   /**
    * Return whether this Zone is valid.
@@ -221,12 +249,12 @@ class W {
    * @type {boolean}
    */
   get isValid() {
-    throw new I();
+    throw new v();
   }
 }
-const G = /* @__PURE__ */ new Map();
-function me(r) {
-  let a = G.get(r);
+const J = /* @__PURE__ */ new Map();
+function he(r) {
+  let a = J.get(r);
   return a === void 0 && (a = new Intl.DateTimeFormat("en-US", {
     hour12: !1,
     timeZone: r,
@@ -237,9 +265,9 @@ function me(r) {
     minute: "2-digit",
     second: "2-digit",
     era: "short"
-  }), G.set(r, a)), a;
+  }), J.set(r, a)), a;
 }
-const Ae = {
+const ye = {
   year: 0,
   month: 1,
   day: 2,
@@ -248,20 +276,20 @@ const Ae = {
   minute: 5,
   second: 6
 };
-function Ee(r, a) {
+function Le(r, a) {
   const i = r.format(a).replace(/\u200E/g, ""), s = /(\d+)\/(\d+)\/(\d+) (AD|BC),? (\d+):(\d+):(\d+)/.exec(i), [, p, m, A, g, y, b, S] = s;
   return [A, p, m, g, y, b, S];
 }
-function fe(r, a) {
+function ve(r, a) {
   const i = r.formatToParts(a), s = [];
   for (let p = 0; p < i.length; p++) {
-    const { type: m, value: A } = i[p], g = Ae[m];
+    const { type: m, value: A } = i[p], g = ye[m];
     m === "era" ? s[g] = A : U(g) || (s[g] = parseInt(A, 10));
   }
   return s;
 }
 const K = /* @__PURE__ */ new Map();
-class x extends W {
+class x extends Q {
   /**
    * @param {string} name - Zone name
    * @return {IANAZone}
@@ -275,7 +303,7 @@ class x extends W {
    * @return {void}
    */
   static resetCache() {
-    K.clear(), G.clear();
+    K.clear(), J.clear();
   }
   /**
    * Returns whether the provided string is a valid specifier. This only checks the string's format, not that the specifier identifies a known zone; see isValidZone for that.
@@ -343,7 +371,7 @@ class x extends W {
    * @return {string}
    */
   offsetName(a, { format: i, locale: s }) {
-    return Le(a, i, s, this.name);
+    return Re(a, i, s, this.name);
   }
   /**
    * Returns the offset's value as a string
@@ -366,10 +394,10 @@ class x extends W {
     if (!this.valid) return NaN;
     const i = new Date(a);
     if (isNaN(i)) return NaN;
-    const s = me(this.name);
-    let [p, m, A, g, y, b, S] = s.formatToParts ? fe(s, i) : Ee(s, i);
+    const s = he(this.name);
+    let [p, m, A, g, y, b, S] = s.formatToParts ? ve(s, i) : Le(s, i);
     g === "BC" && (p = -Math.abs(p) + 1);
-    const C = ye({
+    const C = Ne({
       year: p,
       month: m,
       day: A,
@@ -400,14 +428,14 @@ class x extends W {
     return this.valid;
   }
 }
-let J = null;
-class v extends W {
+let G = null;
+class I extends Q {
   /**
    * Get a singleton instance of UTC
    * @return {FixedOffsetZone}
    */
   static get utcInstance() {
-    return J === null && (J = new v(0)), J;
+    return G === null && (G = new I(0)), G;
   }
   /**
    * Get an instance with a specified offset
@@ -415,7 +443,7 @@ class v extends W {
    * @return {FixedOffsetZone}
    */
   static instance(a) {
-    return a === 0 ? v.utcInstance : new v(a);
+    return a === 0 ? I.utcInstance : new I(a);
   }
   /**
    * Get an instance of FixedOffsetZone from a UTC offset string, like "UTC+6"
@@ -429,7 +457,7 @@ class v extends W {
     if (a) {
       const i = a.match(/^utc(?:([+-]\d{1,2})(?::(\d{2}))?)?$/i);
       if (i)
-        return new v(q(i[1], i[2]));
+        return new I(X(i[1], i[2]));
     }
     return null;
   }
@@ -528,17 +556,17 @@ function F(r, a = 2) {
   let s;
   return i ? s = "-" + ("" + -r).padStart(a, "0") : s = ("" + r).padStart(a, "0"), s;
 }
-function Y(r) {
+function H(r) {
   if (!(U(r) || r === null || r === ""))
     return parseInt(r, 10);
 }
-function he(r) {
+function Ie(r) {
   if (!(U(r) || r === null || r === "")) {
     const a = parseFloat("0." + r) * 1e3;
     return Math.floor(a);
   }
 }
-function ye(r) {
+function Ne(r) {
   let a = Date.UTC(
     r.year,
     r.month - 1,
@@ -550,7 +578,7 @@ function ye(r) {
   );
   return r.year < 100 && r.year >= 0 && (a = new Date(a), a.setUTCFullYear(r.year, r.month - 1, r.day)), +a;
 }
-function Le(r, a, i, s = null) {
+function Re(r, a, i, s = null) {
   const p = new Date(r), m = {
     hourCycle: "h23",
     year: "numeric",
@@ -563,7 +591,7 @@ function Le(r, a, i, s = null) {
   const A = { timeZoneName: a, ...m }, g = new Intl.DateTimeFormat(i, A).formatToParts(p).find((y) => y.type.toLowerCase() === "timezonename");
   return g ? g.value : null;
 }
-function q(r, a) {
+function X(r, a) {
   let i = parseInt(r, 10);
   Number.isNaN(i) && (i = 0);
   const s = parseInt(a, 10) || 0, p = i < 0 || Object.is(i, -0) ? -s : s;
@@ -582,7 +610,7 @@ function k(r, a) {
       throw new RangeError(`Value format ${a} is out of range for property format`);
   }
 }
-const Q = /[A-Za-z_+-]{1,256}(?::?\/[A-Za-z0-9_+-]{1,256}(?:\/[A-Za-z0-9_+-]{1,256})?)?/;
+const _ = /[A-Za-z_+-]{1,256}(?::?\/[A-Za-z0-9_+-]{1,256}(?:\/[A-Za-z0-9_+-]{1,256})?)?/;
 function R(...r) {
   const a = r.reduce((i, s) => i + s.source, "");
   return RegExp(`^${a}$`);
@@ -596,23 +624,23 @@ function D(...r) {
     [{}, null, 1]
   ).slice(0, 2);
 }
-function Z(...r) {
+function ee(...r) {
   return (a, i) => {
     const s = {};
     let p;
     for (p = 0; p < r.length; p++)
-      s[r[p]] = Y(a[i + p]);
+      s[r[p]] = H(a[i + p]);
     return [s, null, i + p];
   };
 }
-const H = /(?:([Zz])|([+-]\d\d)(?::?(\d\d))?)/, Ie = `(?:${H.source}?(?:\\[(${Q.source})\\])?)?`, _ = /(\d\d)(?::?(\d\d)(?::?(\d\d)(?:[.,](\d{1,30}))?)?)?/, X = RegExp(`${_.source}${Ie}`), j = RegExp(`(?:[Tt]${X.source})?`), ve = /([+-]\d{6}|\d{4})(?:-?(\d\d)(?:-?(\d\d))?)?/, Ne = /(\d{4})-?W(\d\d)(?:-?(\d))?/, Re = /(\d{4})-?(\d{3})/, De = Z("weekYear", "weekNumber", "weekDay"), Oe = Z("year", "ordinal"), be = /(\d{4})-(\d\d)-(\d\d)/, ee = RegExp(
-  `${_.source} ?(?:${H.source}|(${Q.source}))?`
-), Se = RegExp(`(?: ${ee.source})?`);
+const re = /(?:([Zz])|([+-]\d\d)(?::?(\d\d))?)/, De = `(?:${re.source}?(?:\\[(${_.source})\\])?)?`, ae = /(\d\d)(?::?(\d\d)(?::?(\d\d)(?:[.,](\d{1,30}))?)?)?/, ne = RegExp(`${ae.source}${De}`), j = RegExp(`(?:[Tt]${ne.source})?`), Oe = /([+-]\d{6}|\d{4})(?:-?(\d\d)(?:-?(\d\d))?)?/, be = /(\d{4})-?W(\d\d)(?:-?(\d))?/, Se = /(\d{4})-?(\d{3})/, Te = ee("weekYear", "weekNumber", "weekDay"), Me = ee("year", "ordinal"), we = /(\d{4})-(\d\d)-(\d\d)/, te = RegExp(
+  `${ae.source} ?(?:${re.source}|(${_.source}))?`
+), Ce = RegExp(`(?: ${te.source})?`);
 function N(r, a, i) {
   const s = r[a];
-  return U(s) ? i : Y(s);
+  return U(s) ? i : H(s);
 }
-function Te(r, a) {
+function Pe(r, a) {
   return [{
     year: N(r, a),
     month: N(r, a + 1, 1),
@@ -624,21 +652,27 @@ function O(r, a) {
     hours: N(r, a, 0),
     minutes: N(r, a + 1, 0),
     seconds: N(r, a + 2, 0),
-    milliseconds: he(r[a + 3])
+    milliseconds: Ie(r[a + 3])
   }, null, a + 4];
 }
 function M(r, a) {
-  const i = !r[a] && !r[a + 1], s = q(r[a + 1], r[a + 2]), p = i ? null : v.instance(s);
+  const i = !r[a] && !r[a + 1], s = X(r[a + 1], r[a + 2]), p = i ? null : I.instance(s);
   return [{}, p, a + 3];
 }
 function w(r, a) {
   const i = r[a] ? x.create(r[a]) : null;
   return [{}, i, a + 1];
 }
-R(ve, j);
-R(Ne, j);
-R(Re, j);
-R(X);
+R(Oe, j);
+R(be, j);
+R(Se, j);
+R(ne);
+D(
+  Pe,
+  O,
+  M,
+  w
+);
 D(
   Te,
   O,
@@ -646,13 +680,7 @@ D(
   w
 );
 D(
-  De,
-  O,
-  M,
-  w
-);
-D(
-  Oe,
+  Me,
   O,
   M,
   w
@@ -663,14 +691,14 @@ D(
   w
 );
 D(O);
-R(be, Se);
-R(ee);
+R(we, Ce);
+R(te);
 D(
   O,
   M,
   w
 );
-const Me = [
+const Ve = [
   // Management
   {
     id: "role-manager-project",
@@ -734,39 +762,21 @@ const Me = [
     id: "role-dev-frontend",
     name: "Frontend Developer",
     groups: ["Developers"],
-    seniorities: [
-      e.JUNIOR,
-      e.MIDLEVEL,
-      e.SENIOR,
-      e.LEAD,
-      e.PRINCIPAL
-    ],
+    seniorities: [e.JUNIOR, e.MIDLEVEL, e.SENIOR, e.LEAD, e.PRINCIPAL],
     description: "Builds and maintains user interfaces and client-side logic for web and mobile applications."
   },
   {
     id: "role-dev-backend",
     name: "Backend Developer",
     groups: ["Developers"],
-    seniorities: [
-      e.JUNIOR,
-      e.MIDLEVEL,
-      e.SENIOR,
-      e.LEAD,
-      e.PRINCIPAL
-    ],
+    seniorities: [e.JUNIOR, e.MIDLEVEL, e.SENIOR, e.LEAD, e.PRINCIPAL],
     description: "Develops server-side logic, APIs, and database interactions to support application functionality."
   },
   {
     id: "role-dev-fullstack",
     name: "Fullstack Developer",
     groups: ["Developers"],
-    seniorities: [
-      e.JUNIOR,
-      e.MIDLEVEL,
-      e.SENIOR,
-      e.LEAD,
-      e.PRINCIPAL
-    ],
+    seniorities: [e.JUNIOR, e.MIDLEVEL, e.SENIOR, e.LEAD, e.PRINCIPAL],
     description: "Works across both frontend and backend, delivering end-to-end solutions for applications."
   },
   {
@@ -964,7 +974,7 @@ const Me = [
     seniorities: [e.JUNIOR, e.MIDLEVEL, e.SENIOR],
     description: "Creates and maintains technical documentation, manuals, and guides for products and systems."
   }
-], we = [
+], Fe = [
   // FRONTEND
   {
     guid: "tech-react",
@@ -1439,6 +1449,6 @@ const Me = [
   // BACKEND/INFRA (Multiple layers)
 ];
 export {
-  Me as DATA_PROJECT_ROLES,
-  we as DATA_TECHNOLOGIES
+  Ve as DATA_PROJECT_ROLES,
+  Fe as DATA_TECHNOLOGIES
 };

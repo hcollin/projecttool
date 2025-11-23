@@ -1,4 +1,4 @@
-import { IRoleTemplate } from "common/projecttoolmodels/dist";
+import { IRoleTemplate } from "@frosttroll/projecttoolmodels";
 import { proxy } from "valtio";
 
 export interface IDataRolesStore {

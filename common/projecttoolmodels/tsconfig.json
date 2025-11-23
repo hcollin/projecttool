@@ -4,8 +4,9 @@
 		"target": "esnext",
 		"module": "esnext",
 		"moduleResolution": "node10",
-		"rootDir": "src",
-		"outDir": "dist",
+		"outDir": "dist/tsc",
+		"declaration": true,
+		"declarationDir": "dist/types",
 		"composite": true
 	},
 	"include": ["src"]

@@ -2,10 +2,11 @@
 	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
 		"target": "esnext",
-    "module": "esnext",
+		"module": "esnext",
 		"moduleResolution": "node10",
-		"rootDir": "src",
-		"outDir": "dist",
+		"outDir": "dist/src",
+		"declaration": true,
+		"declarationDir": "dist/src",
 		"composite": true
 	},
 	"include": ["src"]

@@ -6,18 +6,21 @@ echo.
 echo =======================================
 echo Building projecttoolmodels...
 cd .\common\projecttoolmodels\
+call npm install
 call npm run build
 cd ..\..
 echo.
 echo =======================================
 echo Building projecttoolsdata...
 cd .\common\projecttoolsdata\
+call npm install
 call npm run build
 cd ..\..
 echo.
 echo =======================================
 echo Building projecttoolutils...
 cd .\common\projecttoolutils\
+call npm install
 call npm run build
 cd ..\..
 echo.
