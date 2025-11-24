@@ -46,7 +46,7 @@ const DataShell = (props: { children: React.ReactNode }) => {
                 </AnchorLink>
                 <Divider label="Resource data" labelPosition="center" my="sm" />
                 <NavLink label="Roles" component={Link} to="/data/roles" />
-                <NavLink label="Technologies" component={Link} to="/data/technologies" />
+                <NavLink label="Technologies" component={Link} to="/data/technology/" />
             </AppShell.Navbar>
 
             <AppShell.Main className="main-content">{props.children}</AppShell.Main>

@@ -6,6 +6,16 @@ interface ProjectPageMainTitleProps extends TitleProps {
 
 const ProjectPageMainTitle = (props: ProjectPageMainTitleProps) => {
     const { children, className, ...rest } = props;
-    return <Title order={1} mb="md" className={`project-page-main-title ${className}`} {...rest}>{children}</Title>;
-}
+    return (
+        <Title
+            order={1}
+            mb="md"
+            className={`project-page-main-title ${className}`}
+            style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
+            {...rest}
+        >
+            {children}
+        </Title>
+    );
+};
 export default ProjectPageMainTitle;

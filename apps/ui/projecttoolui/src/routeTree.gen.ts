@@ -22,8 +22,10 @@ import { Route as ProjectPricingRouteImport } from './routes/project/pricing'
 import { Route as ProjectPhasesRouteImport } from './routes/project/phases'
 import { Route as ProjectListprojectsRouteImport } from './routes/project/listprojects'
 import { Route as ProjectDashboardRouteImport } from './routes/project/dashboard'
-import { Route as DataTechnologiesRouteImport } from './routes/data/technologies'
 import { Route as DataRolesRouteImport } from './routes/data/roles'
+import { Route as DataTechnologyIndexRouteImport } from './routes/data/technology/index'
+import { Route as DataTechnologyNewRouteImport } from './routes/data/technology/new'
+import { Route as DataTechnologyEditGuidRouteImport } from './routes/data/technology/edit.$guid'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -90,21 +92,30 @@ const ProjectDashboardRoute = ProjectDashboardRouteImport.update({
   path: '/project/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DataTechnologiesRoute = DataTechnologiesRouteImport.update({
-  id: '/data/technologies',
-  path: '/data/technologies',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const DataRolesRoute = DataRolesRouteImport.update({
   id: '/data/roles',
   path: '/data/roles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DataTechnologyIndexRoute = DataTechnologyIndexRouteImport.update({
+  id: '/data/technology/',
+  path: '/data/technology/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DataTechnologyNewRoute = DataTechnologyNewRouteImport.update({
+  id: '/data/technology/new',
+  path: '/data/technology/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DataTechnologyEditGuidRoute = DataTechnologyEditGuidRouteImport.update({
+  id: '/data/technology/edit/$guid',
+  path: '/data/technology/edit/$guid',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/data/roles': typeof DataRolesRoute
-  '/data/technologies': typeof DataTechnologiesRoute
   '/project/dashboard': typeof ProjectDashboardRoute
   '/project/listprojects': typeof ProjectListprojectsRoute
   '/project/phases': typeof ProjectPhasesRoute
@@ -117,11 +128,13 @@ export interface FileRoutesByFullPath {
   '/project/techstack': typeof ProjectTechstackRoute
   '/data': typeof DataIndexRoute
   '/project': typeof ProjectIndexRoute
+  '/data/technology/new': typeof DataTechnologyNewRoute
+  '/data/technology': typeof DataTechnologyIndexRoute
+  '/data/technology/edit/$guid': typeof DataTechnologyEditGuidRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/data/roles': typeof DataRolesRoute
-  '/data/technologies': typeof DataTechnologiesRoute
   '/project/dashboard': typeof ProjectDashboardRoute
   '/project/listprojects': typeof ProjectListprojectsRoute
   '/project/phases': typeof ProjectPhasesRoute
@@ -134,12 +147,14 @@ export interface FileRoutesByTo {
   '/project/techstack': typeof ProjectTechstackRoute
   '/data': typeof DataIndexRoute
   '/project': typeof ProjectIndexRoute
+  '/data/technology/new': typeof DataTechnologyNewRoute
+  '/data/technology': typeof DataTechnologyIndexRoute
+  '/data/technology/edit/$guid': typeof DataTechnologyEditGuidRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/data/roles': typeof DataRolesRoute
-  '/data/technologies': typeof DataTechnologiesRoute
   '/project/dashboard': typeof ProjectDashboardRoute
   '/project/listprojects': typeof ProjectListprojectsRoute
   '/project/phases': typeof ProjectPhasesRoute
@@ -152,13 +167,15 @@ export interface FileRoutesById {
   '/project/techstack': typeof ProjectTechstackRoute
   '/data/': typeof DataIndexRoute
   '/project/': typeof ProjectIndexRoute
+  '/data/technology/new': typeof DataTechnologyNewRoute
+  '/data/technology/': typeof DataTechnologyIndexRoute
+  '/data/technology/edit/$guid': typeof DataTechnologyEditGuidRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/data/roles'
-    | '/data/technologies'
     | '/project/dashboard'
     | '/project/listprojects'
     | '/project/phases'
@@ -171,11 +188,13 @@ export interface FileRouteTypes {
     | '/project/techstack'
     | '/data'
     | '/project'
+    | '/data/technology/new'
+    | '/data/technology'
+    | '/data/technology/edit/$guid'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/data/roles'
-    | '/data/technologies'
     | '/project/dashboard'
     | '/project/listprojects'
     | '/project/phases'
@@ -188,11 +207,13 @@ export interface FileRouteTypes {
     | '/project/techstack'
     | '/data'
     | '/project'
+    | '/data/technology/new'
+    | '/data/technology'
+    | '/data/technology/edit/$guid'
   id:
     | '__root__'
     | '/'
     | '/data/roles'
-    | '/data/technologies'
     | '/project/dashboard'
     | '/project/listprojects'
     | '/project/phases'
@@ -205,12 +226,14 @@ export interface FileRouteTypes {
     | '/project/techstack'
     | '/data/'
     | '/project/'
+    | '/data/technology/new'
+    | '/data/technology/'
+    | '/data/technology/edit/$guid'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DataRolesRoute: typeof DataRolesRoute
-  DataTechnologiesRoute: typeof DataTechnologiesRoute
   ProjectDashboardRoute: typeof ProjectDashboardRoute
   ProjectListprojectsRoute: typeof ProjectListprojectsRoute
   ProjectPhasesRoute: typeof ProjectPhasesRoute
@@ -223,6 +246,9 @@ export interface RootRouteChildren {
   ProjectTechstackRoute: typeof ProjectTechstackRoute
   DataIndexRoute: typeof DataIndexRoute
   ProjectIndexRoute: typeof ProjectIndexRoute
+  DataTechnologyNewRoute: typeof DataTechnologyNewRoute
+  DataTechnologyIndexRoute: typeof DataTechnologyIndexRoute
+  DataTechnologyEditGuidRoute: typeof DataTechnologyEditGuidRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -318,18 +344,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/data/technologies': {
-      id: '/data/technologies'
-      path: '/data/technologies'
-      fullPath: '/data/technologies'
-      preLoaderRoute: typeof DataTechnologiesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/data/roles': {
       id: '/data/roles'
       path: '/data/roles'
       fullPath: '/data/roles'
       preLoaderRoute: typeof DataRolesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/data/technology/': {
+      id: '/data/technology/'
+      path: '/data/technology'
+      fullPath: '/data/technology'
+      preLoaderRoute: typeof DataTechnologyIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/data/technology/new': {
+      id: '/data/technology/new'
+      path: '/data/technology/new'
+      fullPath: '/data/technology/new'
+      preLoaderRoute: typeof DataTechnologyNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/data/technology/edit/$guid': {
+      id: '/data/technology/edit/$guid'
+      path: '/data/technology/edit/$guid'
+      fullPath: '/data/technology/edit/$guid'
+      preLoaderRoute: typeof DataTechnologyEditGuidRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -338,7 +378,6 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DataRolesRoute: DataRolesRoute,
-  DataTechnologiesRoute: DataTechnologiesRoute,
   ProjectDashboardRoute: ProjectDashboardRoute,
   ProjectListprojectsRoute: ProjectListprojectsRoute,
   ProjectPhasesRoute: ProjectPhasesRoute,
@@ -351,6 +390,9 @@ const rootRouteChildren: RootRouteChildren = {
   ProjectTechstackRoute: ProjectTechstackRoute,
   DataIndexRoute: DataIndexRoute,
   ProjectIndexRoute: ProjectIndexRoute,
+  DataTechnologyNewRoute: DataTechnologyNewRoute,
+  DataTechnologyIndexRoute: DataTechnologyIndexRoute,
+  DataTechnologyEditGuidRoute: DataTechnologyEditGuidRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

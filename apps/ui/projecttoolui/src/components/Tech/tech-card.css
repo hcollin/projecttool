@@ -2,7 +2,7 @@ div.tech-card {
     position: relative;
     height: 100%;
     padding: 0;
-    min-height:  6rem;
+    min-height: 6rem;
     height: 100%;
 
     div.layer-border {
@@ -25,31 +25,65 @@ div.tech-card {
             background-color: var(--mantine-color-green-8);
         }
 
-        &.frontend-backend {
+        &.frontend-backend,
+        &.backend-frontend {
             background: linear-gradient(-45deg, var(--mantine-color-cyan-8) 30%, var(--mantine-color-green-8) 70%);
+        }
+
+        &.frontend-network,
+        &.network-frontend {
+            background: linear-gradient(-45deg, var(--mantine-color-yellow-8) 30%, var(--mantine-color-green-8) 70%);
+        }
+
+        &.frontend-security,
+        &.security-frontend {
+            background: linear-gradient(-45deg, var(--mantine-color-red-8) 30%, var(--mantine-color-green-8) 70%);
+        }
+
+        &.frontend-infrastructure,
+        &.infrastructure-frontend {
+            background: linear-gradient(-45deg, var(--mantine-color-orange-8) 30%, var(--mantine-color-green-8) 70%);
         }
 
         &.backend {
             background-color: var(--mantine-color-cyan-8);
         }
 
-        &.backend-database {
+        &.backend-database,
+        &.database-backend {
             background: linear-gradient(-45deg, var(--mantine-color-blue-8) 30%, var(--mantine-color-cyan-8) 70%);
+        }
+
+        &.backend-network,
+        &.network-backend {
+            background: linear-gradient(-45deg, var(--mantine-color-yellow-8) 30%, var(--mantine-color-cyan-8) 70%);
+        }
+
+        &.backend-security,
+        &.security-backend {
+            background: linear-gradient(-45deg, var(--mantine-color-red-8) 30%, var(--mantine-color-cyan-8) 70%);
         }
 
         &.database {
             background-color: var(--mantine-color-blue-8);
         }
 
-        &.database-infrastructure {
+        &.database-infrastructure,
+        &.infrastructure-database {
             background: linear-gradient(-45deg, var(--mantine-color-orange-8) 30%, var(--mantine-color-blue-8) 70%);
+        }
+
+        &.database-security,
+        &.security-database {
+            background: linear-gradient(-45deg, var(--mantine-color-red-8) 30%, var(--mantine-color-blue-8) 70%);
         }
 
         &.infrastructure {
             background-color: var(--mantine-color-orange-8);
         }
 
-        &.infrastructure-security {
+        &.infrastructure-security,
+        &.security-infrastructure {
             background: linear-gradient(-45deg, var(--mantine-color-red-8) 30%, var(--mantine-color-orange-8) 70%);
         }
 
@@ -81,5 +115,13 @@ div.tech-card {
         margin-left: 4rem;
         height: 100%;
         padding: 0.5rem 1rem;
+    }
+
+    &.clickable {
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: 0 0 0.5rem 0.25rem #fff2;
+        }
     }
 }
