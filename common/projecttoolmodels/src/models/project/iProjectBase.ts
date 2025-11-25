@@ -9,6 +9,7 @@ export interface IProjectBase extends IRootObject{
     codename: string;
     realname?: string;
     clientName?: string;
+    description?: string;
     
 
 }
