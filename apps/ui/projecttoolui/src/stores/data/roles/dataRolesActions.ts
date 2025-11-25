@@ -1,5 +1,6 @@
-import { DATA_PROJECT_ROLES } from "@frosttroll/projecttooldata";
 import dataRolesStore from "./dataRolesStore";
+import { RestService } from "../../../api/RestService";
+import { IRoleTemplate } from "@frosttroll/projecttoolmodels";
 
 export async function actionInitializeDataRoleTemplatesStore() {
     if (dataRolesStore.lastUpdated === -1 && dataRolesStore.roles.length === 0) {
@@ -14,16 +15,18 @@ export async function actionInitializeDataRoleTemplatesStore() {
  * Currently this function will load the role templates from the common/projecttoolsdata package.
  */
 export async function actionLoadDataRoleTemplates() {
-    dataRolesStore.roles = [...DATA_PROJECT_ROLES];
+    const rest = RestService.getInstance();
+    const res = await rest.GET<IRoleTemplate[]>("/roletemplate");
+    dataRolesStore.roles = [...res];
     dataRolesStore.lastUpdated = Date.now();
     return Promise.resolve();
 }
 
 /**
  * Retrieves a data role template by its ID.
- * @param id 
- * @returns 
+ * @param id
+ * @returns
  */
 export function actionGetDataRoleTemplateById(id: string) {
-    return dataRolesStore.roles.find((r) => r.id === id) || null;
+    return dataRolesStore.roles.find((r) => r.guid === id) || null;
 }
