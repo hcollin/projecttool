@@ -16,13 +16,16 @@ export interface IRole extends IRootObject {
  * Template for roles. This can be used to define standard roles that can be assigned to people.
  */
 export interface IRoleTemplate {
-    id: string;
+    guid: string;
     name: string;
     groups: string[];
     seniorities: ROLESENIORITY[];
     description?: string;
 }
 
+/**
+ * Role seniority levels
+ */
 export enum ROLESENIORITY {
     INTERN = "Intern",
     JUNIOR = "Junior",

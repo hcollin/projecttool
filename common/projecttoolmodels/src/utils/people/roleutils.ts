@@ -13,10 +13,10 @@ export function convertRoleTemplateToRole(
     seniority?: ROLESENIORITY
 ): IRole {
     const role: IRole = {
-        guid: `role-${roletemplate.id}-${rnd(10000, 99999)}`,
+        guid: `role-${roletemplate.guid}-${rnd(10000, 99999)}`,
         organizationId: orgId,
         name: roletemplate.name,
-        templateId: roletemplate.id,
+        templateId: roletemplate.guid,
 
         description: roletemplate.description,
     };

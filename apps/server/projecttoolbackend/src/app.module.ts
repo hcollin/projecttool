@@ -5,9 +5,9 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 
-// import { TechnologyService } from "./technology/technology.service";
-// import { TechnologyController } from "./technology/technology.controller";
+// Custom modules
 import { TechnologyModule } from "./technology/technology.module";
+import { RoletemplateModule } from "./roletemplate/roletemplate.module";
 
 @Module({
     imports: [
@@ -25,6 +25,7 @@ import { TechnologyModule } from "./technology/technology.module";
             synchronize: true,
         }),
         TechnologyModule,
+        RoletemplateModule,
     ],
     controllers: [AppController],
     providers: [AppService],

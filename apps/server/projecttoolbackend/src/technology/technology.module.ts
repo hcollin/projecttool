@@ -8,6 +8,6 @@ import { TechnologyEntity } from "./technology.entity";
     imports: [TypeOrmModule.forFeature([TechnologyEntity])],
     controllers: [TechnologyController],
     providers: [TechnologyService],
-    exports: [TypeOrmModule]
+    exports: [TypeOrmModule],
 })
 export class TechnologyModule {}

@@ -5,6 +5,7 @@ node_modules
 # compiled output
 **/dist
 **/build
+dist
 
 # Logs
 **/logs

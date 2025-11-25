@@ -5,6 +5,7 @@ import { TechnologyService } from "./technology.service";
 import { ApiBody, ApiParam } from "@nestjs/swagger";
 import { TechnologyDTO } from "./technology.dto";
 import type { Response } from "express";
+import { NotFoundException, BadRequestException } from "@nestjs/common";
 
 @Controller("technology")
 export class TechnologyController {
@@ -24,18 +25,15 @@ export class TechnologyController {
      */
     @Get(":guid")
     @ApiParam({ name: "guid", type: String, description: "The GUID of the technology to retrieve." })
-    async getTechnologyByGuid(@Param() params: { guid: string }, @Res() res: Response): Promise<ITechnology> {
-        const { guid } = params;
+    async getTechnologyByGuid(@Param("guid") guid: string): Promise<ITechnology> {
         if (!guid) {
-            res.status(400).send("GUID parameter is required.");
-            return Promise.resolve();
+            throw new BadRequestException("GUID parameter is required.");
         }
         const tech = await this.technologyService.getByGuid(guid);
         if (!tech) {
-            res.status(404).send(`Technology with GUID ${guid} not found.`);
-            return;
+            throw new NotFoundException(`Technology with GUID ${guid} not found.`);
         }
-        res.status(200).json(tech);
+        return tech;
     }
 
     /**

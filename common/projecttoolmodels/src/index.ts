@@ -28,7 +28,7 @@ export * from "./models/files/iDocItem";
 // Utils
 export * from "./utils/people/roleutils";
 export * from "./utils/time/phasetimeutils";
-export * from "./utils/project/projectutils"
+export * from "./utils/project/projectutils";
 export * from "./utils/project/phaseUtils";
 export * from "./utils/time/timeUtils";
 export * from "./utils/pricing/currencyUtils";
