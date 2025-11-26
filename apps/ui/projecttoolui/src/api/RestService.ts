@@ -57,9 +57,9 @@ export class RestService {
         if (!res.ok) {
             throw new Error(`HTTP error! status: ${res.status}`);
         }
-		if(method === "POST" && res.status === 201){
-			return {} as T;
-		}
+        if (method === "POST" && res.status === 201) {
+            return {} as T;
+        }
 
         return (await res.json()) as T;
     }

@@ -30,7 +30,6 @@ export function actionCreateNewProject() {
             .set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
             .setLocale("fi")
             .toMillis(),
-        teams: [],
         roles: [],
         prices: {
             hourlypricegroups: [defaultPriceGroup],
@@ -46,8 +45,8 @@ export function actionCreateNewProject() {
             backend: [],
             data: [],
             platform: [],
-            tools: [],  
-        }
+            tools: [],
+        },
     };
 
     const phase1: IPhase = {

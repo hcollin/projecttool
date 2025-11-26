@@ -2,7 +2,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { IconFolderOpen, IconTrash } from "@tabler/icons-react";
 import { useState } from "react";
-import { Box, Button, Container, Flex, Stack, Text } from "@mantine/core";
+import { Box, Button, Container, Flex, Stack, Text, Title } from "@mantine/core";
 
 // IMPORT: Custom components
 import ProjectShell from "../../components/ProjectShell/ProjectShell";
@@ -15,7 +15,9 @@ import { actionDeleteProjectFromLocalStorage, actionLoadProjectsFromLocalStorage
 import { actionSetActiveProject } from "../../stores/activeproject/activeProjectActions";
 
 // IMPORT: Common models
-import { IProject } from "@frosttroll/projecttoolmodels";
+import { IProject, IProjectBase } from "@frosttroll/projecttoolmodels";
+import { useProjectsSimple } from "../../api/project/projectHooks";
+import Loading from "../../components/Saving/Loading";
 
 export const Route = createFileRoute("/project/listprojects")({
     component: ListProjectsComponent,
@@ -23,9 +25,17 @@ export const Route = createFileRoute("/project/listprojects")({
 
 function ListProjectsComponent() {
     const [projects, setProjects] = useState<IProject[]>(actionLoadProjectsFromLocalStorage());
+    const [dbprjs, dbLoading] = useProjectsSimple();
 
-    function handleLoadProject(project: IProject) {
-        actionSetActiveProject(project);
+    function handleLoadProject(guid: string) {
+        const prj = projects.find((p) => p.guid === guid);
+        if (prj) {
+            actionSetActiveProject(prj);
+        }
+    }
+
+    function handleLoadProjectFromDb(projectGuid: string) {
+        const project = dbprjs.find((p) => p.guid === projectGuid);
     }
 
     function handleDeleteProject(projectGuid: string) {
@@ -46,39 +56,32 @@ function ListProjectsComponent() {
                         <Text size="lg">No projects found from local storage. Please create a new project.</Text>
                     )}
 
+                    <Title order={2} mb="md">
+                        Projects in localstorage
+                    </Title>
                     <Stack gap="md">
                         {projects.map((project) => (
-                            <Flex key={project.guid} align="center" gap="md" justify="space-between">
-                                <Text size="lg" style={{ flex: "0 0 auto", width: "25%" }}>
-                                    {project.codename}
-                                </Text>
+                            <ProjectItem
+                                key={project.guid}
+                                project={project}
+                                onDelete={handleDeleteProject}
+                                onLoad={handleLoadProject}
+                            />
+                        ))}
+                    </Stack>
 
-                                {project.realname || project.clientName ? (
-                                    <Box style={{ textAlign: "left", flex: "1 1 auto" }}>
-                                        {project.realname && <Text size="sm">Name: {project.realname}</Text>}
-                                        {project.clientName && <Text size="sm">Client: {project.clientName}</Text>}
-                                    </Box>
-                                ) : null}
-
-                                <Box>
-                                    <ConfirmButton
-                                        variant="filled"
-                                        onClick={() => handleDeleteProject(project.guid)}
-                                        color="red"
-                                        mr="md"
-                                        question="Are you sure you want to delete this project?"
-                                    >
-                                        <IconTrash />
-                                    </ConfirmButton>
-                                    <Button
-                                        variant="contained"
-                                        onClick={() => handleLoadProject(project)}
-                                        leftSection={<IconFolderOpen />}
-                                    >
-                                        Load Project
-                                    </Button>
-                                </Box>
-                            </Flex>
+                    <Title order={2} mt="xl" mb="md">
+                        Projects in database
+                    </Title>
+                    {dbLoading && <Loading />}
+                    <Stack gap="md">
+                        {dbprjs.map((project) => (
+                            <ProjectItem
+                                key={project.guid}
+                                project={project}
+                                onDelete={handleDeleteProject}
+                                onLoad={handleLoadProject}
+                            />
                         ))}
                     </Stack>
                 </ProjectCard>
@@ -86,3 +89,41 @@ function ListProjectsComponent() {
         </ProjectShell>
     );
 }
+
+const ProjectItem = (props: {
+    project: IProjectBase;
+    onDelete: (guid: string) => void;
+    onLoad: (guid: string) => void;
+}) => {
+    const { project, onDelete, onLoad } = props;
+
+    return (
+        <Flex key={project.guid} align="center" gap="md" justify="space-between">
+            <Text size="lg" style={{ flex: "0 0 auto", width: "25%" }}>
+                {project.codename}
+            </Text>
+
+            {project.realname || project.clientName ? (
+                <Box style={{ textAlign: "left", flex: "1 1 auto" }}>
+                    {project.realname && <Text size="sm">Name: {project.realname}</Text>}
+                    {project.clientName && <Text size="sm">Client: {project.clientName}</Text>}
+                </Box>
+            ) : null}
+
+            <Box>
+                <ConfirmButton
+                    variant="filled"
+                    onClick={() => onDelete(project.guid)}
+                    color="red"
+                    mr="md"
+                    question="Are you sure you want to delete this project?"
+                >
+                    <IconTrash />
+                </ConfirmButton>
+                <Button variant="contained" onClick={() => onLoad(project.guid)} leftSection={<IconFolderOpen />}>
+                    Load Project
+                </Button>
+            </Box>
+        </Flex>
+    );
+};
