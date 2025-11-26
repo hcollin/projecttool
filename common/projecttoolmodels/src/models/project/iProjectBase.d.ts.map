@@ -1,1 +1,0 @@
-{"version":3,"file":"iProjectBase.d.ts","sourceRoot":"","sources":["iProjectBase.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,WAAW,EAAE,MAAM,gBAAgB,CAAC;AAGlD;;;GAGG;AACH,MAAM,WAAW,YAAa,SAAQ,WAAW;IAC7C,QAAQ,EAAE,MAAM,CAAC;IACjB,QAAQ,CAAC,EAAE,MAAM,CAAC;IAClB,UAAU,CAAC,EAAE,MAAM,CAAC;CAGvB"}
