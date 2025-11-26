@@ -26,19 +26,19 @@ export class ProjectEntity {
     @Column({ type: "text", nullable: true })
     description?: string;
 
-    @Column({ type: "timestamptz", default: 0 })
+    @Column({ type: "bigint", default: 0 })
     start!: number;
 
-    @Column({ type: "timestamptz", default: 0 })
+    @Column({ type: "bigint", default: 0 })
     end!: number;
 
     @Column({ type: "simple-array", default: "" })
     flags!: string[];
 
-    @Column({ type: "float", nullable: true })
+    @Column({ type: "money", nullable: true })
     targetBudget?: number;
 
-    @Column({ type: "money", default: "EUR" })
+    @Column({ type: "varchar", default: "EUR" })
     currency!: string;
 
     @Column({ type: "simple-array", default: "" })
@@ -65,9 +65,9 @@ export class ProjectEntity {
     @Column({ type: "simple-json", default: "[]" })
     holidays!: [number, number][];
 
-    @OneToMany(() => RoleEntity, (role) => role.project)
+    @OneToMany(() => RoleEntity, (role) => role.project, { cascade: true })
     roles!: RoleEntity[];
 
-    @OneToMany(() => PhaseEntity, (phase) => phase.project)
+    @OneToMany(() => PhaseEntity, (phase) => phase.project, { cascade: true })
     phases!: PhaseEntity[];
 }

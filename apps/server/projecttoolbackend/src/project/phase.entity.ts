@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { ProjectEntity } from "./project.entity";
-import type { IPhaseStart, IPhaseEnd, IPhaseAllocation } from "@frosttroll/projecttoolmodels";
+import type { IPhaseStart, IPhaseEnd, IPhaseAllocation, IDocItem } from "@frosttroll/projecttoolmodels";
 
 @Entity()
 export class PhaseEntity {
@@ -17,10 +17,13 @@ export class PhaseEntity {
     project!: ProjectEntity;
 
     @Column({ type: "varchar" })
+    name!: string;
+
+    @Column({ type: "varchar" })
     description?: string;
 
     @Column({ type: "jsonb", nullable: true })
-    docItem?: string;
+    docItem?: IDocItem;
 
     @Column({ type: "jsonb" })
     start!: IPhaseStart;

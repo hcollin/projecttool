@@ -8,7 +8,7 @@ import { AppService } from "./app.service";
 // Custom modules
 import { TechnologyModule } from "./technology/technology.module";
 import { RoletemplateModule } from "./roletemplate/roletemplate.module";
-import { ProjectModule } from './project/project.module';
+import { ProjectModule } from "./project/project.module";
 
 @Module({
     imports: [

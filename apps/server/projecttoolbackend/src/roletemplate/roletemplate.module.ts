@@ -1,7 +1,8 @@
 import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
+
 import { RoletemplateService } from "./roletemplate.service";
 import { RoletemplateController } from "./roletemplate.controller";
-import { TypeOrmModule } from "@nestjs/typeorm/dist/typeorm.module";
 import { RoleTemplateEntity } from "./roletemplate.entity";
 
 @Module({

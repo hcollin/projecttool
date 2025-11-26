@@ -1,10 +1,19 @@
-import { ITechnology } from "@frosttroll/projecttoolmodels/dist/src/index.js";
+// IMPORT: General libraries
 import { Injectable, Logger } from "@nestjs/common";
-import { DEFAULT_TECHNOLOGIES } from "./default_technologies";
 import { InjectRepository } from "@nestjs/typeorm";
-import { TechnologyEntity } from "./technology.entity";
 import { Repository } from "typeorm";
 import { v4 } from "uuid";
+
+// IMPORT: Project Tool Models
+import { ITechnology } from "@frosttroll/projecttoolmodels";
+
+// IMPORT: Default Data
+import { DEFAULT_TECHNOLOGIES } from "./default_technologies";
+
+// IMPORT: Entities
+import { TechnologyEntity } from "./technology.entity";
+
+// IMPORT: DTOs
 import { TechnologyDTO } from "./technology.dto";
 
 @Injectable()
@@ -99,10 +108,14 @@ export class TechnologyService {
         if (process.env.DB_CLEARDB_ON_STARTUP === "true") {
             await this.technologyRepository.clear();
             // Reset auto-incrementing ID sequence
-            await this.technologyRepository.query("ALTER SEQUENCE technology_entity_id_seq RESTART WITH 1;");
+            try {
+                await this.technologyRepository.query("ALTER SEQUENCE technology_entity_id_seq RESTART WITH 1;");
+            } catch (error) {
+                this.logger.warn("Failed to reset technology_entity_id_seq sequence:", error);
+            }
         }
 
-        const defaultTechs: ITechnology[] = [...(DEFAULT_TECHNOLOGIES as ITechnology[])];
+        const defaultTechs: ITechnology[] = [...DEFAULT_TECHNOLOGIES];
         const existingTechs = await this.technologyRepository.find();
         const existingGuids = new Set(existingTechs.map((t) => t.guid));
 

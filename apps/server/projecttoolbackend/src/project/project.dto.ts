@@ -7,7 +7,9 @@ import {
     IProject,
     IRole,
 } from "@frosttroll/projecttoolmodels";
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiExtraModels, ApiProperty } from "@nestjs/swagger";
+import { RoleDto } from "./role.dto";
+import { PhaseDto } from "./phase.dto";
 
 export class ProjectDto implements IProject {
     @ApiProperty({ description: "The ID of the organization this project belongs to." })
@@ -28,10 +30,8 @@ export class ProjectDto implements IProject {
     @ApiProperty({ description: "A brief description of the project.", required: false })
     description?: string | undefined;
 
-    @ApiProperty({ description: "List of team IDs (references to ITeam.guid)." })
-    teams!: string[]; // List of team IDs (references to ITeam.guid)
-
-    @ApiProperty({ description: "The roles associated with the project." })
+    @ApiProperty({ description: "The roles associated with the project.", type: [RoleDto] })
+    @ApiExtraModels(RoleDto)
     roles!: IRole[];
 
     @ApiProperty({ description: "The start timestamp of the project." })
@@ -52,7 +52,8 @@ export class ProjectDto implements IProject {
         fixedprices: IFixedPrice[];
     };
 
-    @ApiProperty({ description: "The phases of the project." })
+    @ApiProperty({ description: "The phases of the project.", type: [PhaseDto] })
+    @ApiExtraModels(PhaseDto)
     phases!: IPhase[];
 
     @ApiProperty({ description: "The target budget of the project.", required: false })
