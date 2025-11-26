@@ -1,19 +1,12 @@
 import { IFixedPrice, IHourlyPriceGroup } from "@frosttroll/projecttoolmodels/dist/src/index.js";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
 import { RoleEntity } from "./role.entity";
 import { PhaseEntity } from "./phase.entity";
+import { ProjectDto } from "../dtos/project.dto";
+import { RootEntity } from "src/database/rootentity.entity";
 
 @Entity()
-export class ProjectEntity {
-    @PrimaryGeneratedColumn()
-    id!: number;
-
-    @Column({ type: "varchar", unique: true })
-    guid!: string;
-
-    @Column({ type: "varchar", nullable: false })
-    organizationGuid!: string;
-
+export class ProjectEntity extends RootEntity<ProjectEntity> {
     @Column({ type: "varchar", nullable: false })
     codename!: string;
 
@@ -70,4 +63,26 @@ export class ProjectEntity {
 
     @OneToMany(() => PhaseEntity, (phase) => phase.project, { cascade: true })
     phases!: PhaseEntity[];
+
+    updateFromDto(prjDto: Partial<ProjectDto>): void {
+        if (prjDto !== undefined) {
+            this.codename = prjDto.codename || this.codename;
+            this.realname = prjDto.realname || this.realname;
+            this.clientName = prjDto.clientName || this.clientName;
+            this.description = prjDto.description || this.description;
+            this.start = prjDto.start || this.start;
+            this.end = prjDto.end || this.end;
+            this.flags = prjDto.flags || this.flags;
+            this.holidays = (prjDto.holidays as [number, number][]) || this.holidays;
+            this.targetBudget = prjDto.targetBudget || this.targetBudget;
+            this.currency = prjDto.currency || this.currency;
+            this.tech_frontend = prjDto.techStack?.frontend || this.tech_frontend;
+            this.tech_backend = prjDto.techStack?.backend || this.tech_backend;
+            this.tech_data = prjDto.techStack?.data || this.tech_data;
+            this.tech_platform = prjDto.techStack?.platform || this.tech_platform;
+            this.tech_tools = prjDto.techStack?.tools || this.tech_tools;
+            this.hourPriceGroups = prjDto.prices?.hourlypricegroups || this.hourPriceGroups;
+            this.fixedPrices = prjDto.prices?.fixedprices || this.fixedPrices;
+        }
+    }
 }

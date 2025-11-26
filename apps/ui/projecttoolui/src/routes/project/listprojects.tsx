@@ -11,8 +11,12 @@ import ProjectCard from "../../components/ProjectComponents/ProjectCard";
 import ConfirmButton from "../../components/ConfirmButton/ConfirmButton";
 
 // IMPORT: Stores and actions
-import { actionDeleteProjectFromLocalStorage, actionLoadProjectsFromLocalStorage } from "../../stores/generalActions";
-import { actionSetActiveProject } from "../../stores/activeproject/activeProjectActions";
+import {
+    actionDeleteProjectFromDB,
+    actionDeleteProjectFromLocalStorage,
+    actionLoadProjectsFromLocalStorage,
+} from "../../stores/generalActions";
+import { actionLoadProjectFromApi, actionSetActiveProject } from "../../stores/activeproject/activeProjectActions";
 
 // IMPORT: Common models
 import { IProject, IProjectBase } from "@frosttroll/projecttoolmodels";
@@ -25,7 +29,7 @@ export const Route = createFileRoute("/project/listprojects")({
 
 function ListProjectsComponent() {
     const [projects, setProjects] = useState<IProject[]>(actionLoadProjectsFromLocalStorage());
-    const [dbprjs, dbLoading] = useProjectsSimple();
+    const [dbprjs, dbLoading, dbReload] = useProjectsSimple();
 
     function handleLoadProject(guid: string) {
         const prj = projects.find((p) => p.guid === guid);
@@ -34,16 +38,21 @@ function ListProjectsComponent() {
         }
     }
 
-    function handleLoadProjectFromDb(projectGuid: string) {
-        const project = dbprjs.find((p) => p.guid === projectGuid);
+    function handleLoadProjectFromApi(guid: string) {
+        void actionLoadProjectFromApi(guid);
     }
 
-    function handleDeleteProject(projectGuid: string) {
+    async function handleDeleteProject(projectGuid: string) {
         actionDeleteProjectFromLocalStorage(projectGuid);
+
+        await actionDeleteProjectFromDB(projectGuid);
 
         // Load updated projects list
         const storedProjects = actionLoadProjectsFromLocalStorage();
         setProjects(storedProjects);
+
+        // Load updated db projects list
+        dbReload();
     }
 
     return (
@@ -74,16 +83,19 @@ function ListProjectsComponent() {
                         Projects in database
                     </Title>
                     {dbLoading && <Loading />}
-                    <Stack gap="md">
-                        {dbprjs.map((project) => (
-                            <ProjectItem
-                                key={project.guid}
-                                project={project}
-                                onDelete={handleDeleteProject}
-                                onLoad={handleLoadProject}
-                            />
-                        ))}
-                    </Stack>
+                    {!dbLoading && dbprjs.length === 0 && <Text size="lg">No projects found in database.</Text>}
+                    {!dbLoading && dbprjs.length > 0 && (
+                        <Stack gap="md">
+                            {dbprjs.map((project) => (
+                                <ProjectItem
+                                    key={project.guid}
+                                    project={project}
+                                    onDelete={handleDeleteProject}
+                                    onLoad={handleLoadProjectFromApi}
+                                />
+                            ))}
+                        </Stack>
+                    )}
                 </ProjectCard>
             </Container>
         </ProjectShell>

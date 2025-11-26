@@ -41,3 +41,52 @@ export function utilGetProjectYears(project: IProject): number[] {
 
     return years;
 }
+
+export function utilValidateIProject(project: IProject): boolean {
+    const mandatoryFields: Array<keyof IProject> = [
+        "guid",
+        "organizationId",
+        "codename",
+        "start",
+        "end",
+        "roles",
+        "prices",
+        "phases",
+        "currency",
+        "flags",
+    ];
+
+    for (const field of mandatoryFields) {
+        if (project[field] === undefined || project[field] === null) {
+            return false;
+        }
+    }
+
+    // Following values must be numbers not strings
+    const numberFields: Array<keyof IProject> = ["start", "end"];
+
+    for (const field of numberFields) {
+        if (typeof project[field] !== "number") {
+            return false;
+        }
+    }
+
+    // There must be at least on phase
+    if (project.phases.length === 0) {
+        return false;
+    }
+
+    return true;
+}
+
+export function utilFixIProject(project: IProject): IProject {
+    const nproject = { ...project };
+    if (typeof project.start === "string") {
+        nproject.start = parseInt(project.start as unknown as string, 10);
+    }
+    if (typeof project.end === "string") {
+        nproject.end = parseInt(project.end as unknown as string, 10);
+    }
+
+    return nproject;
+}

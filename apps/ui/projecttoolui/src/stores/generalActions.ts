@@ -1,14 +1,15 @@
 import { CURRENCY, IHourlyPriceGroup, IProject, IPhase } from "@frosttroll/projecttoolmodels";
 import { generateRandomProjectName } from "@frosttroll/projecttoolutils";
-import { actionSetActiveProject } from "./activeproject/activeProjectActions";
+import { actionCloseActiveProject, actionSetActiveProject } from "./activeproject/activeProjectActions";
 import userStore from "./user/userStore";
 import { rnd } from "rndlib";
 import { DateTime } from "luxon";
+import { apiDeleteProject, apiPostCreateEmptyProject, apiPostCreateProject } from "../api/project/apiProject";
 
 /**
  * Create a new unsaved project. This creates the new project and all default sub-objects and sets this project to active.
  */
-export function actionCreateNewProject() {
+export async function actionCreateNewProject() {
     // Create default pricegroup for this project
 
     const defaultPriceGroup: IHourlyPriceGroup = {
@@ -64,7 +65,18 @@ export function actionCreateNewProject() {
 
     p.phases.push(phase1);
 
+    const res = await apiPostCreateProject(p);
+    console.log("RES from creating new project:", res);
+
     actionSetActiveProject(p);
+}
+
+export async function actionCreateEmptyProject() {
+    const res = await apiPostCreateEmptyProject();
+
+    if (res) {
+        actionSetActiveProject(res);
+    }
 }
 
 export function actionStoreProjectToLocalStorage(project: IProject) {
@@ -101,4 +113,11 @@ export function actionDeleteProjectFromLocalStorage(projectGuid: string) {
         const updatedProjects = projects.filter((p) => p.guid !== projectGuid);
         localStorage.setItem(`projecttool-projects`, JSON.stringify(updatedProjects));
     }
+}
+
+export async function actionDeleteProjectFromDB(projectGuid: string) {
+    // Force close the active project if it matches the projectGuid
+    actionCloseActiveProject(projectGuid);
+    // Delete project from backend
+    await apiDeleteProject(projectGuid);
 }

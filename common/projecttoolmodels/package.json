@@ -1,6 +1,6 @@
 {
     "name": "@frosttroll/projecttoolmodels",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "type": "commonjs",
     "main": "./dist/index.cjs.js",
     "module": "./dist/index.es.js",
@@ -18,12 +18,10 @@
     ],
     "scripts": {
         "dev": "vite",
-        "build:types": "tsc --emitDeclarationOnly",
-        "build:cjs": "vite build --config vite.config.cjs.ts",
-        "build:esm": "vite build --config vite.config.esm.ts",
-        "build:nonworking": "npm run build:types & npm run build:cjs & npm run build:esm",
         "build": "tsc && vite build --config vite.config.ts",
-        "clean": "rm -rf ./dist"
+        "clean.sh": "rm -rf ./dist",
+        "clean.ps": "Remove-Item -Recurse -Force .\\dist",
+        "clean.cmd": "rmdir /s /q .\\dist"
     },
     "devDependencies": {
         "@types/luxon": "^3.7.1",

@@ -2,6 +2,11 @@
     "name": "projecttool-monorepo",
     "private": true,
     "version": "0.1.0",
+    "scripts": {
+        "clean.ps": "Remove-Item -Recurse -Force .\\node_modules\\@frosttroll\\*",
+        "clean.sh": "rm -rf ./node_modules/@frosttroll",
+        "clean.cmd": "rmdir /s /q .\\node_modules\\@frosttroll"
+    },
     "workspaces": [
         "apps/server/projecttoolbackend",
         "apps/ui/projecttoolui",

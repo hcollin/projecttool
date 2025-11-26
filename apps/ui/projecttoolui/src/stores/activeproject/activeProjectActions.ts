@@ -11,6 +11,8 @@ import {
 
 import activeProjectStore from "./activeProjectStore";
 import dataRolesStore from "../data/roles/dataRolesStore";
+import { apiDeleteRoleFromProject, apiGetProject, apiPostUpdateProject } from "../../api/project/apiProject";
+import { act } from "react";
 
 /**
  * Create a new unsaved project and set it as the active project.
@@ -23,13 +25,59 @@ export function actionSetActiveProject(p: IProject): IProject {
     return p;
 }
 
+export function actionCloseActiveProject(force?: boolean | string) {
+    // If no active project, do nothing
+    if (activeProjectStore.project === null) {
+        return;
+    }
+
+    // If there are unsaved changes, and force is not set, throw an error
+    if (activeProjectStore.unsavedChanges && !force) {
+        throw new Error("There are unsaved changes in the active project. Use force option to close anyway.");
+    }
+
+    // If force is a string (project GUID), only close if it matches the active project GUID
+    if (typeof force === "string" && activeProjectStore.project !== null && activeProjectStore.project.guid !== force) {
+        return;
+    }
+
+    activeProjectStore.project = null;
+    activeProjectStore.unsavedChanges = false;
+}
+
 /**
  * Simulate saving the active project by resetting the unsavedChanges flag.
  */
-export function actionSaveActiveProject(): void {
+export async function actionSaveActiveProject(): Promise<void> {
     if (activeProjectStore.project) {
+        const projectToSave = { ...activeProjectStore.project };
+
+        const response = await apiPostUpdateProject(projectToSave);
+        console.log("RESPONSE FROM SAVE:", response);
+
         activeProjectStore.unsavedChanges = false;
     }
+}
+
+/**
+ * Load project from API and set it as the active project in the store.
+ * @param guid
+ * @returns
+ */
+export async function actionLoadProjectFromApi(guid: string): Promise<IProject | null> {
+    try {
+        // Call the API to get the project data
+        const project = await apiGetProject(guid);
+        if (project) {
+            actionSetActiveProject(project);
+            return project;
+        }
+        // Set the active project in the store
+    } catch (error) {
+        console.error("Error loading project from API:", error);
+        return null;
+    }
+    return null;
 }
 
 /**
@@ -93,7 +141,8 @@ export function actionRemoveRoleFromActiveProject(roleGuid: string): void {
             activeProjectStore.project.roles = activeProjectStore.project.roles.filter(
                 (r: IRole) => r.guid !== roleGuid
             );
-            activeProjectStore.unsavedChanges = true;
+            // activeProjectStore.unsavedChanges = true;
+            void apiDeleteRoleFromProject(roleGuid);
         }
     }
 }

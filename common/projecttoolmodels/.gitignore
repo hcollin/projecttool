@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+# JS and type files on src
+src/**/*.js
+src/**/*.d.ts
+src/**/*.js.map
+src/**/*.tsbuildinfo
+

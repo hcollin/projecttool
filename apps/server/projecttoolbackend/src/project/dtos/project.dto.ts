@@ -1,12 +1,4 @@
-import {
-    CURRENCY,
-    HOLIDAY_TUPLE,
-    IFixedPrice,
-    IHourlyPriceGroup,
-    IPhase,
-    IProject,
-    IRole,
-} from "@frosttroll/projecttoolmodels";
+import { CURRENCY, HOLIDAY_TUPLE, IFixedPrice, IHourlyPriceGroup, IProject } from "@frosttroll/projecttoolmodels";
 import { ApiExtraModels, ApiProperty } from "@nestjs/swagger";
 import { RoleDto } from "./role.dto";
 import { PhaseDto } from "./phase.dto";
@@ -30,10 +22,6 @@ export class ProjectDto implements IProject {
     @ApiProperty({ description: "A brief description of the project.", required: false })
     description?: string | undefined;
 
-    @ApiProperty({ description: "The roles associated with the project.", type: [RoleDto] })
-    @ApiExtraModels(RoleDto)
-    roles!: IRole[];
-
     @ApiProperty({ description: "The start timestamp of the project." })
     start!: number; // timestamp
 
@@ -54,7 +42,11 @@ export class ProjectDto implements IProject {
 
     @ApiProperty({ description: "The phases of the project.", type: [PhaseDto] })
     @ApiExtraModels(PhaseDto)
-    phases!: IPhase[];
+    phases!: PhaseDto[];
+
+    @ApiProperty({ description: "The roles associated with the project.", type: [RoleDto] })
+    @ApiExtraModels(RoleDto)
+    roles!: RoleDto[];
 
     @ApiProperty({ description: "The target budget of the project.", required: false })
     targetBudget?: number;

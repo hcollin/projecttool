@@ -6,6 +6,7 @@ echo.
 echo =======================================
 echo Building projecttoolmodels...
 cd .\common\projecttoolmodels\
+call npm run clean.cmd
 call npm install
 call npm run build
 cd ..\..
@@ -26,6 +27,7 @@ cd ..\..
 echo.
 echo =======================================
 echo Installing project root
+call npm run clean.cmd
 call npm install
 echo.
 echo =======================================
