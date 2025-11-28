@@ -9,6 +9,7 @@ import { AppService } from "./app.service";
 import { TechnologyModule } from "./technology/technology.module";
 import { RoletemplateModule } from "./roletemplate/roletemplate.module";
 import { ProjectModule } from "./project/project.module";
+import { TextsModule } from "./texts/texts.module";
 
 @Module({
     imports: [
@@ -28,6 +29,7 @@ import { ProjectModule } from "./project/project.module";
         TechnologyModule,
         RoletemplateModule,
         ProjectModule,
+        TextsModule,
     ],
     controllers: [AppController],
     providers: [AppService],
