@@ -19,6 +19,9 @@ export * from "./models/people/iTeam";
 export * from "./models/tech/eTechType";
 export * from "./models/tech/iTechnology";
 
+// Text models
+export * from "./models/text/iText";
+
 // File models
 export * from "./models/files/iDocFile";
 export * from "./models/files/eDocType";
