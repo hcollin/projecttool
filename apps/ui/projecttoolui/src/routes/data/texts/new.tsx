@@ -32,7 +32,7 @@ function NewTextComponent() {
 		setSaving(true);
 
 		apiPostNewText(txt)
-			.then((res) => {
+			.then(() => {
 				setSaving(false);
 				// navigate({ to: `/data/texts/edit/${res.guid}` });
 				navigate({ to: `/data/texts` });
