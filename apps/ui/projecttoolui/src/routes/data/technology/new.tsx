@@ -1,6 +1,6 @@
 // IMPORT: General libaries
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Alert, Container } from "@mantine/core";
+import { Alert } from "@mantine/core";
 
 // IMPORT: Components
 import DataShell from "../../../components/DataShell/DataShell";
@@ -49,8 +49,7 @@ function NewTechnologyComponent() {
     };
 
     return (
-        <DataShell>
-            <Container size="xl">
+        <DataShell>        
                 <ProjectPageMainTitle>New Technology</ProjectPageMainTitle>
 
                 {errorMsg && (
@@ -62,7 +61,6 @@ function NewTechnologyComponent() {
                 {!saving && <TechnologyEditor tech={newTech} onConfirm={handleConfirm} onCancel={handleCancel} />}
 
                 {saving && <Saving />}
-            </Container>
         </DataShell>
     );
 }

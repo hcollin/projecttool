@@ -5,6 +5,7 @@ import { TextEntity } from "./text.entity";
 import { TextDto } from "./text.dto";
 import { DEFAULT_TEXTS } from "./defaulttexts";
 import { IText } from "@frosttroll/projecttoolmodels";
+import { v4 } from "uuid";
 
 @Injectable()
 export class TextsService {
@@ -104,6 +105,9 @@ export class TextsService {
         this.logger.debug(`Creating new text with name: ${textData.name}`);
         const newText = new TextEntity();
         newText.updateFromDto(textData as TextDto);
+        newText.guid = v4();
+        this.logger.debug(`Assigned GUID to new text: ${newText.guid}`);
+
         const savedText = await this.textRepository.save(newText);
         return savedText.getDto();
     }

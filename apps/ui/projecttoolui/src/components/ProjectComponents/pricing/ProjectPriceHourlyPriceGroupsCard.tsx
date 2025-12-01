@@ -9,7 +9,7 @@ import {
 	actionUpdatePriceGroupInActiveProject,
 } from "../../../stores/activeproject/activeProjectActions";
 import { useState } from "react";
-import { utilCurrencyToSymbol } from "@frosttroll/projecttoolmodels";
+import { IHourlyPriceGroup, utilCurrencyToSymbol } from "@frosttroll/projecttoolmodels";
 import { IconTrash } from "@tabler/icons-react";
 import TextInputEdit from "../../TextInputEdit/TextInputEdit";
 
@@ -35,7 +35,7 @@ const ProjectPriceHourlyPriceGroupsCard = () => {
 		if (!prg) {
 			return;
 		}
-		actionUpdatePriceGroupInActiveProject({ ...prg, price: value ?? 0 });
+		actionUpdatePriceGroupInActiveProject({ ...prg, price: value ?? 0 } as IHourlyPriceGroup);
 	}
 
 	// function handleCurrencyChange(prgGuid: string, currency: CURRENCY | null) {
@@ -117,7 +117,7 @@ const ProjectPriceHourlyPriceGroupsCard = () => {
 										actionUpdatePriceGroupInActiveProject({
 											...prg,
 											name: val,
-										});
+										} as IHourlyPriceGroup);
 									}}
 								>
 									<Title order={4}>{prg.name}</Title>

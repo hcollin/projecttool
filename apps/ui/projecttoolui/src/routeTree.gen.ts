@@ -25,6 +25,7 @@ import { Route as ProjectDashboardRouteImport } from './routes/project/dashboard
 import { Route as DataRolesRouteImport } from './routes/data/roles'
 import { Route as DataTextsIndexRouteImport } from './routes/data/texts/index'
 import { Route as DataTechnologyIndexRouteImport } from './routes/data/technology/index'
+import { Route as DataTextsNewRouteImport } from './routes/data/texts/new'
 import { Route as DataTechnologyNewRouteImport } from './routes/data/technology/new'
 import { Route as DataTextsEditGuidRouteImport } from './routes/data/texts/edit.$guid'
 import { Route as DataTechnologyEditGuidRouteImport } from './routes/data/technology/edit.$guid'
@@ -109,6 +110,11 @@ const DataTechnologyIndexRoute = DataTechnologyIndexRouteImport.update({
   path: '/data/technology/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DataTextsNewRoute = DataTextsNewRouteImport.update({
+  id: '/data/texts/new',
+  path: '/data/texts/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DataTechnologyNewRoute = DataTechnologyNewRouteImport.update({
   id: '/data/technology/new',
   path: '/data/technology/new',
@@ -141,6 +147,7 @@ export interface FileRoutesByFullPath {
   '/data': typeof DataIndexRoute
   '/project': typeof ProjectIndexRoute
   '/data/technology/new': typeof DataTechnologyNewRoute
+  '/data/texts/new': typeof DataTextsNewRoute
   '/data/technology': typeof DataTechnologyIndexRoute
   '/data/texts': typeof DataTextsIndexRoute
   '/data/technology/edit/$guid': typeof DataTechnologyEditGuidRoute
@@ -162,6 +169,7 @@ export interface FileRoutesByTo {
   '/data': typeof DataIndexRoute
   '/project': typeof ProjectIndexRoute
   '/data/technology/new': typeof DataTechnologyNewRoute
+  '/data/texts/new': typeof DataTextsNewRoute
   '/data/technology': typeof DataTechnologyIndexRoute
   '/data/texts': typeof DataTextsIndexRoute
   '/data/technology/edit/$guid': typeof DataTechnologyEditGuidRoute
@@ -184,6 +192,7 @@ export interface FileRoutesById {
   '/data/': typeof DataIndexRoute
   '/project/': typeof ProjectIndexRoute
   '/data/technology/new': typeof DataTechnologyNewRoute
+  '/data/texts/new': typeof DataTextsNewRoute
   '/data/technology/': typeof DataTechnologyIndexRoute
   '/data/texts/': typeof DataTextsIndexRoute
   '/data/technology/edit/$guid': typeof DataTechnologyEditGuidRoute
@@ -207,6 +216,7 @@ export interface FileRouteTypes {
     | '/data'
     | '/project'
     | '/data/technology/new'
+    | '/data/texts/new'
     | '/data/technology'
     | '/data/texts'
     | '/data/technology/edit/$guid'
@@ -228,6 +238,7 @@ export interface FileRouteTypes {
     | '/data'
     | '/project'
     | '/data/technology/new'
+    | '/data/texts/new'
     | '/data/technology'
     | '/data/texts'
     | '/data/technology/edit/$guid'
@@ -249,6 +260,7 @@ export interface FileRouteTypes {
     | '/data/'
     | '/project/'
     | '/data/technology/new'
+    | '/data/texts/new'
     | '/data/technology/'
     | '/data/texts/'
     | '/data/technology/edit/$guid'
@@ -271,6 +283,7 @@ export interface RootRouteChildren {
   DataIndexRoute: typeof DataIndexRoute
   ProjectIndexRoute: typeof ProjectIndexRoute
   DataTechnologyNewRoute: typeof DataTechnologyNewRoute
+  DataTextsNewRoute: typeof DataTextsNewRoute
   DataTechnologyIndexRoute: typeof DataTechnologyIndexRoute
   DataTextsIndexRoute: typeof DataTextsIndexRoute
   DataTechnologyEditGuidRoute: typeof DataTechnologyEditGuidRoute
@@ -391,6 +404,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DataTechnologyIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/data/texts/new': {
+      id: '/data/texts/new'
+      path: '/data/texts/new'
+      fullPath: '/data/texts/new'
+      preLoaderRoute: typeof DataTextsNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/data/technology/new': {
       id: '/data/technology/new'
       path: '/data/technology/new'
@@ -431,6 +451,7 @@ const rootRouteChildren: RootRouteChildren = {
   DataIndexRoute: DataIndexRoute,
   ProjectIndexRoute: ProjectIndexRoute,
   DataTechnologyNewRoute: DataTechnologyNewRoute,
+  DataTextsNewRoute: DataTextsNewRoute,
   DataTechnologyIndexRoute: DataTechnologyIndexRoute,
   DataTextsIndexRoute: DataTextsIndexRoute,
   DataTechnologyEditGuidRoute: DataTechnologyEditGuidRoute,

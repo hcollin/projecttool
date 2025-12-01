@@ -21,67 +21,50 @@ import ProjectPhaseBar from "../../components/ProjectPhaseBar/ProjectPhaseBar";
 import ProjectCard from "../../components/ProjectComponents/ProjectCard";
 
 export const Route = createFileRoute("/project/phases")({
-    component: PhasesComponent,
+	component: PhasesComponent,
 });
 
 function PhasesComponent() {
-    const aps = useSnapshot(activeProjectStore);
+	const aps = useSnapshot(activeProjectStore);
 
-    const [editGuid, setEditGuid] = useState<string | null>(null);
+	const [editGuid, setEditGuid] = useState<string | null>(null);
 
-    const prj = aps.project;
+	const prj = aps.project;
 
-    function handleCreateNewPhase() {
-        actionAddNewPhaseToActiveProject();
-    }
+	function handleCreateNewPhase() {
+		actionAddNewPhaseToActiveProject();
+	}
 
-    if (!prj) {
-        return null;
-    }
+	if (!prj) {
+		return null;
+	}
 
-    return (
-        <ProjectShell>
-            <Container size="xl">
-                <ProjectPageMainTitle>Project Phases</ProjectPageMainTitle>
+	return (
+		<ProjectShell>
+			<Container size="xl">
+				<ProjectPageMainTitle>Project Phases</ProjectPageMainTitle>
 
-                <ProjectCard>
-                    <ProjectPhaseBar />
-                </ProjectCard>
+				<ProjectCard>
+					<ProjectPhaseBar />
+				</ProjectCard>
 
-                {prj.phases.map((phase) => {
-                    if (editGuid !== phase.guid) {
-                        return (
-                            <Card
-                                key={phase.guid}
-                                shadow="sm"
-                                mb="md"
-                                withBorder
-                                onClick={() => setEditGuid(phase.guid)}
-                            >
-                                <ProjectPhaseInfoRow
-                                    key={phase.guid}
-                                    phase={phase as IPhase}
-                                    project={prj as IProject}
-                                />
-                            </Card>
-                        );
-                    }
-                    return (
-                        <ProjectPhaseCard
-                            key={phase.guid}
-                            phase={phase as IPhase}
-                            project={prj as IProject}
-                            onClose={() => setEditGuid(null)}
-                        />
-                    );
-                })}
+				{prj.phases.map((phase) => {
+					if (editGuid !== phase.guid) {
+						return (
+							<Card key={phase.guid} shadow="sm" mb="md" withBorder onClick={() => setEditGuid(phase.guid)}>
+								<ProjectPhaseInfoRow key={phase.guid} phase={phase as IPhase} project={prj as IProject} />
+							</Card>
+						);
+					}
+					return <ProjectPhaseCard key={phase.guid} phase={phase as IPhase} project={prj as IProject} onClose={() => setEditGuid(null)} />;
+				})}
 
-                <Flex justify="flex-end" align="center">
-                    <Button variant="filled" size="lg" onClick={handleCreateNewPhase}>
-                        <IconPlus mr="sm" /> NEW PHASE
-                    </Button>
-                </Flex>
-            </Container>
-        </ProjectShell>
-    );
+				<Flex justify="flex-end" align="center">
+					<Button variant="filled" size="lg" onClick={handleCreateNewPhase}>
+						<IconPlus style={{ marginRight: "8px" }} /> NEW PHASE
+					</Button>
+				</Flex>
+			</Container>
+		</ProjectShell>
+	);
 }
