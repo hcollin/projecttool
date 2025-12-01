@@ -15,12 +15,17 @@ export interface IDocFile extends IRootObject {
 export interface IDocFileContent {
 	type: EDOCITEMTYPE;
 	style?: string;
+
+    // Targeting key is used to identify specific content items that can be populated automatically from project data
+    targetingKey?: string;
+    hidden?: boolean;
 }
 
 export interface IDocFileHeader extends IDocFileContent {
 	type: EDOCITEMTYPE.HEADER;
 	level: 1 | 2 | 3 | 4 | 5 | 6;
 	text: string;
+    number?: number;
 }
 
 export interface IDocFileParagraph extends IDocFileContent {
@@ -28,6 +33,27 @@ export interface IDocFileParagraph extends IDocFileContent {
 	text: string;
 }
 
+/**
+ * HTML content loaded from the backend /texts endpoint
+ */
+export interface IDocFileHtml extends IDocFileContent {
+	type: EDOCITEMTYPE.HTML;
+	key: string;
+	useNameAsHeader?: number; // if set, will render the name of the text as a header of the given level before the HTML content
+}
+
+export interface IDocFileCover extends IDocFileContent {
+	type: EDOCITEMTYPE.COVER;
+	title: string;
+	subtitle?: string;
+	client?: string;
+	writers?: string[];
+}
+
+export interface IDocFileTableOfContents extends IDocFileContent {
+    type: EDOCITEMTYPE.TABLEOFCONTENTS;
+    maxLevel: number;
+}
 export interface IDocFileList extends IDocFileContent {
 	type: EDOCITEMTYPE.LIST;
 	ordered: boolean;

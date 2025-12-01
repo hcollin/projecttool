@@ -6,17 +6,17 @@ import DocFile from "../../components/Docs/DocFile";
 import { EDOCLANG, EDOCTYPE } from "@frosttroll/projecttoolmodels";
 
 export const Route = createFileRoute("/project/projectplan")({
-    component: ProjectPlanComponent,
+	component: ProjectPlanComponent,
 });
 
 function ProjectPlanComponent() {
-    return (
-        <ProjectShell>
-            <Container size="xl">
-                <ProjectPageMainTitle>Project plan</ProjectPageMainTitle>
+	return (
+		<ProjectShell>
+			<Container size="xl">
+				<ProjectPageMainTitle>Project plan</ProjectPageMainTitle>
 
-                <DocFile type={EDOCTYPE.PROJECTPLAN} lang={EDOCLANG.EN} />
-            </Container>
-        </ProjectShell>
-    );
+				<DocFile type={EDOCTYPE.PROJECTPLAN} lang={EDOCLANG.EN} />
+			</Container>
+		</ProjectShell>
+	);
 }

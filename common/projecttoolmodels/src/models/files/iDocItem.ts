@@ -1,27 +1,30 @@
 export enum EDOCITEMTYPE {
-    HEADER = "header",
-    PARAGRAPH = "paragraph",
-    KEYVALUE = "keyvalue",
-    IMAGE = "image",
-    LIST = "list",
-    TABLE = "table",
+	HEADER = "header",
+	PARAGRAPH = "paragraph",
+	KEYVALUE = "keyvalue",
+	IMAGE = "image",
+	LIST = "list",
+	TABLE = "table",
+	HTML = "html",
+    COVER = "cover",
+    TABLEOFCONTENTS = "tableofcontents",
 }
 
 /**
  * Reference for a document text entry. This is used to add texts to documents
  */
 export interface IDocItem {
-    type: EDOCITEMTYPE;
+	type: EDOCITEMTYPE;
 
-    // Target document key for this text entry
-    key?: string;
+	// Target document key for this text entry
+	key?: string;
 
-    // Target variant for the the key
-    variant?: number;
+	// Target variant for the the key
+	variant?: number;
 
-    // Cusotom text to use instead of looking up from language files
-    text?: string;
+	// Cusotom text to use instead of looking up from language files
+	text?: string;
 
-    // Replacement variables for the text lookup
-    vars?: (string | number | boolean)[];
+	// Replacement variables for the text lookup
+	vars?: (string | number | boolean)[];
 }

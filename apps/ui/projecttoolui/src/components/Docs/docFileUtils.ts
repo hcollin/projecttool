@@ -1,17 +1,20 @@
 import {
-    EDOCLANG,
-    EDOCTYPE,
-    IDocFile,
-    IDocFileContent,
-    IProject,
-    utilCalculatePhaseDuration,
-    utilGetPhaseEndTs,
-    utilGetPhaseStartTs,
+	EDOCITEMTYPE,
+	EDOCLANG,
+	EDOCTYPE,
+	IDocFile,
+	IDocFileContent,
+	IProject,
+	utilCalculatePhaseDuration,
+	utilGetPhaseEndTs,
+	utilGetPhaseStartTs,
 } from "@frosttroll/projecttoolmodels";
-import { docH1, docH2 } from "./parts/docHeaders";
+import { docH1, docH2, docH3 } from "./parts/docHeaders";
 import { docTxt } from "./langs/docLanguage";
 import { docKeyValueList } from "./parts/docLists";
 import { DateTime } from "luxon";
+import { PROJECTPLAN_TEMPLATE_DEFAULT_EN } from "./templates/projectplans/defaultplan_en";
+import { IDocFileHeader } from "common/projecttoolmodels/dist/src/models/files/iDocFile";
 
 /**
  * Generate the initial version of the document file without any content
@@ -20,19 +23,19 @@ import { DateTime } from "luxon";
  * @returns
  */
 export function docGenerate(project: IProject, type: EDOCTYPE, language: EDOCLANG): IDocFile {
-    const filename = `${project.codename.replace(/\s+/g, "_").toLowerCase()}_${type}.docx`;
-    const doc: IDocFile = {
-        guid: `${project.guid}-docfile-${type}`,
-        organizationId: project.organizationId,
-        type: type,
-        language: language,
-        filename: filename,
-        createdAt: Date.now(),
-        createdBy: "system",
-        content: [],
-    };
+	const filename = `${project.codename.replace(/\s+/g, "_").toLowerCase()}_${type}.docx`;
+	const doc: IDocFile = {
+		guid: `${project.guid}-docfile-${type}`,
+		organizationId: project.organizationId,
+		type: type,
+		language: language,
+		filename: filename,
+		createdAt: Date.now(),
+		createdBy: "system",
+		content: [],
+	};
 
-    return doc;
+	return doc;
 }
 
 /**
@@ -42,10 +45,10 @@ export function docGenerate(project: IProject, type: EDOCTYPE, language: EDOCLAN
  * @returns
  */
 export function docChangeFileName(doc: IDocFile, newFilename: string): IDocFile {
-    return {
-        ...doc,
-        filename: newFilename,
-    };
+	return {
+		...doc,
+		filename: newFilename,
+	};
 }
 
 /**
@@ -54,37 +57,39 @@ export function docChangeFileName(doc: IDocFile, newFilename: string): IDocFile 
  * @returns
  */
 export function docGenerateProjectPlanContent(project: IProject, lang: EDOCLANG): IDocFileContent[] {
-    const content: IDocFileContent[] = [];
+	const content: IDocFileContent[] = [...PROJECTPLAN_TEMPLATE_DEFAULT_EN];
 
-    // Generate phase sections
+	// Generate phase parts
+	const phases: IDocFileContent[] = [];
+	project.phases.forEach((phase) => {
+		phases.push(docH3(phase.name));
 
-    content.push(docH1(docTxt("headers.phases", lang, EDOCTYPE.PROJECTPLAN)));
-    project.phases.forEach((phase) => {
-        content.push(docH2(phase.name));
+		const startTs = utilGetPhaseStartTs(phase, project);
+		const endTs = utilGetPhaseEndTs(phase, project);
 
-        const startTs = utilGetPhaseStartTs(phase, project);
-        const endTs = utilGetPhaseEndTs(phase, project);
+		const workdays = utilCalculatePhaseDuration(phase, project, true);
 
-        const workdays = utilCalculatePhaseDuration(phase, project, true);
+		phases.push(
+			docKeyValueList([
+				{
+					key: "START",
+					value: DateTime.fromMillis(startTs).setLocale("fi").toLocaleString(DateTime.DATE_SHORT),
+				},
+				{
+					key: "END",
+					value: DateTime.fromMillis(endTs).setLocale("fi").toLocaleString(DateTime.DATE_SHORT),
+				},
+				{
+					key: "WORKDAYS",
+					value: workdays.toString(),
+				},
+			]),
+		);
+	});
+	const insertIndex = content.findIndex((item) => item.type === EDOCITEMTYPE.HEADER && (item as IDocFileHeader).targetingKey === "phases");
+	if (insertIndex !== -1) {
+		content.splice(insertIndex + 1, 0, ...phases);
+	}
 
-        content.push(
-            docKeyValueList([
-                {
-                    key: "START",
-                    value: DateTime.fromMillis(startTs).setLocale("fi").toLocaleString(DateTime.DATE_SHORT),
-                },
-                {
-                    key: "END",
-                    value: DateTime.fromMillis(endTs).setLocale("fi").toLocaleString(DateTime.DATE_SHORT),
-                },
-                {
-                    key: "WORKDAYS",
-                    value: workdays.toString(),
-
-                }
-            ])
-        );
-    });
-
-    return content;
+	return content;
 }
