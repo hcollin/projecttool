@@ -6,8 +6,9 @@ export enum EDOCITEMTYPE {
 	LIST = "list",
 	TABLE = "table",
 	HTML = "html",
-    COVER = "cover",
-    TABLEOFCONTENTS = "tableofcontents",
+	COVER = "cover",
+	TABLEOFCONTENTS = "tableofcontents",
+	UNKNOWN = "unknown",
 }
 
 /**

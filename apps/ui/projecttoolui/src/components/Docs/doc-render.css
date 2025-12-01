@@ -1,0 +1,57 @@
+div.doc-render {
+
+
+    div.doc-content-item {
+        position: relative;
+        display: block;
+        width: 100%;
+
+        /* display: flex; */
+        /* align-items: center; */
+        /* justify-content: flex-start; */
+
+        &>.edit-doc-button-group {
+            width: 150px;
+            position: absolute;
+
+            /* right: -160px; */
+            right: 0;
+            top: 0;
+            z-index: 100;
+        }
+
+        &>div.unknown-doc-content {
+            height: 60px;
+            width: 100%;
+            border: dashed 2px #8884;
+            border-radius: 1rem;
+            padding: 2rem 0;
+        }
+
+        &>h2 {
+            margin-left: 0.5rem;
+        }
+
+        &>h3 {
+            margin-left: 1rem;
+        }
+
+        &>fieldset {
+            width: 100%;
+
+            margin-bottom: 0.5rem;
+        }
+
+        &.hidden:not(.edit-doc-button-group) {
+            opacity: 0.2;
+        }
+
+        &:hover {
+            background: #8881;
+        }
+    }
+
+
+
+
+}

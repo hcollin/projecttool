@@ -1,4 +1,5 @@
 import { IRootObject } from "../IRootObject";
+import { IText } from "../text/iText";
 import { EDOCLANG } from "./eDocLang";
 import { EDOCTYPE } from "./eDocType";
 import { EDOCITEMTYPE } from "./iDocItem";
@@ -18,6 +19,8 @@ export interface IDocFileContent {
 
     // Targeting key is used to identify specific content items that can be populated automatically from project data
     targetingKey?: string;
+    
+    // If true, this content item is hidden in the final rendered document
     hidden?: boolean;
 }
 
@@ -39,6 +42,7 @@ export interface IDocFileParagraph extends IDocFileContent {
 export interface IDocFileHtml extends IDocFileContent {
 	type: EDOCITEMTYPE.HTML;
 	key: string;
+    text?: IText;
 	useNameAsHeader?: number; // if set, will render the name of the text as a header of the given level before the HTML content
 }
 

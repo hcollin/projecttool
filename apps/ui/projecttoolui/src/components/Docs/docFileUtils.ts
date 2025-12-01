@@ -4,6 +4,7 @@ import {
 	EDOCTYPE,
 	IDocFile,
 	IDocFileContent,
+	IDocFileCover,
 	IProject,
 	utilCalculatePhaseDuration,
 	utilGetPhaseEndTs,
@@ -58,6 +59,19 @@ export function docChangeFileName(doc: IDocFile, newFilename: string): IDocFile 
  */
 export function docGenerateProjectPlanContent(project: IProject, lang: EDOCLANG): IDocFileContent[] {
 	const content: IDocFileContent[] = [...PROJECTPLAN_TEMPLATE_DEFAULT_EN];
+
+	// Replace cover texts
+	const coverIndex = content.findIndex((item) => item.type === EDOCITEMTYPE.COVER);
+	if (coverIndex !== -1) {
+		const cover = content[coverIndex] as IDocFileCover;
+
+		if (cover.type === EDOCITEMTYPE.COVER) {
+			cover.title = project.realname || project.codename;
+			if (project.clientName) {
+				cover.client = project.clientName;
+			}
+		}
+	}
 
 	// Generate phase parts
 	const phases: IDocFileContent[] = [];
