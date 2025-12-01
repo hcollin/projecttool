@@ -6,4 +6,7 @@ export interface IRootObject {
 
     // To what organization does this object belong
     organizationId: string;
+
+    // Texts that have been selected for this object
+    textGuids?: string[];
 }

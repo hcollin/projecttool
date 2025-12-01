@@ -49,4 +49,15 @@ export const DEFAULT_TEXTS: IText[] = [
             en: "default-text-react-typescript-frontend-en",
         },
     },
+    {
+        guid: "default-text-acceptance-process-fi",
+        organizationId: "default-org",
+
+        content:
+            "Tilaajan tuoteomistaja ja/tai hänen valtuuttamansa henkilö hyväksyy kehitystyön tulokset. Työn suunnitteluvaiheessa käydään läpi hyväksymiskriteerit ja toteutus tehdään kattamaan nämä hyväksymiskriteerit. Kriteerit ja niiden hyväksyminen dokumentoidaan kyseisille Jira-tiketeille (toimittajan projektinhallintajärjestelmä). Projektin tuotoksina valmistuvat dokumentit hyväksyvät Tilaajan tuoteomistaja tai hänen valtuuttama henkilö. Projektin valmiiksi hyväksyy ohjausryhmä.\n\nTilaajan suorittama hyväksymistestaus tehdään, kun testaukseen sovittu kokonaisuus on valmistunut ja Toimittajan testausvaiheet ovat suoritettuina. Hyväksymistestaus dokumentteineen on Tilaajan vastuulla. Toimittaja avustaa tehtävässä tarvittaessa ja erikseen sopien.\n\nHyväksymistestauksen huomiot kirjataan yhteisesti sovitulla tavalla, esimerkiksi Jiraan. Testattavalle Jira-tiketille kirjataan mahdollinen testaushavainto ja sen edellyttämät liitteet. Kehittäjä korjaa virheet ja virheiden korjausjärjestyksen tekemiseen osallistuu myös Tilaajan edustaja, esimerkiksi Tuoteomistaja ja testausvastuullinen. Hyväksymistestauksen tarkempi aikataulutus tehdään projektipäälliköiden toimesta, kun kehitystyö on edennyt.",
+        keywords: ["acceptance", "process", "general", "management", "Hyväksymismenettely"],
+        name: "Hyväksymismenettely",
+        language: "fi",
+        langlinks: {},
+    },
 ];

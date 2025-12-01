@@ -1,4 +1,5 @@
 import { IRootObject } from "../IRootObject";
+import { ITextObject } from "../text/iText";
 
 /**
  * Represents a role in the project that one or more people can have.
@@ -15,7 +16,7 @@ export interface IRole extends IRootObject {
 /**
  * Template for roles. This can be used to define standard roles that can be assigned to people.
  */
-export interface IRoleTemplate {
+export interface IRoleTemplate extends ITextObject {
     guid: string;
     name: string;
     groups: string[];

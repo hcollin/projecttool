@@ -26,4 +26,23 @@ export class TextDto implements IText {
         additionalProperties: { type: "string" },
     })
     langlinks?: Record<string, string>;
+
+    @ApiProperty({
+        description: "Metadata information about the text. This is generated automatically in the backend.",
+        type: "object",
+        properties: {
+            createdAt: { type: "number", description: "Timestamp of creation" },
+            createdBy: { type: "string", description: "Identifier GUID of the creator" },
+            updatedAt: { type: "number", nullable: true, description: "Timestamp of last update" },
+            updatedBy: { type: "string", nullable: true, description: "Identifier GUID of the last updater" },
+            contentLength: { type: "number", nullable: true, description: "Length of the content" },
+        },
+    })
+    metadata?: {
+        createdAt: number;
+        createdBy: string;
+        updatedAt?: number;
+        updatedBy?: string;
+        contentLength: number;
+    };
 }

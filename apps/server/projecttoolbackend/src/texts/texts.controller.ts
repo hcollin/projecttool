@@ -1,6 +1,6 @@
-import { Controller, Get, Query, Res } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query, Res } from "@nestjs/common";
 import type { Response } from "express";
-import { ApiQuery } from "@nestjs/swagger";
+import { ApiBody, ApiParam, ApiQuery } from "@nestjs/swagger";
 import { TextDto } from "./text.dto";
 import { TextsService } from "./texts.service";
 
@@ -39,7 +39,8 @@ export class TextsController {
     }
 
     @Get(":guid")
-    async getTextByGuid(@Query("guid") guid: string, @Res() res: Response): Promise<TextDto | void> {
+    @ApiParam({ name: "guid", type: String, description: "The GUID of the text to retrieve." })
+    async getTextByGuid(@Param("guid") guid: string, @Res() res: Response): Promise<TextDto | void> {
         if (!guid) {
             throw new Error("No GUID provided for search.");
         }
@@ -54,5 +55,30 @@ export class TextsController {
         } catch (error) {
             res.status(500).send(`Error retrieving text with GUID ${guid}: ${error as string}`);
         }
+    }
+
+    @ApiBody({ type: TextDto })
+    @Post()
+    async createText(@Body() textData: Partial<TextDto>): Promise<TextDto> {
+        const res = await this.textsService.createText(textData);
+        return res;
+    }
+
+    @ApiBody({ type: TextDto, description: "The text data to update." })
+    @ApiParam({ name: "guid", type: String, description: "The GUID of the text to update." })
+    @Post("/:guid")
+    async updateText(@Param("guid") guid: string, @Body() textData: TextDto, @Res() res: Response): Promise<void> {
+        if (!textData) {
+            console.warn("No text data provided in the request body.");
+            res.status(400).send("Text data is required in the body.");
+            return Promise.resolve();
+        }
+        if (textData.guid !== guid) {
+            res.status(400).send("Text GUID in the body does not match the GUID in the URL.");
+            return Promise.resolve();
+        }
+        const updatedText = await this.textsService.updateText(guid, textData);
+        res.status(200).send(updatedText);
+        return Promise.resolve();
     }
 }

@@ -1,3 +1,5 @@
+import { RestError } from "./RestError";
+
 interface IRestServiceOptions {
     method: "http" | "https";
     server: string;
@@ -58,29 +60,37 @@ export class RestService {
         responseExpectedForPost: boolean = false
     ): Promise<T> {
         const fullUrl = url;
-        console.log(`Making ${method} request to: ${fullUrl}`);
-        const res = await fetch(fullUrl, {
-            method,
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: body ? JSON.stringify(body) : undefined,
-        });
+        // console.log(`Making ${method} request to: ${fullUrl}`);
+        try {
+            const res = await fetch(fullUrl, {
+                method,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: body ? JSON.stringify(body) : undefined,
+            });
 
-        console.log(`Response: ${res.status}`, res);
+            // console.log(`Response: ${res.status}`, res);
 
-        if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
+            if (!res.ok) {
+                throw new RestError(`HTTP error! status: ${res.status}`, res.status);
+            }
+
+            if (method === "DELETE" && res.status === 204) {
+                return {} as T;
+            }
+
+            if (method === "POST" && res.status === 201 && !responseExpectedForPost) {
+                return {} as T;
+            }
+
+            return (await res.json()) as T;
+        } catch (error) {
+            if (error instanceof RestError) {
+                throw error;
+            }
+
+            throw new RestError(`Error during ${method} request to ${fullUrl}: ${(error as Error).message}`, 500);
         }
-
-        if (method === "DELETE" && res.status === 204) {
-            return {} as T;
-        }
-
-        if (method === "POST" && res.status === 201 && !responseExpectedForPost) {
-            return {} as T;
-        }
-
-        return (await res.json()) as T;
     }
 }

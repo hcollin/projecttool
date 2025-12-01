@@ -29,7 +29,10 @@ export class TextsService {
                 guid: true,
                 organizationGuid: true,
                 name: true,
+                language: true,
                 keywords: true,
+                langlinks: true,
+                metadata: true,
             },
         });
 
@@ -45,6 +48,7 @@ export class TextsService {
             dto.keywords = text.keywords;
             dto.language = text.language;
             dto.langlinks = text.langlinks;
+            dto.metadata = text.metadata;
             dto.content = ""; // Content not loaded in list view
             return dto;
         });
@@ -89,6 +93,30 @@ export class TextsService {
             return null;
         }
         return result.getDto();
+    }
+
+    /**
+     * Create a new text entry
+     * @param textData
+     * @returns
+     */
+    async createText(textData: Partial<TextDto>): Promise<TextDto> {
+        this.logger.debug(`Creating new text with name: ${textData.name}`);
+        const newText = new TextEntity();
+        newText.updateFromDto(textData as TextDto);
+        const savedText = await this.textRepository.save(newText);
+        return savedText.getDto();
+    }
+
+    async updateText(guid: string, textData: TextDto): Promise<TextDto> {
+        this.logger.debug(`Updating text with GUID: ${guid}`);
+        const existingText = await this.textRepository.findOne({ where: { guid } });
+        if (!existingText) {
+            throw new Error(`Text with GUID ${guid} not found.`);
+        }
+        existingText.updateFromDto(textData);
+        const updatedText = await this.textRepository.save(existingText);
+        return updatedText.getDto();
     }
 
     //======================================================================

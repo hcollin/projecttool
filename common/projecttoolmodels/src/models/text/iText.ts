@@ -15,4 +15,20 @@ export interface IText extends IRootObject {
 
     // Mapping for different language versions of the text
     langlinks?: Record<string, string>;
+
+    metadata?: ITextMetaData;
+}
+
+export interface ITextObject {
+    // List of exisiting text GUIDs associated with this object
+    texts?: string[];
+}
+
+
+export interface ITextMetaData {
+    createdAt: number;
+    createdBy: string;
+    updatedAt?: number;
+    updatedBy?: string;
+    contentLength: number;
 }

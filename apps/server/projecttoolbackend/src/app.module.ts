@@ -10,6 +10,7 @@ import { TechnologyModule } from "./technology/technology.module";
 import { RoletemplateModule } from "./roletemplate/roletemplate.module";
 import { ProjectModule } from "./project/project.module";
 import { TextsModule } from "./texts/texts.module";
+import { OrganizationModule } from './organization/organization.module';
 
 @Module({
     imports: [
@@ -30,6 +31,7 @@ import { TextsModule } from "./texts/texts.module";
         RoletemplateModule,
         ProjectModule,
         TextsModule,
+        OrganizationModule,
     ],
     controllers: [AppController],
     providers: [AppService],

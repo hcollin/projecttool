@@ -20,6 +20,15 @@ export class TextEntity extends RootEntity<TextEntity> {
     @Column({ type: "simple-json", nullable: true })
     langlinks?: Record<string, string>;
 
+    @Column({ type: "simple-json", nullable: true })
+    metadata?: {
+        createdAt: number;
+        createdBy: string;
+        updatedAt?: number;
+        updatedBy?: string;
+        contentLength: number;
+    };
+
     constructor(data?: Partial<TextEntity>) {
         super(data);
         if (!this.guid) {
@@ -56,6 +65,19 @@ export class TextEntity extends RootEntity<TextEntity> {
         if (dto.name !== undefined) {
             this.name = dto.name;
         }
+
+        if (this.metadata === undefined) {
+            this.metadata = {
+                createdAt: Date.now(),
+                createdBy: "system",
+                contentLength: this.content.length,
+            };
+        }
+
+        if (dto.metadata !== undefined) {
+            this.metadata.updatedAt = dto.metadata.updatedAt || Date.now();
+            this.metadata.updatedBy = dto.metadata.updatedBy || "system";
+        }
     }
 
     getDto(): TextDto {
@@ -67,6 +89,7 @@ export class TextEntity extends RootEntity<TextEntity> {
         dto.content = this.content;
         dto.keywords = this.keywords;
         dto.name = this.name;
+        dto.metadata = this.metadata;
         return dto;
     }
 }

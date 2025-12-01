@@ -1,5 +1,8 @@
 export * from "./models/IRootObject";
 
+// Organization models
+export * from "./models/organization/iOrganization";
+
 // Project models
 export * from "./models/project/iProjectBase";
 export * from "./models/project/iProject";

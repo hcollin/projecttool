@@ -30,7 +30,7 @@ const SORTEDBY_VALUES: SORTEDBY[] = ["Name", "Category", "App Layer"];
 
 function DataTechnologiesComponent() {
     const tds = useSnapshot(techStore);
-    const navigate = useNavigate({ from: "/data/technology" });
+    const navigate = useNavigate({ from: "/data/texts" });
 
     const [sortby, setSortby] = useState<SORTEDBY>("Name");
     const [appLayerFilters, setAppLayerFilters] = useState<ETECHAPPLICATIONLAYER[]>([
