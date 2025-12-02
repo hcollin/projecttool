@@ -5,7 +5,15 @@ import { EntityManager, Repository } from "typeorm";
 import { v4 } from "uuid";
 
 // IMPORT: Project Tool Models
-import { CURRENCY, IHourlyPriceGroup, IProject, IProjectBase, ROLESENIORITY } from "@frosttroll/projecttoolmodels";
+import {
+    CURRENCY,
+    HOLIDAY_TUPLE,
+    IDocFile,
+    IHourlyPriceGroup,
+    IProject,
+    IProjectBase,
+    ROLESENIORITY,
+} from "@frosttroll/projecttoolmodels";
 
 // IMPORT: Project Common Utils
 import { generateRandomProjectName } from "@frosttroll/projecttoolutils";
@@ -430,6 +438,12 @@ export class ProjectService {
         projectEntity.hourPriceGroups = [defaultPriceGroup];
         projectEntity.fixedPrices = [];
 
+        projectEntity.holidays = [];
+        projectEntity.docs = {
+            projectplan: null,
+            solutionplan: null,
+        };
+
         const phase = new PhaseEntity();
         phase.guid = v4();
         phase.organizationGuid = orgId;
@@ -475,6 +489,8 @@ export class ProjectService {
         };
         projectDto.roles = projectEntity.roles.map((roleEntity) => this.convertRoleEntityToDto(roleEntity));
         projectDto.phases = projectEntity.phases.map((phaseEntity) => this.convertPhaseEntityToDto(phaseEntity));
+        projectDto.holidays = projectEntity.holidays as HOLIDAY_TUPLE[] | undefined;
+        projectDto.docs = projectEntity.docs as { [key: string]: IDocFile | null | undefined } | undefined;
         return projectDto;
     }
 

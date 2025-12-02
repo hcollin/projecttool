@@ -1,4 +1,11 @@
-import { CURRENCY, HOLIDAY_TUPLE, IFixedPrice, IHourlyPriceGroup, IProject } from "@frosttroll/projecttoolmodels";
+import {
+    CURRENCY,
+    HOLIDAY_TUPLE,
+    IDocFile,
+    IFixedPrice,
+    IHourlyPriceGroup,
+    IProject,
+} from "@frosttroll/projecttoolmodels";
 import { ApiExtraModels, ApiProperty } from "@nestjs/swagger";
 import { RoleDto } from "./role.dto";
 import { PhaseDto } from "./phase.dto";
@@ -61,5 +68,12 @@ export class ProjectDto implements IProject {
         data: string[];
         platform: string[];
         tools: string[];
+    };
+
+    @ApiProperty({ description: "Document files associated with the project.", required: false })
+    docs?: {
+        projectplan?: IDocFile | null | undefined;
+        solutionplan?: IDocFile | null | undefined;
+        [key: string]: IDocFile | null | undefined;
     };
 }

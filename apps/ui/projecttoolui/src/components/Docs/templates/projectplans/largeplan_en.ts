@@ -1,6 +1,6 @@
 import { EDOCITEMTYPE, IDocFileContent, IDocFileCover, IDocFileTableOfContents, IDocFileHeader } from "@frosttroll/projecttoolmodels";
 
-export const PROJECTPLAN_TEMPLATE_DEFAULT_EN: IDocFileContent[] = [
+export const PROJECTPLAN_TEMPLATE_LARGE_EN: IDocFileContent[] = [
 	{ type: EDOCITEMTYPE.COVER, title: "Project title here" } as IDocFileCover,
 	{ type: EDOCITEMTYPE.TABLEOFCONTENTS, maxLevel: 3 } as IDocFileTableOfContents,
 	{ type: EDOCITEMTYPE.HEADER, level: 1, text: "Introduction" } as IDocFileHeader,

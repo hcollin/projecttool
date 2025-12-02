@@ -185,7 +185,7 @@ function ProjectSettingsComponent() {
             fixedprices: [...(aps.project.prices.fixedprices as IProject["prices"]["fixedprices"])],
         };
         // np.prices = { ...(aps.project.prices as IProject["prices"]) };
-        actionUpdateActiveProject(np);
+        actionUpdateActiveProject(np, true);
     };
 
     const handleReset = () => {

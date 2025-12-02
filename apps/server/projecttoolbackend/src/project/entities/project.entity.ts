@@ -1,4 +1,4 @@
-import { IFixedPrice, IHourlyPriceGroup } from "@frosttroll/projecttoolmodels/dist/src/index.js";
+import { IDocFile, IFixedPrice, IHourlyPriceGroup } from "@frosttroll/projecttoolmodels";
 import { Column, Entity, OneToMany } from "typeorm";
 import { RoleEntity } from "./role.entity";
 import { PhaseEntity } from "./phase.entity";
@@ -64,6 +64,13 @@ export class ProjectEntity extends RootEntity<ProjectEntity> {
     @OneToMany(() => PhaseEntity, (phase) => phase.project, { cascade: true })
     phases!: PhaseEntity[];
 
+    @Column({ type: "jsonb", nullable: true })
+    docs?: {
+        projectplan?: IDocFile | null | undefined;
+        solutionplan?: IDocFile | null | undefined;
+        [key: string]: IDocFile | null | undefined;
+    };
+
     updateFromDto(prjDto: Partial<ProjectDto>): void {
         if (prjDto !== undefined) {
             this.codename = prjDto.codename || this.codename;
@@ -83,6 +90,7 @@ export class ProjectEntity extends RootEntity<ProjectEntity> {
             this.tech_tools = prjDto.techStack?.tools || this.tech_tools;
             this.hourPriceGroups = prjDto.prices?.hourlypricegroups || this.hourPriceGroups;
             this.fixedPrices = prjDto.prices?.fixedprices || this.fixedPrices;
+            this.docs = prjDto.docs || this.docs;
         }
     }
 }
