@@ -122,7 +122,7 @@ function DataIndexComponent() {
 
                 <Title order={3}>Technologies</Title>
                 <Group align="center" mb="lg" justify="space-between">
-                    <Card style={{width: "49%"}}>
+                    <Card style={{ width: "49%" }}>
                         <Flex align="center" gap="xs" justify="space-around">
                             <DonutChart
                                 data={techCategories}
@@ -146,7 +146,7 @@ function DataIndexComponent() {
                         </Flex>
                     </Card>
 
-                    <Card style={{width: "49%"}}>
+                    <Card style={{ width: "49%" }}>
                         <Flex align="center" gap="xs" justify="space-around">
                             <DonutChart
                                 data={techLayers}
@@ -171,8 +171,8 @@ function DataIndexComponent() {
                 </Group>
                 <Title order={3}>Role Templates</Title>
                 <Group>
-                    <Card style={{width: "100%"}}>
-                        <Flex align="center" justify="center" gap="xs" style={{width: "100%"}}>
+                    <Card style={{ width: "100%" }}>
+                        <Flex align="center" justify="center" gap="xs" style={{ width: "100%" }}>
                             <Box style={{ width: "60%", height: "350px", overflow: "visible" }} p="md">
                                 <BarChart
                                     h={330}

@@ -13,6 +13,12 @@ export class TextsController {
         return res;
     }
 
+    @Get("fulllist")
+    async getFullTextList(): Promise<TextDto[]> {
+        const res = await this.textsService.getFullTextList();
+        return res;
+    }
+
     @Get("search")
     @ApiQuery({
         name: "keywords",

@@ -19,6 +19,7 @@ export function convertRoleTemplateToRole(
         templateId: roletemplate.guid,
 
         description: roletemplate.description,
+        template: roletemplate,
     };
     if (seniority) {
         role.seniority = seniority;

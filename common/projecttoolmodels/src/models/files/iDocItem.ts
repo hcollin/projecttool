@@ -1,14 +1,31 @@
 export enum EDOCITEMTYPE {
+	// Default plain content types
 	HEADER = "header",
 	PARAGRAPH = "paragraph",
 	KEYVALUE = "keyvalue",
 	IMAGE = "image",
 	LIST = "list",
 	TABLE = "table",
-	HTML = "html",
+	
+	// Content types with special handling but no editable content and fairly simple in functionality
 	COVER = "cover",
 	TABLEOFCONTENTS = "tableofcontents",
+	
+	// Unknown type, used for empty items
 	UNKNOWN = "unknown",
+
+	// HTML content loaded from the backend /texts endpoint
+	HTML = "html",
+
+	// Project related content types
+	PRJPHASE = "projectphase",
+	PRJRESOURCE = "projectresource",
+	PRJPRICEGROUP = "projectpricegroup",
+	PRJTIMELINE = "projecttimeline",
+
+	// Project charts and tables
+	CHARTBUDGET = "chartbudget",
+
 }
 
 /**

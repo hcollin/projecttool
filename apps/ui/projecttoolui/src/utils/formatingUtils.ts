@@ -1,6 +1,7 @@
 import { CURRENCY, IRole, ROLESENIORITY, utilCurrencyToSymbol } from "@frosttroll/projecttoolmodels";
 import { DateTime } from "luxon";
 
+
 export function uRoleName(role: IRole): string {
     return `${role.seniority !== ROLESENIORITY.MIDLEVEL ? role.seniority + ` ` : ``}${role.name}`;
 }

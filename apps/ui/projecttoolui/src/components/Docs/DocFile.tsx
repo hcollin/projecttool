@@ -160,6 +160,7 @@ const DocFile = ({ type, lang }: DocFileProps) => {
                 updatePart={handleUpdatePart}
                 deletePart={handleDeletePart}
                 hideEditButtons={hideedit}
+                project={aps.project as IProject}
             />
         </>
     );

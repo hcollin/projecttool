@@ -1,3 +1,9 @@
+// IMPORT: General libraries
+import { Box, Button, ButtonGroup, Paper } from "@mantine/core";
+import { useState } from "react";
+import { IconEdit, IconEye, IconEyeOff, IconRowInsertBottom } from "@tabler/icons-react";
+
+// IMPORT: Common models
 import {
     EDOCITEMTYPE,
     IDocFile,
@@ -7,25 +13,32 @@ import {
     IDocFileCover,
     IDocFileContent,
     IDocFileParagraph,
-    IText,
-    EDOCLANG,
+    IProject,
+    IDocFileProjectResource,
 } from "@frosttroll/projecttoolmodels";
-import { ActionIcon, Box, Button, ButtonGroup, Flex, Paper, Text } from "@mantine/core";
-import { useEffect, useState } from "react";
-import { apiGetText } from "../../api/texts/apiTexts";
-import { IconEdit, IconEye, IconEyeOff, IconQuestionMark, IconRefresh, IconRowInsertBottom } from "@tabler/icons-react";
 
-import "./doc-render.css";
+// IMPORT: Doc Renderers
 import DocFileEditor from "./DocFileEditor";
-import { formatTs } from "../../utils/formatingUtils";
+import DocRenderHeader from "./renderers/DocRenderHeader";
+import DocRenderParagraph from "./renderers/DocRenderParagraph";
+import DocRenderKeyValueList from "./renderers/DocRenderKeyValueList";
+import DocRenderHtmlBlock from "./renderers/DocRenderHtmlBlock";
+import DocRenderTableOfContents from "./renderers/DocRenderTableOfContents";
+import DocRenderCover from "./renderers/DocRenderCover";
+import DocRenderUnknown from "./renderers/DocRenderUnknown";
+import DocRenderProjectResource from "./renderers/DocRenderProjectResource";
 
-interface DocRenderHtmlProps {
+// IMPORT: CSS
+import "./doc-render.css";
+
+export interface DocRenderHtmlProps {
     doc: IDocFile;
     hidePart: (contentItem: IDocFileContent) => void;
     addPart: (index: number) => void;
     updatePart: (index: number, contentItem: IDocFileContent) => void;
     deletePart: (index: number) => void;
     hideEditButtons: boolean;
+    project: IProject;
 }
 
 const DocRenderHtml = (props: DocRenderHtmlProps) => {
@@ -47,6 +60,7 @@ const DocRenderContentItem = (props: DocRenderHtmlProps & { contentItem: IDocFil
     const [edit, setEdit] = useState<boolean>(false);
 
     function handleSaveEdit(updatedContentItem: IDocFileContent) {
+        console.log("SAVING EDITED ITEM", updatedContentItem);
         props.updatePart(props.index, updatedContentItem);
         setEdit(false);
     }
@@ -80,6 +94,14 @@ const DocRenderContentItem = (props: DocRenderHtmlProps & { contentItem: IDocFil
             {type === EDOCITEMTYPE.PARAGRAPH && !edit && (
                 <DocRenderParagraph paragraph={props.contentItem as IDocFileParagraph} />
             )}
+            {type === EDOCITEMTYPE.PRJRESOURCE && !edit && (
+                <DocRenderProjectResource
+                    doc={props.contentItem as IDocFileProjectResource}
+                    project={props.project}
+                    docfile={props.doc}
+                />
+            )}
+
             {edit && (
                 <DocFileEditor
                     docFile={props.doc}
@@ -130,169 +152,3 @@ const DocActionButtons = (props: IDocEditProps) => {
         </ButtonGroup>
     );
 };
-
-const DocRenderHeader = (props: { header: IDocFileHeader }) => {
-    const { header } = props;
-    const id = convertTextToId(header.text);
-
-    switch (header.level) {
-        case 1:
-            return <h1 id={id}>{header.text}</h1>;
-        case 2:
-            return <h2 id={id}>{header.text}</h2>;
-        case 3:
-            return <h3 id={id}>{header.text}</h3>;
-        default:
-            return <h4 id={id}>{header.text}</h4>;
-    }
-};
-
-const DocRenderParagraph = (props: { paragraph: IDocFileParagraph }) => {
-    return <p>{props.paragraph.text}</p>;
-};
-
-const DocRenderKeyValueList = (props: { list: IDocFileKeyValue }) => {
-    if (props.list.style === "table") {
-        return null;
-    }
-
-    return (
-        <ul>
-            {props.list.items.map((item, index) => (
-                <li key={index}>
-                    <strong>{item[0]}:</strong> {item[1]}
-                </li>
-            ))}
-        </ul>
-    );
-};
-
-const DocRenderUnknown = (props: { doc: IDocFileContent; onClick: () => void }) => {
-    return (
-        <Button
-            className="unknown-doc-content"
-            onClick={props.onClick}
-            variant="light"
-            fullWidth
-            p="xs"
-            size="xl"
-            leftSection={<IconQuestionMark size={32} />}
-        >
-            Click to edit unknown content type
-        </Button>
-    );
-};
-
-const DocRenderHtmlBlock = (props: { doc: IDocFileHtml }) => {
-    const [txt, setTxt] = useState<IText | null>(props.doc.text || null);
-    const [state, setState] = useState<boolean | string>(false);
-
-    function loadText(key: string) {
-        setState("Loading...");
-        apiGetText(key).then((res) => {
-            if (res) {
-                setTxt(res);
-                setState(true);
-            } else {
-                setTxt(null);
-                setState("Failed to load txt");
-            }
-        });
-    }
-
-    useEffect(() => {
-        if (props.doc.key && !txt) {
-            loadText(props.doc.key);
-        }
-    }, [props.doc.key]);
-
-    if (txt === null) {
-        return <p>Loading...</p>;
-    }
-
-    if (typeof state === "string") {
-        return <p>{state}</p>;
-    }
-
-    const headerDoc: IDocFileHeader | null =
-        props.doc.useNameAsHeader && txt
-            ? ({ type: EDOCITEMTYPE.HEADER, level: props.doc.useNameAsHeader || 4, text: txt.name } as IDocFileHeader)
-            : null;
-
-    return (
-        <>
-            {headerDoc && <DocRenderHeader header={headerDoc} />}
-
-            <div dangerouslySetInnerHTML={{ __html: txt.content }}></div>
-            <Flex justify="flex-start" mt="sm" align="center">
-                <ActionIcon size="sm" onClick={() => loadText(props.doc.key!)}>
-                    <IconRefresh size={16} />
-                </ActionIcon>
-                <Text ml="sm" size="xs" fs="italic">
-                    {txt.name}
-                </Text>
-                <Text ml="sm" size="xs" fs="italic">
-                    {txt.language.toUpperCase()}
-                </Text>
-                {txt.metadata && (
-                    <Text ml="sm" size="xs" fs="italic">
-                        {formatTs(txt.metadata.updatedAt || txt.metadata.createdAt)}
-                    </Text>
-                )}
-            </Flex>
-        </>
-    );
-};
-
-const DocRenderCover = (props: { doc: IDocFileCover }) => {
-    return (
-        <>
-            <h1 className="main-title" style={{ fontSize: "3rem" }}>
-                {props.doc.title}
-            </h1>
-            {props.doc.subtitle && (
-                <h2 className="sub-title" style={{ fontSize: "2rem" }}>
-                    {props.doc.subtitle}
-                </h2>
-            )}
-            {props.doc.client && <h3>Client: {props.doc.client}</h3>}
-            {props.doc.writers && <h3>Writers: {props.doc.writers.join(", ")}</h3>}
-        </>
-    );
-};
-
-const DocRenderTableOfContents = (props: {
-    maxLevel: number;
-    docs: IDocFileContent[];
-    hidden: boolean;
-    lang: EDOCLANG;
-}) => {
-    const headers = props.docs.filter((doc) => {
-        if (doc.type !== EDOCITEMTYPE.HEADER) {
-            return false;
-        }
-        const header = doc as IDocFileHeader;
-        return header.level <= props.maxLevel;
-    }) as IDocFileHeader[];
-
-    const titleText = props.lang === EDOCLANG.FI ? "Sisällysluettelo" : "Table of Contents";
-
-    return (
-        <>
-            <h1>{titleText}</h1>
-            {!props.hidden && (
-                <ul>
-                    {headers.map((header, index) => (
-                        <li key={index} style={{ marginLeft: (header.level - 1) * 20 }}>
-                            <a href={`#${convertTextToId(header.text)}`}>{header.text}</a>
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </>
-    );
-};
-
-function convertTextToId(text: string): string {
-    return text.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
-}

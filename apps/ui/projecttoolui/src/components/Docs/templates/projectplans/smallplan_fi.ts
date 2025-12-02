@@ -4,6 +4,7 @@ import {
     IDocFileCover,
     IDocFileTableOfContents,
     IDocFileHeader,
+    IDocFileHtml,
 } from "@frosttroll/projecttoolmodels";
 
 export const PROJECTPLAN_TEMPLATE_SMALL_FI: IDocFileContent[] = [
@@ -32,19 +33,21 @@ export const PROJECTPLAN_TEMPLATE_SMALL_FI: IDocFileContent[] = [
         text: "Scrum pääkehitysmenetelmänä",
         targetingKey: "scrum",
     } as IDocFileHeader,
+    { type: EDOCITEMTYPE.HTML, key: "default-text-scrum-fi" } as IDocFileHtml,
     {
         type: EDOCITEMTYPE.HEADER,
         level: 3,
         text: "Inkrementit osana Scrum menetelmää",
         targetingKey: "incrementsInScrum",
     } as IDocFileHeader,
+    { type: EDOCITEMTYPE.HTML, key: "default-text-scrum-increment-fi" } as IDocFileHtml,
     {
         type: EDOCITEMTYPE.HEADER,
         level: 3,
         text: "Agile Projects playbook",
         targetingKey: "agilePlaybook",
     } as IDocFileHeader,
-
+    { type: EDOCITEMTYPE.HTML, key: "default-text-agile-playbook-fi" } as IDocFileHtml,
     {
         type: EDOCITEMTYPE.HEADER,
         level: 2,
@@ -67,8 +70,10 @@ export const PROJECTPLAN_TEMPLATE_SMALL_FI: IDocFileContent[] = [
         targetingKey: "changeReleaseManagement",
     } as IDocFileHeader,
 
-    { type: EDOCITEMTYPE.HEADER, level: 2, text: "Viestintä" } as IDocFileHeader,
+    { type: EDOCITEMTYPE.HEADER, level: 2, text: "Viestintä ja kommunikointi" } as IDocFileHeader,
     { type: EDOCITEMTYPE.HEADER, level: 3, text: "Yhteistyövälineet ja -kanavat" } as IDocFileHeader,
+    { type: EDOCITEMTYPE.HEADER, level: 3, text: "Ohjausryhmä" } as IDocFileHeader,
+    { type: EDOCITEMTYPE.HTML, key: "default-text-steering-group-fi" } as IDocFileHtml,
 
     { type: EDOCITEMTYPE.HEADER, level: 2, text: "Työkalut" } as IDocFileHeader,
     { type: EDOCITEMTYPE.HEADER, level: 3, text: "Jira projektinhallintatyökaluna" } as IDocFileHeader,

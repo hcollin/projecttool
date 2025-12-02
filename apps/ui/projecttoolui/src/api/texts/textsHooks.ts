@@ -1,6 +1,6 @@
 import { IText } from "@frosttroll/projecttoolmodels";
 import { useEffect, useState } from "react";
-import { apiGetTexts } from "./apiTexts";
+import { apiGetText, apiGetTexts } from "./apiTexts";
 
 let CACHED_KEYWORDS: string[] = [];
 let KEYWORDS_LOADED = false;
@@ -57,4 +57,24 @@ export const useKeywords = (): string[] => {
     }, [keywords]);
 
     return keywords;
+};
+
+export const useText = (guid: string | null | undefined): IText | null => {
+    const [txt, setTxt] = useState<IText | null>(null);
+
+    useEffect(() => {
+        if (guid) {
+            apiGetText(guid || "")
+                .then((t) => {
+                    setTxt(t);
+                })
+                .catch(() => {
+                    setTxt(null);
+                });
+        } else {
+            setTxt(null);
+        }
+    }, [guid]);
+
+    return txt;
 };

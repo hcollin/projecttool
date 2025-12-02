@@ -9,6 +9,8 @@ export const DEFAULT_ROLETEMPLATES: IRoleTemplate[] = [
         seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD],
         description:
             "Oversees project planning, execution, and delivery, ensuring goals are met on time and within budget.",
+        texts: ["default-text-role-projectmanager-fi"],
+        defaultTextGuid: "default-text-role-projectmanager-fi",
     },
     {
         guid: "role-manager-product",
@@ -43,6 +45,8 @@ export const DEFAULT_ROLETEMPLATES: IRoleTemplate[] = [
         seniorities: [ROLESENIORITY.JUNIOR, ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR],
         description:
             "Facilitates Agile processes, removes impediments, and supports the Scrum team in delivering value.",
+        texts: ["default-text-role-scrummaster-fi"],
+        defaultTextGuid: "default-text-role-scrummaster-fi",
     },
     {
         guid: "role-agile-coach",
@@ -139,6 +143,8 @@ export const DEFAULT_ROLETEMPLATES: IRoleTemplate[] = [
         groups: ["QA"],
         seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD],
         description: "Designs, develops, and maintains automated test scripts and frameworks.",
+        texts: ["default-text-role-testautomationdeveloper-fi"],
+        defaultTextGuid: "default-text-role-testautomationdeveloper-fi",
     },
 
     // Design
@@ -148,6 +154,8 @@ export const DEFAULT_ROLETEMPLATES: IRoleTemplate[] = [
         groups: ["Design"],
         seniorities: [ROLESENIORITY.JUNIOR, ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR],
         description: "Researches and designs user experiences to ensure products are intuitive and user-friendly.",
+        texts: ["default-text-role-uxdesigner-fi"],
+        defaultTextGuid: "default-text-role-uxdesigner-fi",
     },
     {
         guid: "role-design-ui",
@@ -253,6 +261,8 @@ export const DEFAULT_ROLETEMPLATES: IRoleTemplate[] = [
         groups: ["Architecture"],
         seniorities: [ROLESENIORITY.MIDLEVEL, ROLESENIORITY.SENIOR, ROLESENIORITY.LEAD, ROLESENIORITY.PRINCIPAL],
         description: "Designs software systems, sets technical direction, and ensures architectural integrity.",
+        texts: ["default-text-role-softwarearchitect-fi"],
+        defaultTextGuid: "default-text-role-softwarearchitect-fi",
     },
     {
         guid: "role-arch-solution",

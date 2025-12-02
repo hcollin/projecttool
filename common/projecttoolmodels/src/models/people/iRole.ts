@@ -11,6 +11,7 @@ export interface IRole extends IRootObject {
     seniority?: ROLESENIORITY;
     priceGroupId?: string;
     description?: string;
+    template?: IRoleTemplate;
 }
 
 /**

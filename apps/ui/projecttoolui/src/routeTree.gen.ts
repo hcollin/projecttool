@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectIndexRouteImport } from './routes/project/index'
+import { Route as DevIndexRouteImport } from './routes/dev/index'
 import { Route as DataIndexRouteImport } from './routes/data/index'
 import { Route as ProjectTechstackRouteImport } from './routes/project/techstack'
 import { Route as ProjectSummarytableRouteImport } from './routes/project/summarytable'
@@ -38,6 +39,11 @@ const IndexRoute = IndexRouteImport.update({
 const ProjectIndexRoute = ProjectIndexRouteImport.update({
   id: '/project/',
   path: '/project/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevIndexRoute = DevIndexRouteImport.update({
+  id: '/dev/',
+  path: '/dev/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DataIndexRoute = DataIndexRouteImport.update({
@@ -145,6 +151,7 @@ export interface FileRoutesByFullPath {
   '/project/summarytable': typeof ProjectSummarytableRoute
   '/project/techstack': typeof ProjectTechstackRoute
   '/data': typeof DataIndexRoute
+  '/dev': typeof DevIndexRoute
   '/project': typeof ProjectIndexRoute
   '/data/technology/new': typeof DataTechnologyNewRoute
   '/data/texts/new': typeof DataTextsNewRoute
@@ -167,6 +174,7 @@ export interface FileRoutesByTo {
   '/project/summarytable': typeof ProjectSummarytableRoute
   '/project/techstack': typeof ProjectTechstackRoute
   '/data': typeof DataIndexRoute
+  '/dev': typeof DevIndexRoute
   '/project': typeof ProjectIndexRoute
   '/data/technology/new': typeof DataTechnologyNewRoute
   '/data/texts/new': typeof DataTextsNewRoute
@@ -190,6 +198,7 @@ export interface FileRoutesById {
   '/project/summarytable': typeof ProjectSummarytableRoute
   '/project/techstack': typeof ProjectTechstackRoute
   '/data/': typeof DataIndexRoute
+  '/dev/': typeof DevIndexRoute
   '/project/': typeof ProjectIndexRoute
   '/data/technology/new': typeof DataTechnologyNewRoute
   '/data/texts/new': typeof DataTextsNewRoute
@@ -214,6 +223,7 @@ export interface FileRouteTypes {
     | '/project/summarytable'
     | '/project/techstack'
     | '/data'
+    | '/dev'
     | '/project'
     | '/data/technology/new'
     | '/data/texts/new'
@@ -236,6 +246,7 @@ export interface FileRouteTypes {
     | '/project/summarytable'
     | '/project/techstack'
     | '/data'
+    | '/dev'
     | '/project'
     | '/data/technology/new'
     | '/data/texts/new'
@@ -258,6 +269,7 @@ export interface FileRouteTypes {
     | '/project/summarytable'
     | '/project/techstack'
     | '/data/'
+    | '/dev/'
     | '/project/'
     | '/data/technology/new'
     | '/data/texts/new'
@@ -281,6 +293,7 @@ export interface RootRouteChildren {
   ProjectSummarytableRoute: typeof ProjectSummarytableRoute
   ProjectTechstackRoute: typeof ProjectTechstackRoute
   DataIndexRoute: typeof DataIndexRoute
+  DevIndexRoute: typeof DevIndexRoute
   ProjectIndexRoute: typeof ProjectIndexRoute
   DataTechnologyNewRoute: typeof DataTechnologyNewRoute
   DataTextsNewRoute: typeof DataTextsNewRoute
@@ -304,6 +317,13 @@ declare module '@tanstack/react-router' {
       path: '/project'
       fullPath: '/project'
       preLoaderRoute: typeof ProjectIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dev/': {
+      id: '/dev/'
+      path: '/dev'
+      fullPath: '/dev'
+      preLoaderRoute: typeof DevIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/data/': {
@@ -449,6 +469,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProjectSummarytableRoute: ProjectSummarytableRoute,
   ProjectTechstackRoute: ProjectTechstackRoute,
   DataIndexRoute: DataIndexRoute,
+  DevIndexRoute: DevIndexRoute,
   ProjectIndexRoute: ProjectIndexRoute,
   DataTechnologyNewRoute: DataTechnologyNewRoute,
   DataTextsNewRoute: DataTextsNewRoute,

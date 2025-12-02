@@ -3,9 +3,10 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { TextEntity } from "./text.entity";
 import { TextDto } from "./text.dto";
-import { DEFAULT_TEXTS } from "./defaulttexts";
+import { DEFAULT_TEXTS_FI } from "./defaulttexts_fi";
 import { IText } from "@frosttroll/projecttoolmodels";
 import { v4 } from "uuid";
+import { DEFAULT_TEXTS_EN } from "./defaulttexts_en";
 
 @Injectable()
 export class TextsService {
@@ -53,6 +54,18 @@ export class TextsService {
             dto.content = ""; // Content not loaded in list view
             return dto;
         });
+    }
+
+    /**
+     * Get all texts with full content. Be very careful when using this method as it can return a lot of data.
+     * @returns
+     */
+    async getFullTextList(): Promise<TextDto[]> {
+        const res = await this.textRepository.find();
+        if (!res) {
+            throw new Error("Could not retrieve texts");
+        }
+        return res.map((text) => text.getDto());
     }
 
     /**
@@ -141,18 +154,22 @@ export class TextsService {
             }
         }
 
-        const defaultTexts: IText[] = DEFAULT_TEXTS;
-        const existingTexts = await this.textRepository.find();
+        const defTexts = [DEFAULT_TEXTS_FI, DEFAULT_TEXTS_EN];
 
-        const existingGuids = new Set<string>(existingTexts.map((t) => t.guid));
+        for (const texts of defTexts) {
+            const defaultTexts: IText[] = [...texts];
+            const existingTexts = await this.textRepository.find();
 
-        for (const text of defaultTexts) {
-            if (text && typeof text.guid === "string" && !existingGuids.has(text.guid)) {
-                const txtEnt = new TextEntity();
-                txtEnt.updateFromDto(text as TextDto);
-                txtEnt.guid = text.guid;
-                const textEntity = this.textRepository.create(txtEnt);
-                await this.textRepository.save(textEntity);
+            const existingGuids = new Set<string>(existingTexts.map((t) => t.guid));
+
+            for (const text of defaultTexts) {
+                if (text && typeof text.guid === "string" && !existingGuids.has(text.guid)) {
+                    const txtEnt = new TextEntity();
+                    txtEnt.updateFromDto(text as TextDto);
+                    txtEnt.guid = text.guid;
+                    const textEntity = this.textRepository.create(txtEnt);
+                    await this.textRepository.save(textEntity);
+                }
             }
         }
 

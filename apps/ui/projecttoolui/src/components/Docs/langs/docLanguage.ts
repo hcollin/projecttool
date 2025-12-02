@@ -2,6 +2,16 @@ import { EDOCLANG, EDOCTYPE } from "@frosttroll/projecttoolmodels";
 
 import { PROJECTPLAN_EN } from "./projectplan/en";
 import { IDocLang } from "./iDocLang";
+import { PROJECTPLAN_FI } from "./projectplan/fi";
+
+export function parseTxt(text: string, ...args: string[]): string {
+    let parsedText = text;
+    args.forEach((arg, index) => {
+        const placeholder = `%${index + 1}`;
+        parsedText = parsedText.replace(placeholder, arg);
+    });
+    return parsedText;
+}
 
 export function docTxt(key: string, language: EDOCLANG, doctype: EDOCTYPE, variant?: number): string {
     const texts = loadDocLanguageModule(language, doctype);
@@ -21,6 +31,9 @@ function loadDocLanguageModule(language: EDOCLANG, doctype: EDOCTYPE): IDocLang 
     if (doctype === EDOCTYPE.PROJECTPLAN) {
         if (language === EDOCLANG.EN) {
             return PROJECTPLAN_EN;
+        }
+        if (language === EDOCLANG.FI) {
+            return PROJECTPLAN_FI;
         }
     }
     return null;

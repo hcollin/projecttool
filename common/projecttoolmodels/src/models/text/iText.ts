@@ -22,8 +22,9 @@ export interface IText extends IRootObject {
 export interface ITextObject {
     // List of exisiting text GUIDs associated with this object
     texts?: string[];
-}
 
+    defaultTextGuid?: string;
+}
 
 export interface ITextMetaData {
     createdAt: number;

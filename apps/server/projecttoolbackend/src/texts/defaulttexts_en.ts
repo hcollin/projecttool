@@ -1,18 +1,6 @@
 import { IText } from "@frosttroll/projecttoolmodels";
 
-export const DEFAULT_TEXTS: IText[] = [
-    {
-        guid: "default-text-java-openjdk-spring-fi",
-        organizationId: "default-org",
-        content:
-            "Java on alun perin Sun Microsystemsin kehittämä ja nykyisin Oraclen ylläpitämä teknologiaympäristö. Java kieli vaatii toimiakseen Java virtuaalikoneen (Java Virtual Machine eli JVM), jonka avulla lähdekoodista käännettyä binäärikoodia ajetaan. JVM ajoympäristöjä on useita, joista osa on kaupallisia ja osa avoimia. Javan referenssitoteutus ja ajoympäristö on avoimen lähdekoodin OpenJDK, jota myös tämän hankkeen toteuttamisessa hyödynnetään.\n\nJärjestelmän taustapalveluiden teknologiavalinnoissa valinnassa on päädytty ratkaisuun, joka perustuu pääosiltaan Javateknologiaan ja Spring Boot palvelukehykseen. Tämä mahdollistaa taustajärjestelmien alustariippumattomuuden, eli taustajärjestelmää voidaan suorittaa erilaisilla laitteisto- ja ohjelmisto alustoilla tuotannossa, huolimatta siitä missä ympäristöllä varsinainen kehitys on tehty. Java ekosysteemi on yleisesti käytössä web-pohjaisten sovellusten taustajärjestelmänä, joten sille löytyy hyvin sekä kehittäjiä että laajasti käytössä olevia avoimen lähdekoodin kirjastoja ja sovellus kehyksiä. Java Spring boot taas on avoimen lähdekoodin sovelluskehys, joka on suunniteltu yksinkertaistamaan kehitys prosessia Java Spring-sovelluksille. Spring- ekosysteemi on suosittu ja se on laajasti käytössä Javakehitysyhteisössä.",
-        keywords: ["java", "openjdk", "technology", "backend", "general"],
-        name: "OpenJDK ja Java Spring Boot",
-        language: "fi",
-        langlinks: {
-            en: "default-text-java-openjdk-spring-en",
-        },
-    },
+export const DEFAULT_TEXTS_EN: IText[] = [
     {
         guid: "default-text-java-openjdk-spring-en",
         organizationId: "default-org",
@@ -37,18 +25,7 @@ export const DEFAULT_TEXTS: IText[] = [
             fi: "default-text-react-typescript-frontend-fi",
         },
     },
-    {
-        guid: "default-text-react-typescript-frontend-fi",
-        organizationId: "default-org",
-        content:
-            "TypeScript is a modern programming language developed and maintained by Microsoft. It builds on JavaScript by adding static typing and advanced language features, which help developers catch errors early and write more maintainable code. TypeScript code is compiled to standard JavaScript, ensuring compatibility with all major browsers and JavaScript environments.\n\nFor the frontend of this system, the React library has been selected alongside TypeScript. React is an open-source JavaScript library created by Meta (Facebook) for building user interfaces, especially single-page applications. It enables the creation of interactive and dynamic web applications with reusable components, improving development efficiency and code organization. The combination of TypeScript and React is widely adopted in the web development community, offering strong tooling, a large ecosystem of libraries, and a robust developer community. This approach ensures a scalable, maintainable, and high-performance frontend architecture.",
-        keywords: ["react", "typescript", "technology", "frontend", "general"],
-        name: "React ja TypeScript",
-        language: "fi",
-        langlinks: {
-            en: "default-text-react-typescript-frontend-en",
-        },
-    },
+
     {
         guid: "default-text-acceptance-process-fi",
         organizationId: "default-org",
@@ -59,5 +36,18 @@ export const DEFAULT_TEXTS: IText[] = [
         name: "Hyväksymismenettely",
         language: "fi",
         langlinks: {},
+    },
+
+    {
+        guid: "default-text-react-typescript-frontend-en",
+        organizationId: "default-org",
+        content:
+            "<p>TypeScript is a modern programming language developed and maintained by Microsoft. It builds on JavaScript by adding static typing and advanced language features, which help developers catch errors early and write more maintainable code. TypeScript code is compiled to standard JavaScript, ensuring compatibility with all major browsers and JavaScript environments. For the frontend of this system, the React library has been selected alongside TypeScript. </p><p>React is an open-source JavaScript library created by Meta (Facebook) for building user interfaces, especially single-page applications. It enables the creation of interactive and dynamic web applications with reusable components, improving development efficiency and code organization. The combination of TypeScript and React is widely adopted in the web development community, offering strong tooling, a large ecosystem of libraries, and a robust developer community. This approach ensures a scalable, maintainable, and high-performance frontend architecture.</p>",
+        keywords: ["react", "typescript", "technology", "frontend", "general"],
+        name: "React and TypeScript Frontend",
+        language: "en",
+        langlinks: {
+            fi: "default-text-react-typescript-frontend-fi",
+        },
     },
 ];
