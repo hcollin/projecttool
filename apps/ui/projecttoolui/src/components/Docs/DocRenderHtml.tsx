@@ -43,7 +43,7 @@ export interface DocRenderHtmlProps {
 
 const DocRenderHtml = (props: DocRenderHtmlProps) => {
     return (
-        <Paper className="doc-render">
+        <Paper className="doc-render main-print-area">
             {props.doc.content.map((contentItem, index) => {
                 return <DocRenderContentItem key={index} contentItem={contentItem} index={index} {...props} />;
             })}
@@ -133,7 +133,7 @@ const DocActionButtons = (props: IDocEditProps) => {
     }
 
     return (
-        <ButtonGroup className="edit-doc-button-group" style={{ float: "right", display: "inline-block" }}>
+        <ButtonGroup className="edit-doc-button-group no-print" style={{ float: "right", display: "inline-block" }}>
             <Button variant={props.editing ? "filled" : "filled"} size="xs" onClick={() => props.toggleEdit()}>
                 <IconEdit size={16} />
             </Button>

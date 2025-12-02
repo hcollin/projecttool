@@ -52,7 +52,7 @@ const DocRenderHtmlBlock = (props: { doc: IDocFileHtml }) => {
             {headerDoc && <DocRenderHeader header={headerDoc} />}
 
             <SafeHtml html={txt.content} />
-            <Flex justify="flex-start" mt="sm" align="center">
+            <Flex justify="flex-start" mt="sm" align="center" className="no-print">
                 <ActionIcon size="sm" onClick={() => loadText(props.doc.key!)}>
                     <IconRefresh size={16} />
                 </ActionIcon>
@@ -75,8 +75,7 @@ const DocRenderHtmlBlock = (props: { doc: IDocFileHtml }) => {
 export default DocRenderHtmlBlock;
 
 export const DocFileRenderCustomHtml = (props: { contentKey: string }) => {
-    
-    if(!props.contentKey) {
+    if (!props.contentKey) {
         return null;
     }
 

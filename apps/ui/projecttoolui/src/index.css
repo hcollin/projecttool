@@ -1,16 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
-
 /* These are utility border classes for debugging layout issues */
 .yb {
-  border: solid 1px yellow;
+    border: solid 1px yellow;
 }
 .pb {
-  border: solid 1px pink;
+    border: solid 1px pink;
 }
 .lb {
-  border: solid 1px lime;
+    border: solid 1px lime;
 }
 .rb {
-  border: solid 1px red;
+    border: solid 1px red;
+}
+
+@media print {
+    .no-print {
+        display: none !important;
+    }
 }

@@ -58,11 +58,11 @@ const ProjectShell = (props: { children: React.ReactNode }) => {
             }}
             className="project-shell"
         >
-            <AppShell.Header>
+            <AppShell.Header className="no-print">
                 <MainHeader />
             </AppShell.Header>
 
-            <AppShell.Navbar className="project-navbar">
+            <AppShell.Navbar className="project-navbar no-print" >
                 <AnchorLink to="/" style={{ padding: "0.5rem", marginBottom: "1rem" }}>
                     <Title order={1}>Project Tool</Title>
                 </AnchorLink>
@@ -177,7 +177,7 @@ const ProjectShell = (props: { children: React.ReactNode }) => {
 
             <AppShell.Main className="main-content">{props.children}</AppShell.Main>
 
-            <AppShell.Footer>
+            <AppShell.Footer className="no-print">
                 <ProjectFooter />
             </AppShell.Footer>
         </AppShell>

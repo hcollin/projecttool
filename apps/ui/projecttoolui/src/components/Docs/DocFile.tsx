@@ -135,7 +135,7 @@ const DocFile = ({ type, lang }: DocFileProps) => {
     return (
         <>
             <DocFileGeneratorOptions project={aps.project as IProject} onGenerate={setDoc} docFile={doc} />
-            <ProjectCard>
+            <ProjectCard className="no-print">
                 <Flex align="center" justify="space-between">
                     <Button variant="filled" leftSection={<IconDeviceFloppy />} onClick={handleSaveDocument}>
                         Save Document
@@ -251,7 +251,7 @@ const DocFileGeneratorOptions = (props: IDocFileGeneratorOptionsProps) => {
     const selectableTemplates = filterTemplatesByType(type);
 
     return (
-        <ProjectCard>
+        <ProjectCard className="no-print">
             <Flex align="center">
                 <Text size="sm" c="gray.5" mr="md" w="6rem">
                     File name:

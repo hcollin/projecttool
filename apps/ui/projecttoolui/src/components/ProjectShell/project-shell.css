@@ -1,3 +1,5 @@
+
+@media screen {
 div.project-shell {
 
 
@@ -5,3 +7,6 @@ div.project-shell {
         padding: var(--mantine-spacing-md);
     }
 }
+
+}
+

@@ -13,7 +13,7 @@ function ProjectPlanComponent() {
 	return (
 		<ProjectShell>
 			<Container size="xl">
-				<ProjectPageMainTitle>Project plan</ProjectPageMainTitle>
+				<ProjectPageMainTitle className="no-print">Project plan</ProjectPageMainTitle>
 
 				<DocFile type={EDOCTYPE.PROJECTPLAN} lang={EDOCLANG.EN} />
 			</Container>
