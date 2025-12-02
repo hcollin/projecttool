@@ -63,7 +63,6 @@ const DocFileEditorUnknown = (props: IDocFileEditorProps) => {
     return (
         <Flex direction="row" align="center" justify="center" p="md" gap="sm">
             {VALIDTYPESTOADD.map((type) => {
-                console.log("TYPE", type);
                 return (
                     <Button
                         key={type}

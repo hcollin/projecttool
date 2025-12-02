@@ -112,7 +112,6 @@ const DocFile = ({ type, lang }: DocFileProps) => {
 
     function handleSaveDocument() {
         if (!doc) return;
-        console.log("SAVE DOCUMENT", doc);
 
         if (!aps.project) return;
         if (type === EDOCTYPE.PROJECTPLAN) {
@@ -124,7 +123,7 @@ const DocFile = ({ type, lang }: DocFileProps) => {
             } = np.docs !== undefined ? { ...np.docs } : { projectplan: { ...doc }, solutionplan: null };
 
             const saveThis: IProject = { ...np, docs: { ...docs, projectplan: { ...doc } } };
-            console.log("SAVE PROJECT PLAN DOC", saveThis);
+
             actionUpdateActiveProject(saveThis, true);
         }
     }

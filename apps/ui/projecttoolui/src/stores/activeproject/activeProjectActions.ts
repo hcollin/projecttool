@@ -52,7 +52,6 @@ export async function actionSaveActiveProject(): Promise<void> {
         const projectToSave = { ...activeProjectStore.project };
 
         const response = await apiPostUpdateProject(projectToSave);
-        console.log("RESPONSE FROM SAVE:", response);
 
         activeProjectStore.unsavedChanges = false;
     }
