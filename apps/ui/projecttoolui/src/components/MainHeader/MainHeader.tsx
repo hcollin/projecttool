@@ -1,7 +1,10 @@
-import { Flex, Box, Button } from "@mantine/core";
+import { Flex, Box, Button, useMantineColorScheme } from "@mantine/core";
 import AnchorLink from "../AnchorLink/AnchorLink";
+import { IconMoon, IconSun } from "@tabler/icons-react";
 
 const MainHeader = () => {
+    const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+
     const linkStyle: React.CSSProperties = {
         margin: "0 15px",
         fontSize: "1.25rem",
@@ -28,6 +31,9 @@ const MainHeader = () => {
             </Box>
 
             <Box>
+                <Button variant="outline" size="md" onClick={() => toggleColorScheme()} mr="lg">
+                    {colorScheme === "dark" ? <IconSun /> : <IconMoon />}
+                </Button>
                 <Button variant="outline" size="md">
                     Logout?
                 </Button>

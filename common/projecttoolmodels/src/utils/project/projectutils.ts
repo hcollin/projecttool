@@ -88,5 +88,14 @@ export function utilFixIProject(project: IProject): IProject {
         nproject.end = parseInt(project.end as unknown as string, 10);
     }
 
+    // Remove roles from phase allocations that do not exist in project roles
+    nproject.phases = nproject.phases.map((phase) => {
+        const nphase = { ...phase };
+        nphase.allocations = nphase.allocations.filter((alloc) =>
+            nproject.roles.some((role) => role.guid === alloc.roleGuid)
+        );
+        return nphase;
+    });
+
     return nproject;
 }

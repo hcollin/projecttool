@@ -1,0 +1,13 @@
+.heatmap-chart {
+    --heatmap-color-0: #000000;
+    --heatmap-color-1: gray;
+    --heatmap-color-2: alpha(yellowgreen, 0.5);
+    --heatmap-color-3: yellowgreen;
+    --heatmap-color-4: green;
+    --heatmap-color-5: lime;
+    --heatmap-color-6: #e9a700;
+    --heatmap-color-7: #ff8800;
+    --heatmap-color-8: #ff6600;
+    --heatmap-color-9: #ff3300;
+    --heatmap-color-10: red;
+}

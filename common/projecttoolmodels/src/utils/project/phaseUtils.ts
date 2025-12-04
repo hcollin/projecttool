@@ -109,6 +109,7 @@ export function utilCalculatePhasePrice(phase: IPhase, project: IProject): numbe
 
     phase.allocations.forEach((alloc) => {
         const role = project.roles.find((r) => r.guid === alloc.roleGuid);
+
         if (role) {
             const hourlyGroup = project.prices.hourlypricegroups.find((hg) => hg.guid === role.priceGroupId);
             if (hourlyGroup) {
@@ -164,4 +165,24 @@ export function utilCalculatePhaseSingleDay(
         }
     });
     return response;
+}
+
+/**
+ * Calculate both work hours and the their total price for the given phase
+ * @param phase
+ * @param project
+ * @returns
+ */
+export function utilCalculatePhaseAllocatedWorkHours(phase: IPhase, project: IProject): number {
+    let totalHours = 0;
+
+    const phaseDurationInWorkDays = utilCalculatePhaseDuration(phase, project, true);
+
+    phase.allocations.forEach((alloc) => {
+        const hoursForAllocation = phaseDurationInWorkDays * 7.5 * (alloc.allocation / 100);
+
+        totalHours += hoursForAllocation;
+    });
+
+    return totalHours;
 }

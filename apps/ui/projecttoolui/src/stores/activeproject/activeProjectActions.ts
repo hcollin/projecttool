@@ -7,6 +7,7 @@ import {
     IPhaseAllocation,
     utilGetPhaseStartTs,
     ITechnology,
+    utilGetPhaseEndTs,
 } from "@frosttroll/projecttoolmodels";
 
 import activeProjectStore from "./activeProjectStore";
@@ -339,6 +340,13 @@ export function actionSortPhasesInActiveProjectByStartTime(): void {
         phases.sort((a, b) => {
             const aStartTs = utilGetPhaseStartTs(a, activeProjectStore.project!);
             const bStartTs = utilGetPhaseStartTs(b, activeProjectStore.project!);
+
+            if (aStartTs === bStartTs) {
+                const aEndTs = utilGetPhaseEndTs(a, activeProjectStore.project!);
+                const bEndTs = utilGetPhaseEndTs(b, activeProjectStore.project!);
+                return bEndTs - aEndTs;
+            }
+
             return aStartTs - bStartTs;
         });
         activeProjectStore.project.phases = phases;

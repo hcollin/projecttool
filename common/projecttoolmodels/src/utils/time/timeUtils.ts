@@ -45,6 +45,11 @@ export function utilCalculateWorkdaysBetweenTimes(
 
 const WORKDAYCACHE = new Map<string, number>();
 
+/**
+ * Calculate the timestamp after adding a number of working days (excluding weekends and Finnish public holidays) to a start timestamp
+ *
+ * TODO! This function may stil count the date wrongly. I need to write a test for it
+ */
 export function utilCalculatePlusWorkingDaysFromTs(
     start: number,
     workdaysToAdd: number,
@@ -97,21 +102,22 @@ export function utilCalculatePlusWorkingDaysFromTs(
     return curDate.toMillis();
 }
 
-
-
 /**
  * Internal helper to check if a date is in the additional holidays list
- * @param date 
- * @param additionalHolidays 
- * @returns 
+ * @param date
+ * @param additionalHolidays
+ * @returns
  */
 function isAdditionalHoliday(date: DateTime, additionalHolidays?: HOLIDAY_TUPLE[]): boolean {
     if (!additionalHolidays) {
         return false;
     }
     const nd: [number, number] = [date.day, date.month];
-    if (additionalHolidays.findIndex((h) => h[0] === nd[0] && h[1] === nd[1] && (h[2] === undefined || h[2] === date.year)) !== -1) {
-
+    if (
+        additionalHolidays.findIndex(
+            (h) => h[0] === nd[0] && h[1] === nd[1] && (h[2] === undefined || h[2] === date.year)
+        ) !== -1
+    ) {
         return true;
     }
     return false;

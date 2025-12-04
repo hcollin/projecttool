@@ -39,19 +39,19 @@ const ProjectPhaseInfoRow = (props: ProjectPhaseInfoRowProps) => {
 
     return (
         <Flex direction="row" justify="space-between" align="center">
-            <Box style={{flex: "0 0 auto", width: "40%"}}>
+            <Box style={{ flex: "0 0 auto", width: "40%" }}>
                 <Title order={3}>{props.phase.name}</Title>
             </Box>
-            <Box style={{flex: "0 0 auto", width: "15%"}}>
+            <Box style={{ flex: "0 0 auto", width: "15%" }}>
                 <Text ta="center">{phaseDur} work days</Text>
             </Box>
-        
-            <Box style={{flex: "0 0 auto", width: "20%"}}>
+
+            <Box style={{ flex: "0 0 auto", width: "20%" }}>
                 <Text ta="center">
                     {phaseStart} - {phaseEnd}
                 </Text>
             </Box>
-            <Box style={{flex: "1 1 auto", textAlign: "right"}}>
+            <Box style={{ flex: "1 1 auto", textAlign: "right" }}>
                 <Text fw="bold" size="lg">
                     <NumberFormatter
                         value={phasePrice}

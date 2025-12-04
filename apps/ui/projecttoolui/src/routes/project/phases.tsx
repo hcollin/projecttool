@@ -13,58 +13,85 @@ import activeProjectStore from "../../stores/activeproject/activeProjectStore";
 
 // IMPORT: Common Models, Data and Utils
 import { IPhase, IProject } from "@frosttroll/projecttoolmodels";
-import { IconPlus } from "@tabler/icons-react";
-import { actionAddNewPhaseToActiveProject } from "../../stores/activeproject/activeProjectActions";
+import { IconPlus, IconSort09 } from "@tabler/icons-react";
+import {
+    actionAddNewPhaseToActiveProject,
+    actionSortPhasesInActiveProjectByStartTime,
+} from "../../stores/activeproject/activeProjectActions";
 import { useState } from "react";
 import ProjectPhaseInfoRow from "../../components/ProjectComponents/phases/ProjectPhaseInfoRow";
 import ProjectPhaseBar from "../../components/ProjectPhaseBar/ProjectPhaseBar";
 import ProjectCard from "../../components/ProjectComponents/ProjectCard";
 
 export const Route = createFileRoute("/project/phases")({
-	component: PhasesComponent,
+    component: PhasesComponent,
 });
 
 function PhasesComponent() {
-	const aps = useSnapshot(activeProjectStore);
+    const aps = useSnapshot(activeProjectStore);
 
-	const [editGuid, setEditGuid] = useState<string | null>(null);
+    const [editGuid, setEditGuid] = useState<string | null>(null);
 
-	const prj = aps.project;
+    const prj = aps.project;
 
-	function handleCreateNewPhase() {
-		actionAddNewPhaseToActiveProject();
-	}
+    function handleCreateNewPhase() {
+        actionAddNewPhaseToActiveProject();
+    }
 
-	if (!prj) {
-		return null;
-	}
+    function handleSort() {
+        actionSortPhasesInActiveProjectByStartTime();
+    }
 
-	return (
-		<ProjectShell>
-			<Container size="xl">
-				<ProjectPageMainTitle>Project Phases</ProjectPageMainTitle>
+    if (!prj) {
+        return null;
+    }
 
-				<ProjectCard>
-					<ProjectPhaseBar />
-				</ProjectCard>
+    return (
+        <ProjectShell>
+            <Container size="xl">
+                <ProjectPageMainTitle>Project Phases</ProjectPageMainTitle>
 
-				{prj.phases.map((phase) => {
-					if (editGuid !== phase.guid) {
-						return (
-							<Card key={phase.guid} shadow="sm" mb="md" withBorder onClick={() => setEditGuid(phase.guid)}>
-								<ProjectPhaseInfoRow key={phase.guid} phase={phase as IPhase} project={prj as IProject} />
-							</Card>
-						);
-					}
-					return <ProjectPhaseCard key={phase.guid} phase={phase as IPhase} project={prj as IProject} onClose={() => setEditGuid(null)} />;
-				})}
+                <ProjectCard>
+                    <ProjectPhaseBar />
+                </ProjectCard>
 
-				<Flex justify="flex-end" align="center">
-					<Button variant="filled" size="lg" onClick={handleCreateNewPhase}>
-						<IconPlus style={{ marginRight: "8px" }} /> NEW PHASE
-					</Button>
-				</Flex>
-			</Container>
-		</ProjectShell>
-	);
+                {prj.phases.map((phase) => {
+                    if (editGuid !== phase.guid) {
+                        return (
+                            <Card
+                                key={phase.guid}
+                                shadow="sm"
+                                mb="md"
+                                withBorder
+                                onClick={() => setEditGuid(phase.guid)}
+                            >
+                                <ProjectPhaseInfoRow
+                                    key={phase.guid}
+                                    phase={phase as IPhase}
+                                    project={prj as IProject}
+                                />
+                            </Card>
+                        );
+                    }
+                    return (
+                        <ProjectPhaseCard
+                            key={phase.guid}
+                            phase={phase as IPhase}
+                            project={prj as IProject}
+                            onClose={() => setEditGuid(null)}
+                        />
+                    );
+                })}
+
+                <Flex justify="flex-end" align="center">
+                    <Button variant="filled" size="lg" onClick={handleSort} mr="lg" leftSection={<IconSort09 />}>
+                        SORT
+                    </Button>
+                    <Button variant="filled" size="lg" onClick={handleCreateNewPhase} leftSection={<IconPlus />}>
+                        NEW PHASE
+                    </Button>
+                </Flex>
+            </Container>
+        </ProjectShell>
+    );
 }

@@ -192,15 +192,18 @@ const PhaseRoleAllocation = (props: { phase: IPhase; role: IRole; onChange: (val
 
     return (
         <Flex key={role.guid} align="center" justify="space-between">
-            <Text
-                size="lg"
-                style={{ flex: "0 0 auto", width: "25%" }}
-                fw={hasAlloc ? "bold" : "normal"}
-                c={hasAlloc ? "var(--mantine-primary-color)" : "gray.6"}
-            >
-                {role.seniority !== ROLESENIORITY.MIDLEVEL ? role.seniority + " " : ""}
-                {role.name}
-            </Text>
+            <Box style={{ flex: "0 0 auto", width: "25%" }}>
+                <Text
+                    size="lg"
+                    
+                    fw={hasAlloc ? "bold" : "normal"}
+                    c={hasAlloc ? "var(--mantine-primary-color)" : "gray.6"}
+                >
+                    {role.seniority !== ROLESENIORITY.MIDLEVEL ? role.seniority + " " : ""}
+                    {role.name}
+                </Text>
+                <Text size="xs" style={{opacity: 0.5}}>{role.guid}</Text>
+            </Box>
 
             <Flex style={{ flex: 1, marginLeft: "1rem", marginRight: "1rem" }}>
                 <Button variant="filled" size="xs" mr="sm" onClick={() => props.onChange(0)} disabled={!hasAlloc}>
